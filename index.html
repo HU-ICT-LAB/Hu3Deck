@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Animating and moving objects</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-sky src="water.jpg" rotation="0 -130 0"></a-sky>
+
+      <!-- Assets -->
+      <a-assets>
+          <a-asset-items id="bird" response-type="arraybuffer" src="assets/bird/scene.glb"></a-asset-items>
+      </a-assets>
+
+      <!-- Floor -->
+      <!-- <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane> -->
+
+      <!-- Sky -->
+      <!-- <a-sky color="#ECECEC"></a-sky> -->
+
+      <!-- Camera -->
+      <a-entity position="0 0 2">
+        <a-camera></a-camera>
+      </a-entity>
+
+      <!-- A moving box -->
+      <!-- <a-box animation="property: position; from: -2 0.5 -4; to: 2 0.5 -4; dir: alternate; dur: 1000; easing: linear; loop: true" color="blue"></a-box> -->
+
+      <!-- Flying Bird -->
+      <a-entity gltf-model="#bird" scale="0.5 0.5 0.5" position="15 5 -50" animation-mixer="clip:Flying" rotation="0 -25 0" sound="src: url(vogel.mp3); autoplay: true" loop=true animation="property: position; from: 15 5 -50; to: -5 3 10; dur: 4000; easing: linear; loop: true">></a-entity>
+
+
+    </a-scene>
+  </body>
+</html>
