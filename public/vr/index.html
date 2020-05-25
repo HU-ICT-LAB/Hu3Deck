@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    </head>
+    <body>
+        <a-scene>
+            <a-sky id="background" src="/assets/first.jpg" rotation="0 -130 0"></a-sky>
+      
+            <!-- Assets -->
+            <a-assets>
+                <a-asset-items id="bird" response-type="arraybuffer" src="/assets/scene.glb"></a-asset-items>
+            </a-assets>
+      
+            <!-- Camera -->
+            <a-entity position="0 0 0">
+              <a-camera></a-camera>
+            </a-entity>
+
+            <!-- Flying Bird -->
+            <a-entity gltf-model="#bird" scale="0.5 0.5 0.5" position="15 5 -50" animation-mixer="clip:Flying" rotation="0 -25 0" sound="src: url(/assets/vogel.mp3); autoplay: true; loop: true" loop=true animation="property: position; from: 15 5 -50; to: -5 3 10; dur: 4000; easing: linear; loop: true"></a-entity>
+      
+      
+          </a-scene>
+
+
+
+        
+        <script src="/socket.io/socket.io.js"></script>
+        
+        <script>
+            var socket = io();
+            socket.on('change background', (data) => {
+                console.log(data);
+                document.querySelector("#background").setAttribute('src', data.background_image);
+            });
+        </script>
+        <script src="/assets/web.js"></script>
+    </body>
+</html>

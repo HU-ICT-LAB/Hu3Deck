@@ -1,0 +1,68 @@
+<div class="col-md-6 ">
+    <div class="x_panel">
+       <div class="x_title">
+          <h2><i class="fa fa-wrench"></i> Session settings</h2>
+          
+          <div class="clearfix"></div>
+       </div>
+       <div class="x_content">
+        <form class="form-horizontal form-label-left" [formGroup]="session_form" (ngSubmit)="onSubmit(session_form.value)">
+            <div class="item form-group">
+               <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Name</label>
+               <div class="col-md-9 col-sm-9 ">
+                  <input disabled type="text" id="first-name" value="{{name}}" required="required" class="form-control ">
+               </div>
+            </div>
+            <div class="form-group row">
+
+                <label class="control-label col-md-3 col-sm-3 ">Scenes</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select class="form-control" formControlName="scene" name="scenes" id="">
+                        <option *ngFor="let scene of scenes" [value]="scene">{{ scene }}</option>
+                     </select>
+                </div>
+            </div>
+
+            <div class="ln_solid"></div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm12">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+          
+          </form>
+       </div>
+    </div>
+ </div>
+
+ <div class="col-md-6 ">
+    <div class="x_panel">
+       <div class="x_title">
+          <h2><i class="fa fa-heart"></i> Heart rate</h2>
+          
+          <div class="clearfix"></div>
+       </div>
+       <div class="x_content">
+
+       </div>
+    </div>
+ </div>
+ 
+ 
+ 
+ <div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+       <div class="x_title">
+          <h2><i class="fa fa-rocket"></i> Props</h2>
+          
+          <div class="clearfix"></div>
+       </div>
+       <div class="x_content" style="display: block;">
+          <br> 
+
+
+       </div>
+    </div>
+ </div>
+

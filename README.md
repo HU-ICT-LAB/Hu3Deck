@@ -1,2 +1,1 @@
-# Hu3Deck
-Hogeschool Utrecht 3D Holodeck
+# HU3Deck-backend
