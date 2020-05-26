@@ -1,41 +1,41 @@
-<div class="x_title">
-    <h2>Create Prop</h2>
-    <div class="clearfix"></div>
-</div>
-
-<div class="x_content">
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+       <div class="x_title">
+          <h2>Create Prop</h2>
+          <div class="clearfix"></div>
+          </div>
+        <div class="x_content" style="display: block;">
     <br>
     <form [formGroup]="createProp" (ngSubmit)="onSubmit(createProp.value)" id="create_prop" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
         <div class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align" for="prop-name">Prop Name <span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 ">
+            <div class="col-md-9 col-sm-9 ">
                 <input type="text" formControlName="propName" required="required" class="form-control ">
             </div>
         </div>
         <div class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align" for="model">Model <span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 ">
+            <div class="col-md-9 col-sm-9 ">
                 <input type="file" formControlName="model" required="required">
             </div>
         </div>
         <div class="item form-group">
             <label for="audio" class="col-form-label col-md-3 col-sm-3 label-align">Audio </label>
-            <div class="col-md-6 col-sm-6 ">
+            <div class="col-md-9 col-sm-9 ">
                 <input type="file" formControlName="audio">
             </div>
         </div>
         <div class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align">Animation Mixer </label>
-            <div class="col-md-6 col-sm-6 ">
+            <div class="col-md-9 col-sm-9 ">
                 <input formControlName="animationMixer" required="required" class="form-control" type="text">
             </div>
         </div>
         <div class="ln_solid"></div>
-        <div class="item form-group">
-            <div class="col-md-6 col-sm-6 offset-md-3">
+        <div class="col-md-9 col-sm-9">
                 <button class="btn btn-primary" type="button">Cancel</button>
                 <button type="submit" class="btn btn-success">Submit</button>
             </div>
-        </div>
     </form>
+</div>
 </div>
