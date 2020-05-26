@@ -1,0 +1,131 @@
+<div class="col-md-12 ">
+    <div class="x_panel">
+      <div class="x_title">
+        <h1>Assign 'ObjectName' to scene</h1>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <form class="form-horizontal" name="form1" [formGroup]="form1">
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="selectScene">Scene</label>
+            <select id="selectScene" class="form-control col-6" formControlName="selectScene" required="required">
+              <option value="scene1">Scene1</option>
+              <option value="scene2">Scene2</option>
+              <option value="scene3">Scene3</option>
+            </select>
+          </div>
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="duration">Duration</label>
+            <input type="number" id="duration" class="form-control col-6" formControlName="duration">
+          </div>
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="loop">Loop</label>
+            <input type="text" id="loop" class="form-control col-6" formControlName="loop">
+          </div>
+          <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="direction">Direction</label>
+            <input type="text" id="direction" class="form-control col-6" formControlName="direction">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 ">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Position</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <form class="form-horizontal" name="form2" [formGroup]="form2">
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="x-position-to">X-position</label>
+            <input type="number" id="xPosition" class="form-control" formControlName="xPosition">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="y-position-to">Y-position</label>
+            <input type="number" id="yPosition" class="form-control" formControlName="yPosition">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="z-position-to">Z-position</label>
+            <input type="number" id="zPosition" class="form-control" formControlName="zPosition">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 ">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Position to (optional)</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <form class="form-horizontal" name="form3" [formGroup]="form3">
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="xPositionTo">X-position</label>
+            <input type="number" id="xPositionTo" class="form-control" formControlName="xPositionTo">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="yPositionTo">Y-position</label>
+            <input type="number" id="yPositionTo" class="form-control" formControlName="yPositionTo">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="zPositionTo">Z-position</label>
+            <input type="number" id="zPositionTo" class="form-control" formControlName="zPositionTo">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 ">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Scale</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <form class="form-horizontal" name="form4" [formGroup]="form4">
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="xScale">X-scale</label>
+            <input type="number" id="xScale" class="form-control" formControlName="xScale">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="yScale">Y-scale</label>
+            <input type="number" id="yScale" class="form-control" formControlName="yScale">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="zScale">Z-scale</label>
+            <input type="number" id="zScale" class="form-control" formControlName="zScale">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 ">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Rotation</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <form class="form-horizontal" name="form5" [formGroup]="form5">
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="xRotation">X-rotation</label>
+            <input type="number" id="xRotation" class="form-control" formControlName="xRotation">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="yRotation">Y-rotation</label>
+            <input type="number" id="yRotation" class="form-control" formControlName="yRotation">
+          </div>
+          <div class="item form-group col-10">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="zRotation">Z-rotation</label>
+            <input type="number" id="zRotation" class="form-control" formControlName="zRotation">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary">Cancel</button>
+  <button class="btn btn-success" (click)="onSubmit(form1.value, form2.value, form3.value, form4.value, form5.value)">Save</button>
+  

@@ -13,4 +13,4 @@ To run the project, we use nodemon, I've added a command in the package.json to 
 Use `npm run dev` to run the project and make it so every change applied in the main.js will reload the project automatically.
 
 ## Develop Angular
-To develop the angular project, go to the public/angular folder and execute the `ng serve` command. Once you're done developing, you can recompile the project by going back by following the Build Angular step.
+To develop the angular project, go to the public/angular folder and execute the `ng serve` command. Once you're done developing, you can recompile the project by following the Build Angular step.

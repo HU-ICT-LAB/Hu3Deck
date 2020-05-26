@@ -1,0 +1,12 @@
+<div class="x-panel">
+    <h1>Create User</h1>
+  
+    <form class="form-horizontal form-label-left" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+      Name: <input type="text" name="Name" class="form-control input-width"><p>
+      Middlename: <input type="text" name="Middlename" class="form-control input-width"><p>
+      Lastname: <input type="text" name="Lastname" class="form-control input-width"><p>
+      Age: <input type="number" name="Age" class="form-control input-width"> <p>
+      <button name="cancel" class="btn btn-primary">Cancel</button>
+      <input type="submit" name="submit" value="Save" class="btn btn-success">
+    </form>
+  </div>
