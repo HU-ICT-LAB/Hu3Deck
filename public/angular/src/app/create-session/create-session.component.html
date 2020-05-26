@@ -1,0 +1,43 @@
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+       <div class="x_title">
+          <h2>Create Session</h2>
+          
+          <div class="clearfix"></div>
+       </div>
+       <div class="x_content" style="display: block;">
+          <br>
+          <form id="create-session" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" [formGroup]="updateSession" (ngSubmit)="onSubmit(updateSession.value)">
+             <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Session name:<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 ">
+                   <input type="text" id="session-name" name="session-name" class="form-control" formControlName="session_name">
+                </div>
+             </div>
+             <div class="session form-group">
+                <label for="scene" class="col-form-label col-md-3 col-sm-3 label-align">Scene:</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select class="form-control" formControlName="scene" name="" id="">
+                        <option *ngFor="let scene of scenes" [value]="scene">{{ scene }}</option>
+                    </select>
+                </div>
+             </div>
+            <div class="session form-group">
+                <label for="user" class="col-form-label col-md-3 col-sm-3 label-align">User:</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select class="form-control" formControlName="user" name="" id="">
+                        <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ln_solid"></div>
+            <div class="col-md-9 col-sm-9">
+                <button class="btn btn-primary" type="button">Cancel</button>
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+
+          </form>
+       </div>
+    </div>
+ </div>
