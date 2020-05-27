@@ -40,7 +40,7 @@ export class DashboardOverviewComponent implements OnInit {
     let data = [
       68,
       70,
-      75,
+      91,
       70,
       63,
       65,
