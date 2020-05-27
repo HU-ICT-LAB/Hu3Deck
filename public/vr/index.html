@@ -32,7 +32,7 @@
             var socket = io();
             socket.on('change background', (data) => {
                 console.log(data);
-                document.querySelector("#background").setAttribute('src', data.background_image);
+                document.querySelector("#background").setAttribute('src', "assets/" + data.background_image);
             });
         </script>
         <script src="/assets/web.js"></script>

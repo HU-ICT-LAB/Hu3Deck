@@ -36,9 +36,28 @@ app.get('/*', (req, res) => {
 io.on('connection', (s) => {
   console.log('a user connected');
   
-  s.on("change background", (data) => {
+  s.on("change scene", (data) => {
     console.log(data);
-    s.broadcast.emit('change background', data); 
+    //get data from database
+
+    //als test doe ik dit nu even, heeeeel sloppy
+    if(data['scene'] == "Scene 1") {
+      data['background_image'] = "first.jpg";
+    } else if(data['scene'] == "Scene 2") {
+      data['background_image'] = "second.jpg";
+    } else if(data['scene'] == "Scene 2") {
+      data['background_image'] = "second.jpg";
+    } else if(data['scene'] == "Scene 3") {
+      data['background_image'] = "third.jpg";
+    } else if(data['scene'] == "Scene 4") {
+      data['background_image'] = "fourth.jpg";
+    } else if(data['scene'] == "Scene 5") {
+      data['background_image'] = "fifth.jpg";
+    } else {
+      data['background_image'] = "first.jpg";
+    }
+
+    io.emit('change background', data); 
   });
   
 });
