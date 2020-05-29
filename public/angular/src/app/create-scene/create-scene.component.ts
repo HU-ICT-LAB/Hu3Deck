@@ -11,46 +11,17 @@ import { FormBuilder } from '@angular/forms';
 export class CreateSceneComponent implements OnInit {
   createScene;
   title:String;
-  backgroundImage;
 
 
   constructor(private formBuilder: FormBuilder) { 
     this.createScene = this.formBuilder.group({
-      title: '',
-      backgroundImage: ''
+      title: ''
     });
   }
 
   ngOnInit(): void {
   }
 
-  allowed = [
-    'Hond',
-    'Vogel',
-    'Zwarte bloem',
-    'Boom',
-    'Groene boom',
-    'Plant',
-    'Schaap'
-  ];
-
-  not_allowed = [
-    'Fortnite',
-    'Apple'
-  ];
-
- 
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
-    }
-  }
 
   onSubmit(data) {
     console.log(data);
