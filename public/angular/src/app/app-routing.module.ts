@@ -8,6 +8,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { AssignObjectComponent } from './assign-object/assign-object.component';
 
 const routes: Routes = [
+  {path: '', component: CreateSessionComponent},
   {path:'dashboard', component:DashboardOverviewComponent},
   {path: 'session',component: CreateSessionComponent},
   {path: 'create-prop', component: CreateObjectComponent},
