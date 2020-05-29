@@ -4,12 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { DashboardOverviewComponent } from './dashboard-overview/dashboard-overview.component';
 import { CreateSessionComponent } from './create-session/create-session.component';
 import { CreateObjectComponent } from './create-object/create-object.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { AssignObjectComponent } from './assign-object/assign-object.component';
+import { CreateSceneComponent } from './create-scene/create-scene.component';
 
 @NgModule({
   declarations: [
@@ -19,13 +23,15 @@ import { AssignObjectComponent } from './assign-object/assign-object.component';
     CreateObjectComponent,
     StatisticsComponent,
     CreateUserComponent,
-    AssignObjectComponent
+    AssignObjectComponent,
+    CreateSceneComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

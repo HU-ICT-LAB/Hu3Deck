@@ -6,6 +6,7 @@ import { CreateObjectComponent } from './create-object/create-object.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { AssignObjectComponent } from './assign-object/assign-object.component';
+import {CreateSceneComponent } from './create-scene/create-scene.component';
 
 const routes: Routes = [
   {path:'dashboard', component:DashboardOverviewComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'create-prop', component: CreateObjectComponent},
   {path:'statistics',component:StatisticsComponent},
   {path: 'create-user', component: CreateUserComponent},
-  {path: 'assign-object', component: AssignObjectComponent}
+  {path: 'assign-object', component: AssignObjectComponent},
+  {path: 'create-scene', component: CreateSceneComponent}
 ];
 
 @NgModule({
