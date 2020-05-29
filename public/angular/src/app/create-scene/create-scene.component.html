@@ -1,0 +1,67 @@
+<div class="x_title">
+  <h1>Create Scene</h1>
+  <div class="clearfix"></div>
+</div>
+
+
+<div class="x_panel">
+  <div class="x_content">
+    <div class="x_title">
+      <h2>Scene properties</h2>
+      <div class="clearfix"></div>
+    </div>
+    <form [formGroup]="createScene" (ngSubmit)="onSubmit(createScene.value)" id="create_Scene" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+      <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align" for="scene-name">Scene Name <span class="required">*</span></label>
+          <div class="col-md-6 col-sm-6 ">
+              <input type="text" formControlName="propName" required="required" class="form-control ">
+          </div>
+      </div>
+      <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align" for="backgroundImage">Background image <span class="required">*</span></label>
+          <div class="col-md-6 col-sm-6 ">
+              <input type="file" formControlName="model" required="required">
+          </div>
+      </div>
+      <div class="ln_solid"></div>
+      <div class="item form-group">
+          <div class="col-md-6 col-sm-6 offset-md-3">
+              <button class="btn btn-primary" type="button">Cancel</button>
+              <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+      </div>
+  </form>
+   
+  </div>
+</div>
+
+
+
+<!-- drag drop lists -->
+<div class="x_panel">
+    <div class="x_content">
+      <div class="x_title">
+        <h2>Assign objects</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-6">
+          <div class="drag-container">
+              <div class="section-heading">Allowed Objects</div>
+              <div cdkDropList #pendingList="cdkDropList" [cdkDropListData]="allowed" [cdkDropListConnectedTo]="[doneList]"
+                class="item-list" (cdkDropListDropped)="drop($event)">
+                <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item}}</div>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="drag-container">
+              <div class="section-heading">Not Allowed Objects</div>
+          
+              <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="not_allowed" [cdkDropListConnectedTo]="[pendingList]"
+                class="item-list" (cdkDropListDropped)="drop($event)">
+                <div class="item-box" *ngFor="let item of not_allowed" cdkDrag>{{item}}</div>
+              </div>
+            </div>
+      </div>
+    </div>
+</div>
