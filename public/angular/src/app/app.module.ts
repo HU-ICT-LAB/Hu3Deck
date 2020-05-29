@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 import { DashboardOverviewComponent } from './dashboard-overview/dashboard-overview.component';
 import { CreateSessionComponent } from './create-session/create-session.component';
