@@ -10,30 +10,52 @@
                 <div class="item form-group">
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Prop Type <span class="required">*</span></label>
                     <div class="col-md-9 col-sm-9 ">
-                        <select class="form-control" formControlName="propType" name="propType" id="">
+                        <select (change)="onChangePropType($event.target.value)" class="form-control" formControlName="propType" name="propType" id="">
                             <option *ngFor="let propType of propTypes" [value]="propType">{{ propType }}</option>
                          </select>
                     </div>
                 </div>
-                <div class="item form-group">
+                <div class="item form-group" *ngIf="propType == 'Model' || propType == 'Background'">
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="prop-name">Prop Name <span class="required">*</span></label>
                     <div class="col-md-9 col-sm-9 ">
                         <input type="text" formControlName="propName" required="required" class="form-control ">
                     </div>
                 </div>
-                <div class="item form-group">
+                <div class="item form-group" *ngIf="propType == 'Background'">
+                    <label for="backgroundImage" class="col-form-label col-md-3 col-sm-3 label-align">Background Image <span class="required">*</span></label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <div class="custom-file">
+                            <input type="file" (change)="onChangeBG($event.target.value)" formControlName="backgroundImage" required="required" class="custom-file-input" id="customFileLang">
+                            <label class="custom-file-label" for="customFileLang">{{ backgroundImage }}</label>
+                          </div>
+                    </div>
+                </div>
+                <div class="item form-group" *ngIf="propType == 'Model'">
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="model">Model <span class="required">*</span></label>
                     <div class="col-md-9 col-sm-9 ">
-                        <input type="file" formControlName="model" required="required">
+                        <div class="custom-file">
+                            <input type="file" (change)="onChangeModel($event.target.value)" formControlName="model" required="required" class="custom-file-input" id="customFileLang">
+                            <label class="custom-file-label" for="customFileLang">{{ model }}</label>
+                          </div>
                     </div>
                 </div>
-                <div class="item form-group">
+                <div class="item form-group" *ngIf="propType == 'Model' || propType == 'Background'">
                     <label for="audio" class="col-form-label col-md-3 col-sm-3 label-align">Audio </label>
                     <div class="col-md-9 col-sm-9 ">
-                        <input type="file" formControlName="audio">
+                        <div class="custom-file">
+                            <input type="file" (change)="onChangeAudio($event.target.value)" value="" formControlName="audio" class="custom-file-input" id="customFileLang" >
+                            <label class="custom-file-label" for="customFileLang">{{ audio }}</label>
+                          </div>                
                     </div>
                 </div>
-                <div class="item form-group">
+                <div class="item form-group" *ngIf="audio != undefined">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <label for="customRange1">Volume</label>
+                        <input type="range" formControlName="volume" class="custom-range" id="customRange1">
+                    </div>
+                </div>
+                <div class="item form-group" *ngIf="propType == 'Model'">
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Animation Mixer </label>
                     <div class="col-md-9 col-sm-9 ">
                         <input formControlName="animationMixer" required="required" class="form-control" type="text">
@@ -42,7 +64,7 @@
                 <div class="ln_solid"></div>
                 <div class="col-md-9 col-sm-9">
                     <button class="btn btn-primary" type="button">Cancel</button>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </form>
     </div>

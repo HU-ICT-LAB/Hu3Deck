@@ -4,32 +4,75 @@ import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-create-object',
   templateUrl: './create-object.component.html',
-  styleUrls: ['./create-object.component.css']
+  styleUrls: ['./create-object.component.css'],
 })
 export class CreateObjectComponent implements OnInit {
   createProp;
-  propTypes = [];
+  selectedValue
+  propTypes = ['Model', 'Background'];
   propName;
-  model;
+  propType;
   audio;
+  model;
   animationMixer;
+  backgroundImage;
 
   constructor(private formBuilder: FormBuilder) {
-    this.propTypes = ['Model', 'Background-Image'];
-
-    this.createProp = this.formBuilder.group({
-      propName: '',
-      propType: '',
-      model: '',
-      audio: '',
-      animationMixer: ''
-    });
   }
 
   ngOnInit(): void {
+    console.log(this.audio);
+    this.createProp = this.formBuilder.group(
+      {
+      propType: '',
+    });
+  } 
+
+  onChangePropType(propTypeValue) {
+    this.audio = undefined;
+    this.propType = propTypeValue;
+    if(propTypeValue == 'Model'){
+      this.createProp = this.formBuilder.group(
+        {
+        propName: '',
+        propType: propTypeValue,
+        model: '',
+        audio: '',
+        volume: '',
+        animationMixer: ''
+      });
+    }
+    else if(propTypeValue == 'Background') {
+      this.createProp = this.formBuilder.group(
+        {
+        propName: '',
+        propType: propTypeValue,
+        backgroundImage: '',
+        audio: '',
+        volume: ''
+      });
+    }
   }
 
-  onSubmit(data) {
+  onChangeAudio(fileValue) {
+    if(fileValue != undefined){
+      this.audio = fileValue;
+    }
+  }
+
+  onChangeModel(fileValue) {
+    if(fileValue != undefined){
+      this.model = fileValue;
+    }
+  }
+
+  onChangeBG(fileValue) {
+    if(fileValue != undefined) {
+      this.backgroundImage = fileValue;
+    }
+  }
+
+  onSubmit(data){
     console.log(data);
   }
 }
