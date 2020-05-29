@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { WebSocketService } from '../web-socket.service';
 import { Chart } from 'chart.js';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+
+
 
 @Component({
   selector: 'app-dashboard-overview',
@@ -13,6 +16,21 @@ export class DashboardOverviewComponent implements OnInit {
   session_form;
   heartRateChart;
   name: string = "Example";
+
+  allowed = [
+    'Hond',
+    'Vogel',
+    'Zwarte bloem',
+    'Boom',
+    'Groene boom',
+    'Plant',
+    'Schaap'
+  ];
+
+  not_allowed = [
+    'Fortnite',
+    'Apple'
+  ];
 
 
   constructor(private formBuilder: FormBuilder, private webSocketService: WebSocketService) {
@@ -73,6 +91,19 @@ export class DashboardOverviewComponent implements OnInit {
       }
 			}
     });     
+  }
+
+
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event.container['data'])
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
   }
 
 }
