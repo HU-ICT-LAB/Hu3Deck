@@ -8,14 +8,18 @@ import { FormBuilder } from '@angular/forms';
 })
 export class CreateObjectComponent implements OnInit {
   createProp;
+  propTypes = [];
   propName;
   model;
   audio;
   animationMixer;
 
   constructor(private formBuilder: FormBuilder) {
+    this.propTypes = ['Model', 'Background-Image'];
+
     this.createProp = this.formBuilder.group({
       propName: '',
+      propType: '',
       model: '',
       audio: '',
       animationMixer: ''

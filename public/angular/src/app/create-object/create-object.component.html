@@ -8,6 +8,14 @@
             <br>
             <form [formGroup]="createProp" (ngSubmit)="onSubmit(createProp.value)" id="create_prop" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
                 <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">Prop Type <span class="required">*</span></label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <select class="form-control" formControlName="propType" name="propType" id="">
+                            <option *ngFor="let propType of propTypes" [value]="propType">{{ propType }}</option>
+                         </select>
+                    </div>
+                </div>
+                <div class="item form-group">
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="prop-name">Prop Name <span class="required">*</span></label>
                     <div class="col-md-9 col-sm-9 ">
                         <input type="text" formControlName="propName" required="required" class="form-control ">
