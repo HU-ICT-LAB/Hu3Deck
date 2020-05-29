@@ -31,7 +31,7 @@ import { CreateSceneComponent } from './create-scene/create-scene.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    DragDropModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
