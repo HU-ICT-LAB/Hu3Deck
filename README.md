@@ -10,11 +10,11 @@
   - Navigate to the project root using a terminal
   - To install the required dependencies execute the following
   - In `/` do `npm install`
-  - In `/public/angular` do `npm install`
+  - In `/frontend/angular` do `npm install`
   - To build the project execute the following
-  - in `/public/angular` do `npm run build`
+  - in `/frontend/angular` do `npm run build`
   - To run the project execute the following
   - in `/` do `npm run dev`
 
 ## Developing in Angular
-To develop the angular project, go to the `public/angular` folder and execute the `ng serve` command. Once you're done developing, you can recompile the project by following the Build Angular step.
+To develop the angular project, go to the `frontend/angular` folder and execute the `ng serve` command. Once you're done developing, you can recompile the project by following the Build Angular step.
