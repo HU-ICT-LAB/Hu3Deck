@@ -16,7 +16,6 @@ export default function makeCreateSession({ sessionDb, userDb }) {
         // }
 
         
-        // console.log("createSession: ", session);
         echo(__filename + thisLine(), session);
 
         //if user doesnt exist, make a new user in the database using the data given.

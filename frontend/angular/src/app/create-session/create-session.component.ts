@@ -11,7 +11,7 @@ export class CreateSessionComponent implements OnInit {
     first_name: string = '';
     middle_name: string = '';
     last_name: string = '';
-    age: int = 0;
+    age: 0;
     scenes = [];
     users = [];
     updateSession;
