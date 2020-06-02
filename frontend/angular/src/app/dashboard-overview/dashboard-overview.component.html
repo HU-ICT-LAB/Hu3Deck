@@ -30,7 +30,7 @@
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </div>
-          
+            <div><mat-slider></mat-slider></div>
           </form>
        </div>
     </div>
@@ -59,7 +59,25 @@
           <div class="clearfix"></div>
        </div>
        <div class="x_content" style="display: block;">
-          <br> 
+         <div class="col-md-6">
+            <div class="drag-container">
+                <div class="section-heading">Allowed Objects</div>
+                <div cdkDropList #AllowedList="cdkDropList" [cdkDropListData]="allowed" [cdkDropListConnectedTo]="[notAllowedList]"
+                  class="item-list" (cdkDropListDropped)="drop($event)">
+                  <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="drag-container">
+                <div class="section-heading">Not Allowed Objects</div>
+  
+                <div cdkDropList #notAllowedList="cdkDropList" [cdkDropListData]="not_allowed" [cdkDropListConnectedTo]="[AllowedList]"
+                  class="item-list" (cdkDropListDropped)="drop($event)">
+                  <div class="item-box" *ngFor="let item of not_allowed" cdkDrag>{{item}}</div>
+                </div>
+              </div>
+        </div>
 
 
        </div>
