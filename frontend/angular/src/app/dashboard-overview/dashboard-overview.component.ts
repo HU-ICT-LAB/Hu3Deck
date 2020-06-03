@@ -2,7 +2,7 @@ import { ElementRef, ViewEncapsulation,  ViewChild, AfterViewInit, Component, On
 import { FormBuilder } from '@angular/forms';
 import { WebSocketService } from '../web-socket.service';
 import { Chart } from 'chart.js';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle } from '@angular/cdk/drag-drop';
 
 
 
@@ -22,8 +22,6 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
   name: string = "Example";
 
   hidden = [
-    'Fortnite',
-    'Apple',
     'Hond',
     'Vogel',
     'Zwarte bloem',
@@ -34,14 +32,18 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
   ];
 
   shown = [
-   
+    'Fortnite',
+    'Apple',
+    'koe',
+    'nog iets',
+    'android',
+    'laptop'
   ];
 
   @ViewChild('sliders') sliders: ElementRef;
 
 
   ngAfterViewInit() {
-    console.log(this.sliders.nativeElement.innerHTML);
   }
 
   constructor(private formBuilder: FormBuilder, private webSocketService: WebSocketService) {
@@ -57,7 +59,23 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
       scene: ''
     });
 
+
+    this.shown.forEach(obj =>{
+      setTimeout(() =>{
+        console.log(obj);
+        this.propSlider(obj);
+      }, 1000)
+     
+    })
+
+
+
+ 
+
   }
+
+
+
 
   onSubmit(data) {
 
@@ -74,6 +92,8 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
       63,
       65,
     ];
+
+
 
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
@@ -118,31 +138,38 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
         event.previousIndex,
         event.currentIndex);
     }
-
     if (event.container.id == 'cdk-drop-list-1' && event.previousContainer.id == 'cdk-drop-list-0') {
-      var div = document.createElement("div");
-      var input = document.createElement("input");
-      var title = document.createElement("p");
-
-      div.setAttribute('class', 'volume-prop')
-      div.setAttribute('id', event.item.element.nativeElement.innerHTML)
-      input.setAttribute('type', 'range')
-      input.setAttribute('name', event.item.element.nativeElement.innerHTML)
-      title.innerHTML = event.item.element.nativeElement.innerHTML;
-
-      div.appendChild(title);
-      div.appendChild(input);
-      this.sliders.nativeElement.appendChild(div);
-
-
-
-    }
-    else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
+    this.propSlider(event.item.element.nativeElement.innerHTML);
+    } else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
       console.log(this);
       (<HTMLInputElement>document.getElementById(event.item.element.nativeElement.innerHTML)).remove();
     }
 
   }
+
+
+
+
+  propSlider(prop){
+    
+      var div = document.createElement("div");
+      var input = document.createElement("input");
+      var title = document.createElement("p");
+    
+      div.setAttribute('id', prop)
+      input.setAttribute('name', prop)
+      title.innerHTML = prop;
+      div.setAttribute('class', 'volume-prop')
+      input.setAttribute('type', 'range')
+
+
+      div.appendChild(title);
+      div.appendChild(input);
+      this.sliders.nativeElement.appendChild(div);
+
+  }
+
+
 
 
 }
