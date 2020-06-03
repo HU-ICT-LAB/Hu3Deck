@@ -16,6 +16,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { AssignObjectComponent } from './assign-object/assign-object.component';
 import { CreateSceneComponent } from './create-scene/create-scene.component';
+import { WebhookComponent } from './webhook/webhook.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CreateSceneComponent } from './create-scene/create-scene.component';
     StatisticsComponent,
     CreateUserComponent,
     AssignObjectComponent,
-    CreateSceneComponent
+    CreateSceneComponent,
+    WebhookComponent
   ],
   imports: [
     BrowserModule,
