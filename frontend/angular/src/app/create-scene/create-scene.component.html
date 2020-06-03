@@ -1,16 +1,14 @@
-<div class="x_title">
-    <h1>Create Scene</h1>
-    <div class="clearfix"></div>
-  </div>
-  
-  
-  <div class="x_panel">
-    <div class="x_content">
-      <div class="x_title">
-        <h2>Scene properties</h2>
-        <div class="clearfix"></div>
-      </div>
-      <form [formGroup]="createScene" (ngSubmit)="onSubmit(createScene.value)" id="create_Scene" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+
+
+  <div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Create Scene</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content" style="display: block;">
+            <br>
+            <form [formGroup]="createScene" (ngSubmit)="onSubmit(createScene.value)" id="create_Scene" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
         <div class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align" for="scene-name">Scene Name <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 ">
@@ -20,11 +18,11 @@
   
         <div class="ln_solid"></div>
         <div class="item form-group">
-            <div class="col-md-6 col-sm-6 offset-md-3">
+            <div class="col-md-6 col-sm-6">
                 <button class="btn btn-primary" type="button">Cancel</button>
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Create</button>
             </div>
         </div>
     </form>
     </div>
-  </div>
+</div>
