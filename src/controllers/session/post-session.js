@@ -11,8 +11,6 @@ export default function makePostSession({ createSession }) {
                 ...data
             });
 
-            console.log("post-session: ", createdSession);
-
             return {
                 headers,
                 statusCode: 200,

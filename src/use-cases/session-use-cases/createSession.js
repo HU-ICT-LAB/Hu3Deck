@@ -1,33 +1,43 @@
-import { makeSession, makeUser } from './../../entities/';
-export default function makeCreateSession({ sessionDb, userDb }) {
+import { makeSession } from './../../entities/';
+export default function makeCreateSession({ sessionDb, userDb, sceneDb }) {
     return async function(requestData) {        
-        console.log("createSession: ", requestData);
-
         const session = makeSession({...requestData});
-        const exists = sessionDb.findById({
+        
+        //Check if the session already exists.
+        const sessionExists = await sessionDb.findById({
             id: session.getId()
         });
+
+        if(Object.keys(sessionExists).length > 0) {
+            throw new Error("Session already exists.");
+        }
+
+
+        //check if the user exists.
+        const userExists = await userDb.findById({
+            id: session.getUserId()
+        });
         
+        if(Object.keys(userExists).length < 1) {
+            throw new Error("User doesnt exist.");
+        }
 
-
-        //Comment back in when database has been implemented.
-        // if(Object.keys(exists).length > 0) {
-        //     return exists;
-        // }
-
-        
-        echo(__filename + thisLine(), session);
-
-        //if user doesnt exist, make a new user in the database using the data given.
-        //if user already exists, use the id to create a session.
 
         //check if the scene exists.
+        const sceneExists = await sceneDb.findById({
+            id: session.getSceneId()
+        });
 
+        
+        if(Object.keys(sceneExists).length < 1) {
+            throw new Error("Scene doesnt exist.");
+        }
 
 
 
         //create function still needs to be implemented.
         return sessionDb.create({
+            id: session.getId(),
             name: session.getName(),
             user_id: session.getUserId(),
             scene_id: session.getSceneId(),

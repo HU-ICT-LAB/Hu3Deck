@@ -1,7 +1,7 @@
 export default function createMakeHeartbeat({uid}) {
     return function makeHeartbeat({
         id = uid(),
-        measurement_date = Date.now(),
+        measurement_date = new Date,
         bpm,
         sessionId
     }) {
