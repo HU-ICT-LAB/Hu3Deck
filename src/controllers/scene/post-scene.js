@@ -6,6 +6,8 @@ export default function makePostScene({ createScene }) {
 
         try {
             const {...data } = httpRequest.body
+
+            echo(__filename + thisLine(), httpRequest);
             
             const createdScene = await createScene({
                 ...data

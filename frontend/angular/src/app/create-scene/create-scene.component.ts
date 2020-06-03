@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 
 @Component({
@@ -26,7 +26,18 @@ export class CreateSceneComponent implements OnInit {
 
   onSubmit(data) {
 
-    //this.http.post('http://localhost/scenes/create', JSON.stringify(data));
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+
+    const body = new HttpParams().set('title', data.title);
+
+    this.http.post('http://localhost:3000/scenes/create', body.toString(), options).subscribe(dataa => {
+      console.log(dataa);
+    }, response => {
+      console.log(response);
+    });
     console.log(data);
   }
 
