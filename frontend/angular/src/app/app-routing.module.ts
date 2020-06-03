@@ -11,10 +11,8 @@ import { CreateSceneComponent }       from './create-scene/create-scene.componen
 const routes: Routes = [
   {path: '', component: CreateSessionComponent},
   {path:'dashboard/:sessionid', component:DashboardOverviewComponent},
-  {path: 'session',component: CreateSessionComponent},
   {path: 'create-prop', component: CreateObjectComponent},
   {path:'statistics',component:StatisticsComponent},
-  {path: 'create-user', component: CreateUserComponent},
   {path: 'assign-object', component: AssignObjectComponent},
   {path: 'create-scene', component: CreateSceneComponent}
 ];
