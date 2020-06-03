@@ -1,7 +1,8 @@
 export default function makeListSession({ getSessions }) {
     return async function listSession(httpRequest) {
         const headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            
         };
 
         try {
