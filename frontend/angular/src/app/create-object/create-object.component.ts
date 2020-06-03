@@ -9,33 +9,14 @@ import { FormBuilder } from '@angular/forms';
 export class CreateObjectComponent implements OnInit {
   createProp;
   propTypes = ['Model', 'Background'];
-  propName;
-  propType;
-  audio;
-  volume = 50;
-  model;
-  animationMixer;
-  backgroundImage;
-  movement;
   movements = ['Stationary', 'Linear', 'Rotation'];
-  xScale;
-  yScale;
-  zScale;
-  xPosition;
-  yPosition;
-  zPosition;
-  xToPosition;
-  yToPosition;
-  zToPosition;
-  xOuterPosition;
-  yOuterPosition;
-  zOuterPosition;
-  duration;
-  loop;
-  easing;
-  xRotation;
-  yRotation;
-  zRotation;
+  propType;
+  movement;
+  volume = 50;
+  model: File = null;
+  audio: File = null;
+  backgroundImage: File = null;
+
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -45,7 +26,7 @@ export class CreateObjectComponent implements OnInit {
       {
         propType:'',
         propName:'',
-        model:'',
+        model: '',
         audio: '',
         volume:50,
         animationMixer:'',
@@ -55,7 +36,7 @@ export class CreateObjectComponent implements OnInit {
         xRotation:0,
         yRotation:0,
         zRotation:0,
-        backgroundImage:'',
+        backgroundImage: '',
         movement:'',
         xPosition:0,
         yPosition:0,
