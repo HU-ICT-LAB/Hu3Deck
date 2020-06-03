@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatSliderModule} from '@angular/material/slider';
 
 import { DashboardOverviewComponent } from './dashboard-overview/dashboard-overview.component';
 import { CreateSessionComponent } from './create-session/create-session.component';
@@ -33,7 +32,7 @@ import { CreateSceneComponent } from './create-scene/create-scene.component';
     ReactiveFormsModule,
     AppRoutingModule,
     DragDropModule,
-    MatSliderModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
