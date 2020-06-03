@@ -32,7 +32,7 @@ export default function makeSessionDb({ getDbInstance }) {
 
         const query = {
             name: 'findSessionById',
-            text: 'SELECT * FROM session WHERE id = $1',
+            text: 'SELECT * FROM session WHERE id = $1 AND date_ended IS NULL',
             values: [_id],
         };
 

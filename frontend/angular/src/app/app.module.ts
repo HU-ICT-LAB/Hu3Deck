@@ -16,6 +16,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { AssignObjectComponent } from './assign-object/assign-object.component';
 import { CreateSceneComponent } from './create-scene/create-scene.component';
+import { ConstantsService } from './constants.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { CreateSceneComponent } from './create-scene/create-scene.component';
     DragDropModule,
     MatSliderModule
   ],
-  providers: [],
+  providers: [ConstantsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

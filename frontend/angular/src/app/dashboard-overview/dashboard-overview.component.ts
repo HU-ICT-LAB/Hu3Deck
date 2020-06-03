@@ -5,6 +5,7 @@ import { Chart } from 'chart.js';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ConstantsService } from '../constants.service';
 
 
 
@@ -34,25 +35,28 @@ export class DashboardOverviewComponent implements OnInit {
     'Apple'
   ];
 
+  
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private _constant: ConstantsService) {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
-    let response = this.http.get("http://localhost:3000/session/" + sessionid).subscribe((v) => {
-      if(Object.keys(v).length < 1) {
-        location.href = '/';
-      }
-    });
+    
+    this.http.get(_constant.apiLocation + "/sessions/" + sessionid).subscribe(data => {
+        if(Object.keys(data).length < 1) {
+          location.href = '/';
+          return;
+        }
+
+        this.name = data['name'];
+      });
+
+    this.http.get(_constant.apiLocation + "/scenes").subscribe(data => {
+        this.scenes = Object.values(data);
+        console.log(data);
+        console.log(this.scenes[0].title);
+    });  
 
 
-    this.scenes = [
-      "Scene 1",
-      "Scene 2",
-      "Scene 3",
-      "Scene 4",
-      "Scene 5",
-    ];
-
-    this.session_form = this.formBuilder.group({
+      this.session_form = this.formBuilder.group({
       scene: ''
     });
 
