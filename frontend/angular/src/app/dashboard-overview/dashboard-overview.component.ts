@@ -23,6 +23,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
   session_form;
   heartRateChart;
   name: string = "Example";
+  sceneId;
 
   hidden = [
     'Hond',
@@ -50,11 +51,20 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute) {
+    var sceneId = 'a';
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
-    let response = this.http.get("http://localhost:3000/session/" + sessionid).subscribe((v) => {
+    this.http.get("http://localhost:3000/session/" + sessionid).subscribe((v) => {
       if(Object.keys(v).length < 1) {
         location.href = '/';
       }
+      console.log(v["scene_id"])
+      sceneId = v["scene_id"];
+    });
+
+    console.log(this.sceneId);
+
+    this.http.get("http://localhost:3000/scene/" + sceneId + "/props").subscribe((v) => {
+        console.log(v);
     });
 
 
@@ -73,7 +83,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
 
     this.shown.forEach(obj =>{
       setTimeout(() =>{
-        console.log(obj);
+        // console.log(obj);
         this.propSlider(obj);
       }, 1000)
      
@@ -157,7 +167,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
     if (event.container.id == 'cdk-drop-list-1' && event.previousContainer.id == 'cdk-drop-list-0') {
     this.propSlider(event.item.element.nativeElement.innerHTML);
     } else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
-      console.log(this);
+      // console.log(this);
       (<HTMLInputElement>document.getElementById(event.item.element.nativeElement.innerHTML)).remove();
     }
 
