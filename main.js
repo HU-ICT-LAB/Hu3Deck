@@ -18,11 +18,13 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 
 import expressAdapter from './src/express-callback'; 
 import { listSessions, postSession }  from './src/controllers/session/';
+import { postScene }  from './src/controllers/scene/';
 
 app.use(express.static(process.cwd() + "/frontend/angular/dist/HU3Deck"));
 app.use(express.static(process.cwd() + "/frontend/vr"));
@@ -32,7 +34,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/session/:id', expressAdapter(listSessions));
 app.post('/session/create', expressAdapter(postSession));
 
-
+//scene
+app.post('/scenes/create', expressAdapter(postScene));
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(__dirname + "/frontend/vr/index.html");

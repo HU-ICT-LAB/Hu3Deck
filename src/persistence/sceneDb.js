@@ -41,9 +41,22 @@ export default function makeSceneDb({ getDbInstance }) {
     }
 
     async function create({...data}) {
-        
+        let conn = await getDbInstance();
+        const query = {
+            name: 'createScene',
+            text: 'INSERT INTO scene (id, title) VALUES ($1, $2)',
+            values: [data.id, data.title]
+        };
 
-        return {};
+        let response = [];
+
+        await conn.query(query).then((res) => {
+            response = res.rows;
+        });
+
+        echo(__filename + thisLine(), response);
+
+        return {...data};
     }
 
     async function remove({id: _id}) {
