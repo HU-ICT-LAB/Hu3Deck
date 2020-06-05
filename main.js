@@ -23,19 +23,27 @@ require('dotenv').config();
 
 
 import expressAdapter from './src/express-callback'; 
-import { listSessions, postSession }  from './src/controllers/session/';
-import { postScene }  from './src/controllers/scene/';
+
+import { listSessions, postSession }  from './src/controllers/session';
+import { postScene, listAllScenes } from './src/controllers/scene';
+import { listAllUsers, postUser } from './src/controllers/user';
 
 app.use(express.static(process.cwd() + "/frontend/angular/dist/HU3Deck"));
 app.use(express.static(process.cwd() + "/frontend/vr"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //session
-app.get('/session/:id', expressAdapter(listSessions));
-app.post('/session/create', expressAdapter(postSession));
+app.get('/sessions/:id', expressAdapter(listSessions));
+app.post('/sessions/create', expressAdapter(postSession));
 
 //scene
+app.get('/scenes', expressAdapter(listAllScenes));
 app.post('/scenes/create', expressAdapter(postScene));
+
+//user
+app.get('/users', expressAdapter(listAllUsers));
+app.post('/users/create', expressAdapter(postUser));
+
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(__dirname + "/frontend/vr/index.html");

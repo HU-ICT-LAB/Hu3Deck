@@ -5,6 +5,7 @@ import { Chart } from 'chart.js';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ConstantsService } from '../constants.service';
 
 
 
@@ -22,7 +23,9 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
   scenes = [];
   session_form;
   heartRateChart;
-  name: string = "Example";
+  // name: string = "Example";
+
+  defaultSelected;
 
   hidden = [
     'Hond',
@@ -43,30 +46,30 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
     'laptop'
   ];
 
+  sessionData;
+  
   @ViewChild('sliders') sliders: ElementRef;
 
-
-  ngAfterViewInit() {
-  }
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private _constant: ConstantsService) {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
-    let response = this.http.get("http://localhost:3000/session/" + sessionid).subscribe((v) => {
-      if(Object.keys(v).length < 1) {
-        location.href = '/';
-      }
-    });
+    this.sessionData = {name: '', id:'', scene_id: ''};
+    
+    this.http.get(_constant.apiLocation + "/sessions/" + sessionid).subscribe(data => {
+        if(Object.keys(data).length < 1) {
+          location.href = '/';
+          return;
+        }
+
+        this.defaultSelected = data['scene_id'];
+        this.sessionData = data;
+      });
+
+    this.http.get(_constant.apiLocation + "/scenes").subscribe(data => {
+        this.scenes = Object.values(data);
+    });  
 
 
-    this.scenes = [
-      "Scene 1",
-      "Scene 2",
-      "Scene 3",
-      "Scene 4",
-      "Scene 5",
-    ];
-    console.log(document);
-    this.session_form = this.formBuilder.group({
+      this.session_form = this.formBuilder.group({
       scene: ''
     });
 
@@ -79,23 +82,13 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
      
     })
 
+   onSubmit(data) {
 
+    console.log(data);
 
-
- 
-
-  }
-
-
-
-
-  onSubmit(data) {
-
-    // this.webSocketService.emit('change scene', data);
-    // console.log(data);
-  }
 
       // this.webSocketService.emit('change scene', data);
+   }
 
 
   ngOnInit(): void {

@@ -8,11 +8,27 @@ export default function makeUserDb({ getDbInstance }) {
     });
 
     async function findAll() {
+        let conn = await getDbInstance();
+
+        const query = {
+            name: 'findSceneById',
+            text: 'SELECT * FROM public.user',
+            values: [],
+        };
+
+        let response = [];
+        
+        await conn.query(query).then((res) => {
+            response = res.rows;
+            conn.end();
+        });
 
 
-        return [
-            
-        ];
+        if(response.length > 0) {
+            return response;
+        }
+
+        return {};
     }
 
     async function findById({id: _id}) {
@@ -28,6 +44,7 @@ export default function makeUserDb({ getDbInstance }) {
         
         await conn.query(query).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
 
@@ -39,9 +56,24 @@ export default function makeUserDb({ getDbInstance }) {
     }
 
     async function create({...data}) {
+        let conn = await getDbInstance();
         
+        const query = {
+            name: 'createUser',
+            text: 'INSERT INTO public.user (id, name, middlename, lastname, age, date_added) VALUES ($1, $2, $3, $4, $5, $6)',
+            values: [data.id, data.firstname, data.middlename, data.lastname, data.age, data.date_added],
+        };
 
-        return {};
+        let response = [];
+
+        await conn.query(query).then((res) => {
+            response = res.rows;
+            conn.end();
+        });
+
+        echo(__filename + thisLine(), response);
+
+        return {...data};
     }
 
     async function remove({id: _id}) {

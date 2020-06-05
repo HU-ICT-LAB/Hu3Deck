@@ -8,16 +8,33 @@ export default function makeSceneDb({ getDbInstance }) {
     });
 
     async function findAll() {
+        let conn = await getDbInstance();
+
+        const query = {
+            name: 'findAllScenes',
+            text: 'SELECT * FROM scene',
+            values: [],
+        };
+
+        let response = [];
+        
+        await conn.query(query).then((res) => {
+            response = res.rows;
+            conn.end();
+        });
 
 
-        return [
-            
-        ];
+        if(response.length > 0) {
+            return response;
+        }
+
+
+        return [];
     }
 
     async function findById({id: _id}) {
         let conn = await getDbInstance();
-        echo(__filename + thisLine(), _id);
+        //echo(__filename + thisLine(), _id);
 
         const query = {
             name: 'findSceneById',
@@ -29,6 +46,7 @@ export default function makeSceneDb({ getDbInstance }) {
         
         await conn.query(query).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
 

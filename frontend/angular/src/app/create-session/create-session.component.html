@@ -19,32 +19,31 @@
                 <label for="scene" class="col-form-label col-md-3 col-sm-3 label-align">Scene</label>
                 <div class="col-md-9 col-sm-9 ">
                     <select class="form-control" formControlName="scene" name="" id="">
-                        <option *ngFor="let scene of scenes" [value]="scene">{{ scene }}</option>
+                        <option *ngFor="let scene of scenes" [value]="scene.id">{{ scene.title }}</option>
                     </select>
                 </div>
              </div>
 
-             <div class="item form-group">
+            <div class="item form-group">
                 <div class="col-md-9 col-sm-9 ">
-
                     <div class="radio">
-                    <label>
-                    <input type="radio" value="existingUser" id="optionsRadios1" name="optionsRadios" (click)="setradio('existingUser')"  [checked]='true'> Existing user
-                    </label>
+                        <label>
+                            <input type="radio" value="existingUser" id="optionsRadios1" name="optionsRadios" (click)="setradio('existingUser')"  [checked]='true'> Existing user
+                        </label>
                     </div>
                     <div class="radio">
-                    <label>
-                    <input type="radio" value="newUser" id="optionsRadios2" name="optionsRadios" (click)="setradio('newUser')"> New user
-                    </label>
-                    </div>
+                        <label>
+                            <input type="radio" value="newUser" id="optionsRadios2" name="optionsRadios" (click)="setradio('newUser')"> New user
+                        </label>
                     </div>
                 </div>
+            </div>
 
             <div class="session form-group" *ngIf="isSelected('existingUser')">
                 <label for="user" class="col-form-label col-md-3 col-sm-3 label-align">User</label>
                 <div class="col-md-9 col-sm-9 ">
                     <select class="form-control" formControlName="user" name="" id="">
-                        <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+                        <option *ngFor="let user of users" [value]="user.id">{{ user.name + " " }}{{ (user.middlename == null) ? "" : user.middlename + " " }} {{ user.lastname }}</option>
                     </select>
                 </div>
             </div>

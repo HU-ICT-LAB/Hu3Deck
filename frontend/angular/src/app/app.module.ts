@@ -15,6 +15,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { AssignObjectComponent } from './assign-object/assign-object.component';
 import { CreateSceneComponent } from './create-scene/create-scene.component';
+import { ConstantsService } from './constants.service';
 import { WebhookComponent } from './webhook/webhook.component';
 
 @NgModule({
@@ -38,7 +39,7 @@ import { WebhookComponent } from './webhook/webhook.component';
     DragDropModule,
     
   ],
-  providers: [],
+  providers: [ConstantsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -32,7 +32,7 @@ export default function makeSessionDb({ getDbInstance }) {
 
         const query = {
             name: 'findSessionById',
-            text: 'SELECT * FROM session WHERE id = $1',
+            text: 'SELECT * FROM session WHERE id = $1 AND date_ended IS NULL',
             values: [_id],
         };
 
@@ -40,6 +40,7 @@ export default function makeSessionDb({ getDbInstance }) {
         
         await conn.query(query).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
         if(response.length > 0) {
@@ -62,6 +63,7 @@ export default function makeSessionDb({ getDbInstance }) {
 
         await conn.query(query).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
         echo(__filename + thisLine(), response);

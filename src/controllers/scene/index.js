@@ -1,13 +1,14 @@
 import makePostScene from './post-scene';
+import makeListAllScenes from './list-all-scenes';
 
-import {createScene} from '../../use-cases/scene-use-cases';
+import { getAllScenes, createScene } from './../../use-cases/scene-use-cases/';
 
-
+const listAllScenes = makeListAllScenes({ getAllScenes });
 const postScene = makePostScene({ createScene })
 
 const sceneController = Object.freeze({
     postScene
+    listAllScenes
 });
-
 export default sceneController;
-export { postScene };
+export { postScene, listAllScenes };
