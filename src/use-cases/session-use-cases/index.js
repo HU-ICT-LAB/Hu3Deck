@@ -1,4 +1,4 @@
-import { sessionDb } from '../../persistence';
+import { sessionDb, userDb, sceneDb } from '../../persistence';
 import makeGetSession from './getSession';
 import makeUpdateSession from './updateSession';
 import makeCreateSession from './createSession';
@@ -6,7 +6,7 @@ import makeCreateSession from './createSession';
 
 const getSessions = makeGetSession({ sessionDb });
 const updateSession = makeUpdateSession({ sessionDb });
-const createSession = makeCreateSession({ sessionDb })
+const createSession = makeCreateSession({ sessionDb, userDb, sceneDb });
 
 const session = Object.freeze({
     getSessions,

@@ -2,7 +2,10 @@ import { ElementRef, ViewEncapsulation,  ViewChild, AfterViewInit, Component, On
 import { FormBuilder } from '@angular/forms';
 import { WebSocketService } from '../web-socket.service';
 import { Chart } from 'chart.js';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle } from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+
 
 
 
@@ -46,7 +49,15 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  constructor(private formBuilder: FormBuilder, private webSocketService: WebSocketService) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute) {
+    let sessionid = this.route.snapshot.paramMap.get('sessionid');
+    let response = this.http.get("http://localhost:3000/session/" + sessionid).subscribe((v) => {
+      if(Object.keys(v).length < 1) {
+        location.href = '/';
+      }
+    });
+
+
     this.scenes = [
       "Scene 1",
       "Scene 2",
@@ -70,6 +81,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
 
 
 
+
  
 
   }
@@ -83,7 +95,13 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
     // console.log(data);
   }
 
+
+      // this.webSocketService.emit('change scene', data);
+   }
+
+
   ngOnInit(): void {
+
     let data = [
       68,
       70,

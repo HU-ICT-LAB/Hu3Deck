@@ -18,6 +18,8 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
+require('dotenv').config();
+
 
 import expressAdapter from './src/express-callback'; 
 import { listSessions, postSession }  from './src/controllers/session/';

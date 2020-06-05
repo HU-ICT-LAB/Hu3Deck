@@ -8,7 +8,7 @@ export default function makeSessionDb({ getDbInstance }) {
     });
 
     async function findAll() {
-
+        let conn = getDbInstance();
 
         return [
             {
@@ -26,20 +26,47 @@ export default function makeSessionDb({ getDbInstance }) {
         ];
     }
 
-    //returns a plain js-object with data when something has been found.
+    
     async function findById({id: _id}) {
-        return {
-            id: _id,
-            name:"testsession",
-            userId: 1,
-            sceneId: 1
+        let conn = await getDbInstance();
+
+        const query = {
+            name: 'findSessionById',
+            text: 'SELECT * FROM session WHERE id = $1',
+            values: [_id],
         };
+
+        let response = [];
+        
+        await conn.query(query).then((res) => {
+            response = res.rows;
+        });
+
+        if(response.length > 0) {
+            return response[0];
+        }
+
+        return {};
     }
 
     async function create({...data}) {
-        //implement inserting session
+        let conn = await getDbInstance();
 
-        return {};
+        const query = {
+            name: 'createSession',
+            text: 'INSERT INTO session (id, name, user_id, scene_id, date_started) VALUES ($1, $2, $3, $4, $5)',
+            values: [data.id, data.name, data.user_id, data.scene_id, data.date_started],
+        };
+
+        let response = [];
+
+        await conn.query(query).then((res) => {
+            response = res.rows;
+        });
+
+        echo(__filename + thisLine(), response);
+
+        return {...data};
     }
 
     async function remove({id: _id}) {

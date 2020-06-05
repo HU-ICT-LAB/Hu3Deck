@@ -18,6 +18,8 @@ module.exports = function makeExpressCallback (controller) {
       controller(httpRequest)
         .then(httpResponse => {
           if (httpResponse.headers) {
+            //remove when not in development
+            httpResponse.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200';
             res.set(httpResponse.headers)
           }
           res.type('json')
