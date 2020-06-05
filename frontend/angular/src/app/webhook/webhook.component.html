@@ -1,0 +1,21 @@
+<div class="col-md-12 ">
+  <div class="x_panel">
+    <div class="x_title">
+      <h1>Assign Webhook trigger</h1>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+      <form class="form-horizontal" name="webhookForm" [formGroup]="webhookForm">
+        <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align" for="triggerName">Trigger naam</label>
+          <input type="text" id="triggerName" class="form-control col-6" formControlName="triggerName">
+        </div>
+        <div class="item form-group">
+          <label class="col-form-label col-md-3 col-sm-3 label-align" for="token">Token</label>
+          <input type="text" id="token" class="form-control col-6" formControlName="token">
+        </div>
+      </form>
+    </div>
+  </div>
+  <button class="btn btn-success" (click)="onSubmit()">Save trigger</button>
+</div>
