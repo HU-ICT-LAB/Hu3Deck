@@ -4,54 +4,65 @@ import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-create-object',
   templateUrl: './create-object.component.html',
-  styleUrls: ['./create-object.component.css'],
+  styleUrls: ['./create-object.component.css']
 })
 export class CreateObjectComponent implements OnInit {
   createProp;
-  selectedValue
   propTypes = ['Model', 'Background'];
-  propName;
+  movements = ['Stationary', 'Linear', 'Rotation'];
   propType;
-  audio;
-  model;
-  animationMixer;
-  backgroundImage;
+  movement;
+  volume = 50;
+  model: File = null;
+  audio: File = null;
+  backgroundImage: File = null;
+
 
   constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    console.log(this.audio);
     this.createProp = this.formBuilder.group(
       {
-      propType: '',
-    });
+        propType:'',
+        propName:'',
+        model: '',
+        audio: '',
+        volume:50,
+        animationMixer:'',
+        xScale:0,
+        yScale:0,
+        zScale:0,
+        xRotation:0,
+        yRotation:0,
+        zRotation:0,
+        backgroundImage: '',
+        movement:'',
+        xPosition:0,
+        yPosition:0,
+        zPosition:0,
+        xToPosition:0,
+        yToPosition:0,
+        zToPosition:0,
+        xOuterPosition:0,
+        yOuterPosition:0,
+        zOuterPosition:0,
+        duration:5000,
+        loop:'false',
+        easing:''
+      }
+    )
   } 
 
   onChangePropType(propTypeValue) {
     this.audio = undefined;
+    this.model = undefined;
+    this.backgroundImage = undefined;
     this.propType = propTypeValue;
-    if(propTypeValue == 'Model'){
-      this.createProp = this.formBuilder.group(
-        {
-        propName: '',
-        propType: propTypeValue,
-        model: '',
-        audio: '',
-        volume: '',
-        animationMixer: ''
-      });
-    }
-    else if(propTypeValue == 'Background') {
-      this.createProp = this.formBuilder.group(
-        {
-        propName: '',
-        propType: propTypeValue,
-        backgroundImage: '',
-        audio: '',
-        volume: ''
-      });
-    }
+  }
+
+  onChangeMovement(movementType){
+    this.movement = movementType;
   }
 
   onChangeAudio(fileValue) {
@@ -72,8 +83,61 @@ export class CreateObjectComponent implements OnInit {
     }
   }
 
+  onInputVolume(volumeValue){
+    this.volume = volumeValue;
+  }
+
   onSubmit(data){
-    console.log(data);
+    if(this.propType == 'Model'){
+      if(this.movement == 'Stationary'){
+        delete data.backgroundImage;
+        delete data.xToPosition;
+        delete data.yToPosition;
+        delete data.zToPosition;
+        delete data.xOuterPosition;
+        delete data.yOuterPosition;
+        delete data.zOuterPosition;
+        delete data.duration;
+        delete data.loop;
+        delete data.easing;
+        console.log(data);
+      }
+      else if(this.movement == 'Linear'){
+        delete data.backgroundImage;
+        delete data.xOuterPosition;
+        delete data.yOuterPosition;
+        delete data.zOuterPosition;
+        console.log(data);
+      }
+      else if(this.movement == 'Rotation'){
+        delete data.backgroundImage;
+        console.log(data);
+      }
+    }
+    else if(this.propType == 'Background'){
+      delete data.model;
+      delete data.animationMixer;
+      delete data.movement;
+      delete data.xScale;
+      delete data.yScale;
+      delete data.zScale;
+      delete data.xRotation;
+      delete data.yRotation;
+      delete data.zRotation;
+      delete data.xPosition;
+      delete data.yPosition;
+      delete data.zPosition;
+      delete data.xToPosition;
+      delete data.yToPosition;
+      delete data.zToPosition;
+      delete data.xOuterPosition;
+      delete data.yOuterPosition;
+      delete data.zOuterPosition;
+      delete data.duration;
+      delete data.loop;
+      delete data.easing;
+      console.log(data);
+    }
   }
 }
 
