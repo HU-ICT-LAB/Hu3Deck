@@ -9,16 +9,16 @@ export default function createGetSession({ sessionDb }) {
             throw new Error("To get a session, you need a sessionId.");
         }
 
-
         const sessionObject = await sessionDb.findById({
             id
         });
 
-        const session = makeSession(sessionObject);
+        if (Object.keys(sessionObject).length < 1) {
+            return {};
+        } 
 
         return {
-            ...session.toObject()
+            ...makeSession(sessionObject).toObject()
         };
-        
     }
 }
