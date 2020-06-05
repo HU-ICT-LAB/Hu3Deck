@@ -18,7 +18,9 @@ export class DashboardOverviewComponent implements OnInit {
   scenes = [];
   session_form;
   heartRateChart;
-  name: string = "Example";
+  // name: string = "Example";
+
+  defaultSelected;
 
   allowed = [
     'Hond',
@@ -35,10 +37,12 @@ export class DashboardOverviewComponent implements OnInit {
     'Apple'
   ];
 
+  sessionData;
   
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private _constant: ConstantsService) {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
+    this.sessionData = {name: '', id:'', scene_id: ''};
     
     this.http.get(_constant.apiLocation + "/sessions/" + sessionid).subscribe(data => {
         if(Object.keys(data).length < 1) {
@@ -46,13 +50,12 @@ export class DashboardOverviewComponent implements OnInit {
           return;
         }
 
-        this.name = data['name'];
+        this.defaultSelected = data['scene_id'];
+        this.sessionData = data;
       });
 
     this.http.get(_constant.apiLocation + "/scenes").subscribe(data => {
         this.scenes = Object.values(data);
-        console.log(data);
-        console.log(this.scenes[0].title);
     });  
 
 
@@ -64,7 +67,7 @@ export class DashboardOverviewComponent implements OnInit {
 
    onSubmit(data) {
 
-
+    console.log(data);
 
       // this.webSocketService.emit('change scene', data);
    }

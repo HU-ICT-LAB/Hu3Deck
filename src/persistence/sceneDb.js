@@ -20,6 +20,7 @@ export default function makeSceneDb({ getDbInstance }) {
         
         await conn.query(query).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
 
@@ -45,6 +46,7 @@ export default function makeSceneDb({ getDbInstance }) {
         
         await conn.query(query).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
 

@@ -2,7 +2,6 @@ export default function createMakeScene({ uid }) {
     return function makeScene({
         id = uid(),
         title,
-
     }) {
         
 

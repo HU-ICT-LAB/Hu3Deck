@@ -18,6 +18,8 @@ async function getDbInstance() {
 
     client.connect();
 
+    
+
     return client;
 }
 
