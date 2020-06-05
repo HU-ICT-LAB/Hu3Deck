@@ -91,13 +91,11 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
 
   onSubmit(data) {
 
-    this.webSocketService.emit('change scene', data);
+    // this.webSocketService.emit('change scene', data);
     // console.log(data);
   }
 
-
       // this.webSocketService.emit('change scene', data);
-   }
 
 
   ngOnInit(): void {

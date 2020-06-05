@@ -11,6 +11,7 @@ export class AssignObjectComponent implements OnInit {
     scenes = [];
     form1;
     selectScene: string = '';
+    selectedValue: string = '';
 
     prohibited = [
         'Apex',
@@ -35,7 +36,8 @@ export class AssignObjectComponent implements OnInit {
     ]
 
     this.form1 = this.formBuilder.group({
-      selectScene: ''
+      selectScene: '',
+      selectedValue: ''
     });
 
   }
