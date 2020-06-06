@@ -11,7 +11,6 @@ export default function makePostSession({ createSession, createUser }) {
             if(!("user_id" in data)) {
                 let user = await createUser({ ...data });
                 data.user_id = user.id;
-                echo(__filename + thisLine(), user, data);
             }
 
 

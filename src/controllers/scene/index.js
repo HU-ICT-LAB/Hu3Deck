@@ -7,7 +7,7 @@ const listAllScenes = makeListAllScenes({ getAllScenes });
 const postScene = makePostScene({ createScene })
 
 const sceneController = Object.freeze({
-    postScene
+    postScene,
     listAllScenes
 });
 export default sceneController;

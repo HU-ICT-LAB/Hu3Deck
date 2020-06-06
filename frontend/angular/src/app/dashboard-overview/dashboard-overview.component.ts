@@ -19,11 +19,10 @@ import { ConstantsService } from '../constants.service';
 
 
 
-export class DashboardOverviewComponent implements OnInit, AfterViewInit {
+export class DashboardOverviewComponent implements OnInit {
   scenes = [];
   session_form;
   heartRateChart;
-  // name: string = "Example";
 
   defaultSelected;
 
@@ -54,7 +53,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
     this.sessionData = {name: '', id:'', scene_id: ''};
     
-    this.http.get(_constant.apiLocation + "/sessions/" + sessionid).subscribe(data => {
+    this.http.get(`${_constant.apiLocation}/sessions/${sessionid}`).subscribe(data => {
         if(Object.keys(data).length < 1) {
           location.href = '/';
           return;
@@ -64,12 +63,12 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
         this.sessionData = data;
       });
 
-    this.http.get(_constant.apiLocation + "/scenes").subscribe(data => {
+    this.http.get(`${_constant.apiLocation}/scenes`).subscribe(data => {
         this.scenes = Object.values(data);
     });  
 
 
-      this.session_form = this.formBuilder.group({
+    this.session_form = this.formBuilder.group({
       scene: ''
     });
 
@@ -80,16 +79,13 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
         this.propSlider(obj);
       }, 1000)
      
-    })
+    });
 
-   onSubmit(data) {
+  }
 
+  onSubmit(data) {
     console.log(data);
-
-
-      // this.webSocketService.emit('change scene', data);
-   }
-
+  }
 
   ngOnInit(): void {
 

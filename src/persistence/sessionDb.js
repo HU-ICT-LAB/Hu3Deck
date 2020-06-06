@@ -66,8 +66,6 @@ export default function makeSessionDb({ getDbInstance }) {
             conn.end();
         });
 
-        echo(__filename + thisLine(), response);
-
         return {...data};
     }
 
