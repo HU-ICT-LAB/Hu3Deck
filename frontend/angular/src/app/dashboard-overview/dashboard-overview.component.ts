@@ -18,8 +18,9 @@ import { ActivatedRoute } from '@angular/router';
 
 
 
-export class DashboardOverviewComponent implements OnInit, AfterViewInit {
+export class DashboardOverviewComponent implements OnInit {
   scenes = [];
+  sessionData:any;
   session_form;
   heartRateChart;
   name: string = "Example";
@@ -47,27 +48,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
   @ViewChild('sliders') sliders: ElementRef;
 
 
-  ngAfterViewInit() {
-  }
-
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute) {
-    var sceneId = 'a';
-    let sessionid = this.route.snapshot.paramMap.get('sessionid');
-    this.http.get("http://localhost:3000/session/" + sessionid).subscribe((v) => {
-      if(Object.keys(v).length < 1) {
-        location.href = '/';
-      }
-      console.log(v["scene_id"])
-      sceneId = v["scene_id"];
-    });
-
-    console.log(this.sceneId);
-
-    this.http.get("http://localhost:3000/scene/" + sceneId + "/props").subscribe((v) => {
-        console.log(v);
-    });
-
-
     this.scenes = [
       "Scene 1",
       "Scene 2",
@@ -108,7 +89,16 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit {
       // this.webSocketService.emit('change scene', data);
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    let sessionid = this.route.snapshot.paramMap.get('sessionid');
+    this.sessionData = await this.http.get(`http://localhost:3000/session/${sessionid}`).toPromise();
+    
+    if(Object.keys(this.sessionData).length < 1) {
+      location.href = '/';
+    }
+
+    const propsData = await this.http.get(`http://localhost:3000/scene/${this.sessionData.scene_id}/props`).toPromise();
+
 
     let data = [
       68,
