@@ -89,16 +89,14 @@ export class CreateSessionComponent {
       
       
 
-      this.http.post(this._constant.apiLocation + "/sessions/create", requestBody.toString(), {
+      this.http.post(`${this._constant.apiLocation}/sessions/create`, requestBody.toString(), {
         headers: requestHeaders
       }).subscribe(data => {
 
         if("id" in data) {
-          location.href = '/dashboard/' + data['id'];
+          location.href = `/dashboard/${data['id']}`;
         }
       });
-
-
 
   }
 

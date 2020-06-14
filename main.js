@@ -18,7 +18,6 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
-const cors = require('cors');
 require('dotenv').config();
 
 
