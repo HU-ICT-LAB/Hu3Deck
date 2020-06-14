@@ -21,6 +21,7 @@ import { ConstantsService } from '../constants.service';
 
 export class DashboardOverviewComponent implements OnInit {
   scenes = [];
+  sessionData:any;
   session_form;
   heartRateChart;
 
@@ -75,7 +76,7 @@ export class DashboardOverviewComponent implements OnInit {
 
     this.shown.forEach(obj =>{
       setTimeout(() =>{
-        console.log(obj);
+        // console.log(obj);
         this.propSlider(obj);
       }, 1000)
      
@@ -87,7 +88,19 @@ export class DashboardOverviewComponent implements OnInit {
     console.log(data);
   }
 
-  ngOnInit(): void {
+      // this.webSocketService.emit('change scene', data);
+
+
+  async ngOnInit() {
+    let sessionid = this.route.snapshot.paramMap.get('sessionid');
+    this.sessionData = await this.http.get(`http://localhost:3000/session/${sessionid}`).toPromise();
+    
+    if(Object.keys(this.sessionData).length < 1) {
+      location.href = '/';
+    }
+
+    const propsData = await this.http.get(`http://localhost:3000/scene/${this.sessionData.scene_id}/props`).toPromise();
+
 
     let data = [
       68,
@@ -146,7 +159,7 @@ export class DashboardOverviewComponent implements OnInit {
     if (event.container.id == 'cdk-drop-list-1' && event.previousContainer.id == 'cdk-drop-list-0') {
     this.propSlider(event.item.element.nativeElement.innerHTML);
     } else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
-      console.log(this);
+      // console.log(this);
       (<HTMLInputElement>document.getElementById(event.item.element.nativeElement.innerHTML)).remove();
     }
 
