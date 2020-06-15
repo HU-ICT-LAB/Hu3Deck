@@ -4,13 +4,10 @@ const sanitizeHtml = require('sanitize-html');
 import buildMakeSession from './session';
 import buildMakeHeartbeat from './heartbeat';
 import buildMakeScene from './scene';
+import buildMakeUser from './user';
 import buildMakeProp from './prop';
 
 const makeUser = buildMakeUser({ uid, sanitize });
-const makeSession = buildMakeSession({ uid, sanitize });
-const makeHeartbeat = buildMakeHeartbeat({ uid });
-const makeScene = buildMakeScene({ uid });
-
 const makeSession = buildMakeSession({uid, sanitize});
 const makeHeartbeat = buildMakeHeartbeat({uid});
 const makeScene = buildMakeScene({uid});
@@ -26,5 +23,5 @@ function uid() {
     return shortid.generate();
 }
 
-export default { makeSession, makeHeartbeat, makeScene, makeProp }
-export { makeSession, makeHeartbeat, makeScene, makeProp }
+export default { makeSession, makeHeartbeat, makeScene, makeProp, makeUser }
+export { makeSession, makeHeartbeat, makeScene, makeProp, makeUser }

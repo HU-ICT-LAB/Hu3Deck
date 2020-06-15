@@ -8,7 +8,13 @@ export default function makePropDb({ getDbInstance }) {
 
         const query = {
             name: 'findPropsById',
-            text: 'select p.* from prop p join scene_props sp on p.id = sp.prop_id where sp.scene_id = $1',
+            text: 
+                `select p.*, b.background_image_path from prop 
+                p inner join 
+                scene_props sp on p.id = sp.prop_id
+                left join background b 
+                on b.id = p.background_id
+                where sp.scene_id = $1`,
             values: [_id],
         };
 
@@ -16,6 +22,7 @@ export default function makePropDb({ getDbInstance }) {
         
         await conn.query(query).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
         if(response.length > 0) {

@@ -20,6 +20,7 @@ export class CreateSessionComponent {
     selectedLink: string="existingUser"; 
     private _constant: ConstantsService;       
   
+
   constructor(private formBuilder: FormBuilder, private constant: ConstantsService, private http: HttpClient) { 
     this._constant = constant;
     this.http.get(this._constant.apiLocation + "/scenes").subscribe(data => {
@@ -29,8 +30,6 @@ export class CreateSessionComponent {
     this.http.get(this._constant.apiLocation + "/users").subscribe(data => {
       this.users = data;
     });
-
-
 
 
 

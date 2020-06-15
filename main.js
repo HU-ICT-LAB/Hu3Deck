@@ -22,11 +22,8 @@ require('dotenv').config();
 
 
 import expressAdapter from './src/express-callback'; 
-import { listSessions, postSession }  from './src/controllers/session/';
-import { postScene }  from './src/controllers/scene/';
 import { listSceneProps } from './src/controllers/prop';
-
-import { listSessions, postSession }  from './src/controllers/session';
+import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
 
@@ -36,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //session
 app.get('/sessions/:id', expressAdapter(listSessions));
+app.get('/session/active', expressAdapter(listActiveSession));
 app.post('/sessions/create', expressAdapter(postSession));
 
 //scene

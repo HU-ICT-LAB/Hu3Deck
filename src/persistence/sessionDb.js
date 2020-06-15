@@ -4,8 +4,32 @@ export default function makeSessionDb({ getDbInstance }) {
         create,
         remove,
         update,
-        findAll
+        findAll,
+        findActive
     });
+
+    async function findActive() {
+        let conn = await getDbInstance();
+
+        const query = {
+            name: 'findSessionById',
+            text: 'SELECT * FROM session WHERE date_ended IS NULL',
+            values: [],
+        };
+
+        let response = [];
+        
+        await conn.query(query).then((res) => {
+            response = res.rows;
+            conn.end();
+        });
+
+        if(response.length > 0) {
+            return response[0];
+        }
+
+        return {};
+    }
 
     async function findAll() {
         let conn = getDbInstance();

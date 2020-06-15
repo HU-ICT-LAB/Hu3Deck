@@ -28,25 +28,23 @@ export class DashboardOverviewComponent implements OnInit {
   defaultSelected;
 
   hidden = [
-    'Hond',
-    'Vogel',
-    'Zwarte bloem',
-    'Boom',
-    'Groene boom',
-    'Plant',
-    'Schaap'
+    // 'Hond',
+    // 'Vogel',
+    // 'Zwarte bloem',
+    // 'Boom',
+    // 'Groene boom',
+    // 'Plant',
+    // 'Schaap'
   ];
 
   shown = [
-    'Fortnite',
-    'Apple',
-    'koe',
-    'nog iets',
-    'android',
-    'laptop'
+    // 'Fortnite',
+    // 'Apple',
+    // 'koe',
+    // 'nog iets',
+    // 'android',
+    // 'laptop'
   ];
-
-  sessionData;
   
   @ViewChild('sliders') sliders: ElementRef;
 
@@ -54,15 +52,15 @@ export class DashboardOverviewComponent implements OnInit {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
     this.sessionData = {name: '', id:'', scene_id: ''};
     
-    this.http.get(`${_constant.apiLocation}/sessions/${sessionid}`).subscribe(data => {
-        if(Object.keys(data).length < 1) {
-          location.href = '/';
-          return;
-        }
+    // this.http.get(`${_constant.apiLocation}/sessions/${sessionid}`).subscribe(data => {
+    //     if(Object.keys(data).length < 1) {
+    //       location.href = '/';
+    //       return;
+    //     }
 
-        this.defaultSelected = data['scene_id'];
-        this.sessionData = data;
-      });
+        
+    //     this.sessionData = data;
+    //   });
 
     this.http.get(`${_constant.apiLocation}/scenes`).subscribe(data => {
         this.scenes = Object.values(data);
@@ -74,13 +72,7 @@ export class DashboardOverviewComponent implements OnInit {
     });
 
 
-    this.shown.forEach(obj =>{
-      setTimeout(() =>{
-        // console.log(obj);
-        this.propSlider(obj);
-      }, 1000)
-     
-    });
+
 
   }
 
@@ -93,13 +85,23 @@ export class DashboardOverviewComponent implements OnInit {
 
   async ngOnInit() {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
-    this.sessionData = await this.http.get(`http://localhost:3000/session/${sessionid}`).toPromise();
+    this.sessionData = await this.http.get(`http://localhost:3000/sessions/${sessionid}`).toPromise();
     
     if(Object.keys(this.sessionData).length < 1) {
       location.href = '/';
     }
 
+    this.defaultSelected = this.sessionData['scene_id'];
+
     const propsData = await this.http.get(`http://localhost:3000/scene/${this.sessionData.scene_id}/props`).toPromise();
+
+    console.log(propsData);
+
+    this.shown = Object.values(propsData).map(data => `${data.name} [${data.prop_type}]`);
+
+    this.shown.forEach(obj => {
+        this.propSlider(obj);
+    });
 
 
     let data = [
@@ -146,7 +148,6 @@ export class DashboardOverviewComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<string[]>) {
-    // console.log(event.container['data'])
     // console.log(event.item.element.nativeElement.innerHTML)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -157,9 +158,8 @@ export class DashboardOverviewComponent implements OnInit {
         event.currentIndex);
     }
     if (event.container.id == 'cdk-drop-list-1' && event.previousContainer.id == 'cdk-drop-list-0') {
-    this.propSlider(event.item.element.nativeElement.innerHTML);
+      this.propSlider(event.item.element.nativeElement.innerHTML);
     } else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
-      // console.log(this);
       (<HTMLInputElement>document.getElementById(event.item.element.nativeElement.innerHTML)).remove();
     }
 

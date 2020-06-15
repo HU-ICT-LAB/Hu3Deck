@@ -14,6 +14,8 @@ module.exports = function makeExpressCallback (controller) {
         }
       };
 
+      echo(__filename, controller);
+
       controller(httpRequest)
         .then(httpResponse => {
           if (httpResponse.headers) {
