@@ -16,6 +16,7 @@ export class CreateObjectComponent implements OnInit {
   model: File = null;
   audio: File = null;
   backgroundImage: File = null;
+  triggerSwitch = true;
 
 
   constructor(private formBuilder: FormBuilder) {
@@ -49,10 +50,12 @@ export class CreateObjectComponent implements OnInit {
         zOuterPosition:0,
         duration:5000,
         loop:'false',
-        easing:''
+        easing: '',
+        triggerName: '',
+        token: ''
       }
-    )
-  } 
+    );
+  }
 
   onChangePropType(propTypeValue) {
     this.audio = undefined;
@@ -138,6 +141,27 @@ export class CreateObjectComponent implements OnInit {
       delete data.easing;
       console.log(data);
     }
+    const name = this.createProp.get('triggerName').value;
+    const token = this.createProp.get('token').value;
+    const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
+    this.webhookApi(apiLink);
+  }
+
+  webhookApi(url: string) {
+    const addTriggerValue = url + this.triggerSwitch;
+    url = addTriggerValue;
+
+    return fetch(url, {mode: 'no-cors'})
+      .then(response => {
+        if (this.triggerSwitch) {
+          this.triggerSwitch = false;
+          console.log(url);
+        }
+        else {
+          this.triggerSwitch = true;
+          console.log(url);
+        }
+      });
   }
 }
 

@@ -46,7 +46,7 @@
                         <div class="custom-file">
                             <input type="file" (change)="onChangeAudio($event.target.value)" formControlName="audio" class="custom-file-input" id="customFileLang" >
                             <label class="custom-file-label" for="customFileLang">{{ audio }}</label>
-                          </div>                
+                          </div>
                     </div>
                 </div>
                 <div class="item form-group" *ngIf="audio != undefined">
@@ -106,7 +106,7 @@
                         <input type="number" formControlName="zRotation" id="zRotation" class="form-control" >
                     </div>
                 </div>
-                
+
                 <div class="backgroundButtons" *ngIf="propType == 'Background'">
                 <div class="ln_solid"></div>
 
@@ -167,7 +167,7 @@
                         <h2>Position to</h2>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="x_content">                      
+                      <div class="x_content">
                           <div class="item form-group">
                             <label class="col-form-label label-align">X-position</label>
                             <input type="number" formControlName="xToPosition" class="form-control" >
@@ -190,7 +190,7 @@
                         <h2>Position outer</h2>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="x_content">                      
+                      <div class="x_content">
                           <div class="item form-group">
                             <label class="col-form-label label-align">X-position</label>
                             <input type="number" formControlName="xOuterPosition" class="form-control" >
@@ -229,6 +229,20 @@
                     <input type="text" formControlName="easing" class="form-control ">
                 </div>
             </div>
+
+              <div class="item form-group" *ngIf="propType == 'Model' && movement == 'Linear' || propType == 'Model' && movement == 'Rotation' || propType == 'Model' && movement == 'Stationary'">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="triggerName">Trigger name</label>
+                <div class="col-md-9">
+                  <input type="text" id="triggerName" class="form-control" formControlName="triggerName">
+                </div>
+              </div>
+
+              <div class="item form-group" *ngIf="propType == 'Model' && movement == 'Linear' || propType == 'Model' && movement == 'Rotation' || propType == 'Model' && movement == 'Stationary'">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="token">Token</label>
+                <div class="col-md-9">
+                  <input type="text" id="token" class="form-control" formControlName="token">
+                </div>
+              </div>
 
             <div class="ln_solid"></div>
 
