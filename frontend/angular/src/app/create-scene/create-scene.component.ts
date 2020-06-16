@@ -35,10 +35,11 @@ export class CreateSceneComponent implements OnInit {
 
         this.http.post('http://localhost:3000/scenes/create', body.toString(), options).subscribe(dataa => {
           console.log(dataa);
+          alert("Scene name is created");
         }, response => {
           console.log(response);
+          
         });
-        console.log(data);
       }else{
         alert("Scene name cannot be empty");
       }
