@@ -22,7 +22,7 @@ require('dotenv').config();
 
 
 import expressAdapter from './src/express-callback'; 
-import { listSceneProps } from './src/controllers/prop';
+import { listSceneProps, postPropBackground } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
@@ -45,6 +45,8 @@ app.get('/scene/:id/props', expressAdapter(listSceneProps));
 app.get('/users', expressAdapter(listAllUsers));
 app.post('/users/create', expressAdapter(postUser));
 
+//prop
+app.post('/prop/createBackground', expressAdapter(postPropBackground))
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(__dirname + "/frontend/vr/index.html");

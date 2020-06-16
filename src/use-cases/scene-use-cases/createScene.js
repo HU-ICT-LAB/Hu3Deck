@@ -9,8 +9,6 @@ export default function createMakeScene({ sceneDb }) {
             id: sceneInstance.getId(),
             title: sceneInstance.getTitle()
         });
-
-
         return scene;
     }
 }
