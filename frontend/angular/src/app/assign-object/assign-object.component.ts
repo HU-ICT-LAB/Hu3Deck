@@ -11,7 +11,6 @@ import { ConstantsService } from '../constants.service';
 })
 export class AssignObjectComponent implements OnInit {
     scenes: Object;
-    propsData: Object;
     form1;
     selectScene: string = '';
     selectedValue: string = '';
@@ -65,10 +64,6 @@ export class AssignObjectComponent implements OnInit {
 
     console.log(propsData);
     this.allowed = Object.values(propsData).map(data => `${data.name} [${data.prop_type}]`);
-
-    this.allowed.forEach(obj => {
-        this.propSlider(obj);
-    });
       
   }
 

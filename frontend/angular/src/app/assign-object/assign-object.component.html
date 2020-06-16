@@ -48,7 +48,7 @@
 
                     <div cdkDropList #AllowedList="cdkDropList" [cdkDropListData]="allowed"
                         [cdkDropListConnectedTo]="[ProhibitedList]" class="item-list" (cdkDropListDropped)="drop($event)">
-                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item}}<input type="checkbox" id="{{item.id}}" name="{{item.id}}" value="default"></div>
+                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item}}<input type="checkbox" [name]="item" value="default"></div>
                     </div>
                 </div>
             </div>
