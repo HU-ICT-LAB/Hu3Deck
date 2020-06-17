@@ -38,7 +38,7 @@ export default function makePropDb({ getDbInstance }) {
         let conn = await getDbInstance();
         const insertIntoBackgroundQuery = {
             name: 'insertBackground',
-            text: `INSERT INTO background (id ,background_image_path) VALUES ($1, $2)`,
+            text: `INSERT INTO background (id, background_image_path) VALUES ($1, $2)`,
             values: [data.backgroundId, data.backgroundImage]
         };
 

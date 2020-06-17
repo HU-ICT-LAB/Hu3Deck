@@ -7,7 +7,7 @@ export default function makePostPropBackground({ createPropOfTypeBackground }) {
         try {
             const {...data } = httpRequest.body
 
-            echo(__filename + thisLine(), httpRequest);
+            // echo(__filename + thisLine(), httpRequest);
             
             const createdPropOfTypeBackground = await createPropOfTypeBackground({
                 ...data

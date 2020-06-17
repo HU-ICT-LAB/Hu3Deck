@@ -25,25 +25,9 @@ const bodyParser = require('body-parser');
 
 
 //multer 
+import storage from './src/multer-storage';
 const multer = require('multer');
-const storage = multer.diskStorage({
-  destination: (req, file, callBack) => {
-    //file upload destination
-    if(file.mimetype == 'image/jpeg'){
-    callBack(null, 'upload/backgrounds')
-    }
-    else if(file.mimetype == 'audio/mpeg'){
-      callBack(null, 'upload/audio')
-    }
-
-  },
-  //filename on upload
-  filename: function(req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-
-var upload = multer({ storage: storage })
+const upload = multer({ storage: storage(multer) });
 
 
 require('dotenv').config();
@@ -87,21 +71,27 @@ app.get('/*', (req, res) => {
 
 
 //multer
-app.post('/file', upload.fields([{
-    name: 'file', maxCount: 1
-},{
-    name: 'audio', maxCount: 1
-}]), function(req, res, next) {
-  const files = req.files;
-  console.log(files);
-  if(!files) {
-    const error = new Error('No File')
-    error.httpStatusCode = 400
-    return next(error)
-  }
-  res.send(files);
+const backgroundPropFileFields = upload.fields([
+  { name: 'backgroundFile', maxCount: 1 },
+  { name: 'audioFile', maxCount: 1 }
+]);
+
+// expressAdapter(/**controller**/)
+
+app.post('/file', backgroundPropFileFields, (req, res) => {
+  res.header['Access-Control-Allow-Origin'] = 'http://localhost:4200';
 });
 
+// function(req, res, next) {
+//   const files = req.files;
+//   console.log(files);
+//   if(!files) {
+//     const error = new Error('No File')
+//     error.httpStatusCode = 400
+//     return next(error)
+//   }
+//   res.send(files);
+// }
 
 io.on('connection', (s) => {
   console.log('a user connected');

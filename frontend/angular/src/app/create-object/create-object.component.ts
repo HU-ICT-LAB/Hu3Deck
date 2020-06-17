@@ -155,37 +155,30 @@ export class CreateObjectComponent implements OnInit {
       const options = {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       }
-  
-      const body = new HttpParams()
-      .set('propName', data.propName)
-      .set('propType', data.propType)
-      .set('backgroundImage', data.backgroundImage = this.backgroundImage)
-      .set('audio', data.audio = this.audio)
-      .set('volume', data.volume);   
 
-      this.http.post('http://localhost:3000/prop/createBackground', body.toString(), options).subscribe(dataa => {
+      data.backgroundImage = this.backgroundImageFile;
+      data.audio = this.audioFile;
+  
+      const body = new FormData();
+      body.append('backgroundFile', data.backgroundImage);
+      body.append('audioFile', data.audio);
+      body.append('propName', data.propName);
+      body.append('propType', data.propType);
+      body.append('backgroundImage', data.backgroundImage = this.backgroundImage);
+      body.append('audio', data.audio = this.audio);
+      body.append('volume', data.volume);   
+
+      this.http.post('http://localhost:3000/file', body).subscribe(dataa => {
         console.log(dataa);
       }, response => {
         console.log(response);
       });
     }
+
     const name = this.createProp.get('triggerName').value;
     const token = this.createProp.get('token').value;
     const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
     this.webhookApi(apiLink);
-
-    data.backgroundImage = this.backgroundImageFile;
-    data.audio = this.audioFile;
-    console.log(data);
-    const formData = new FormData();
-    formData.append('file', data.backgroundImage);
-    formData.append('audio', data.audio);
-
-
-    this.http.post<any>('http://localhost:3000/file', formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
   }
 
   webhookApi(url: string) {
