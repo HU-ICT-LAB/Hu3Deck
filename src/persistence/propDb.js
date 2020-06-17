@@ -1,7 +1,7 @@
 export default function makePropDb({ getDbInstance }) {
     return Object.freeze({
         findBySceneId,
-        findById
+        findById,
         createPropOfTypeBackground
     });
     

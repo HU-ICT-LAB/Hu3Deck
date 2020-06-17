@@ -11,7 +11,7 @@ const createPropOfTypeBackground = makeCreateOfTypePropBackground({ propDb });
 
 const prop = Object.freeze({
     getSceneProps,
-    getPropById
+    getPropById,
     createPropOfTypeBackground
 });
 
