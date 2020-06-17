@@ -1,5 +1,9 @@
 //development functions:
 //for fun
+
+
+
+
 global.thisLine = () => {
   const e = new Error();
   const regex = /\((.*):(\d+):(\d+)\)$/
@@ -18,14 +22,23 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
+
+
+//multer 
+import storage from './src/multer-storage';
+const multer = require('multer');
+const upload = multer({ storage: storage(multer) });
+
+
 require('dotenv').config();
 
 
 import expressAdapter from './src/express-callback'; 
-import { listSceneProps } from './src/controllers/prop';
+import { listSceneProps, postPropBackground } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
+import { pathToFileURL } from 'url';
 
 app.use(express.static(process.cwd() + "/frontend/angular/dist/HU3Deck"));
 app.use(express.static(process.cwd() + "/frontend/vr"));
@@ -45,6 +58,8 @@ app.get('/scene/:id/props', expressAdapter(listSceneProps));
 app.get('/users', expressAdapter(listAllUsers));
 app.post('/users/create', expressAdapter(postUser));
 
+//prop
+// app.post('/prop/createBackground', expressAdapter(postPropBackground))
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(__dirname + "/frontend/vr/index.html");
@@ -54,6 +69,13 @@ app.get('/*', (req, res) => {
   res.sendFile(process.cwd() + "/frontend/angular/dist/HU3Deck/index.html");
 });
 
+//multer
+const backgroundPropFileFields = upload.fields([
+  { name: 'backgroundFile', maxCount: 1 },
+  { name: 'audioFile', maxCount: 1 }
+]);
+
+app.post('/prop/createBackground', backgroundPropFileFields, expressAdapter(postPropBackground));
 
 io.on('connection', (s) => {
   console.log('a user connected');

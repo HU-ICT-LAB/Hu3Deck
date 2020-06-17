@@ -26,7 +26,7 @@
                     <label for="backgroundImage" class="col-form-label col-md-3 col-sm-3 label-align">Background Image <span class="required">*</span></label>
                     <div class="col-md-9">
                         <div class="custom-file">
-                            <input type="file" (change)="onChangeBG($event.target.value)" formControlName="backgroundImage" required="required" class="custom-file-input" id="customFileLang">
+                            <input type="file" (change)="onChangeBG($event)" formControlName="backgroundImage" required="required" class="custom-file-input" id="customFileLang">
                             <label class="custom-file-label" for="customFileLang"> {{ backgroundImage }}</label>
                           </div>
                     </div>
@@ -35,7 +35,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="model">Model <span class="required">*</span></label>
                     <div class="col-md-9">
                         <div class="custom-file">
-                            <input type="file" (change)="onChangeModel($event.target.value)" formControlName="model" required="required" class="custom-file-input" id="customFileLang">
+                            <input type="file" (change)="onChangeModel($event)" formControlName="model" required="required" class="custom-file-input" id="customFileLang">
                             <label class="custom-file-label" for="customFileLang">{{ model }}</label>
                           </div>
                     </div>
@@ -44,7 +44,7 @@
                     <label for="audio" class="col-form-label col-md-3 col-sm-3 label-align">Audio </label>
                     <div class="col-md-9">
                         <div class="custom-file">
-                            <input type="file" (change)="onChangeAudio($event.target.value)" formControlName="audio" class="custom-file-input" id="customFileLang" >
+                            <input type="file" (change)="onChangeAudio($event)" formControlName="audio" class="custom-file-input" id="customFileLang" >
                             <label class="custom-file-label" for="customFileLang">{{ audio }}</label>
                           </div>
                     </div>

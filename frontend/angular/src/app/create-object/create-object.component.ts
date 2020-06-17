@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-create-object',
@@ -13,13 +15,16 @@ export class CreateObjectComponent implements OnInit {
   propType;
   movement;
   volume = 50;
-  model: File = null;
-  audio: File = null;
-  backgroundImage: File = null;
+  backgroundImage;
+  audio;
+  model;
   triggerSwitch = true;
+  backgroundImageFile;
+  modelFile;
+  audioFile;
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -68,21 +73,24 @@ export class CreateObjectComponent implements OnInit {
     this.movement = movementType;
   }
 
-  onChangeAudio(fileValue) {
-    if(fileValue != undefined){
-      this.audio = fileValue;
+  onChangeAudio(event) {
+    if(event.target.files.length > 0){
+      this.audio = event.target.files[0].name;
+      this.audioFile = event.target.files[0];
     }
   }
 
-  onChangeModel(fileValue) {
-    if(fileValue != undefined){
-      this.model = fileValue;
+  onChangeModel(event) {
+    if(event.target.files.length > 0){
+      this.model = event.target.files[0].name;
+      this.modelFile = event.target.files[0];
     }
   }
 
-  onChangeBG(fileValue) {
-    if(fileValue != undefined) {
-      this.backgroundImage = fileValue;
+  onChangeBG(event) {
+    if(event.target.files.length > 0){
+      this.backgroundImage = event.target.files[0].name;
+      this.backgroundImageFile = event.target.files[0];
     }
   }
 
@@ -91,6 +99,7 @@ export class CreateObjectComponent implements OnInit {
   }
 
   onSubmit(data){
+    console.log("hallo dit is etestestest", data);
     if(this.propType == 'Model'){
       if(this.movement == 'Stationary'){
         delete data.backgroundImage;
@@ -103,6 +112,7 @@ export class CreateObjectComponent implements OnInit {
         delete data.duration;
         delete data.loop;
         delete data.easing;
+
         console.log(data);
       }
       else if(this.movement == 'Linear'){
@@ -139,8 +149,32 @@ export class CreateObjectComponent implements OnInit {
       delete data.duration;
       delete data.loop;
       delete data.easing;
+      delete data.token;
+      delete data.triggerName;
       console.log(data);
+      const options = {
+        headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+
+      data.backgroundImageFile = this.backgroundImageFile;
+      data.audioFile = this.audioFile;
+  
+      const body = new FormData();
+      body.append('backgroundFile', this.backgroundImageFile);
+      body.append('audioFile', this.audioFile);
+      body.append('propName', data.propName);
+      body.append('propType', data.propType);
+      body.append('backgroundImage', data.backgroundImage = this.backgroundImage);
+      body.append('audio', data.audio = this.audio);
+      body.append('volume', data.volume);   
+
+      this.http.post('http://localhost:3000/prop/createBackground', body).subscribe(dataa => {
+        console.log(dataa);
+      }, response => {
+        console.log(response);
+      });
     }
+
     const name = this.createProp.get('triggerName').value;
     const token = this.createProp.get('token').value;
     const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
@@ -163,5 +197,10 @@ export class CreateObjectComponent implements OnInit {
         }
       });
   }
+
+
+
+
+
 }
 
