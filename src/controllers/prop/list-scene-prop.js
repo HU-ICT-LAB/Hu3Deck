@@ -6,7 +6,6 @@ export default function makeListSceneProps({ getSceneProps }) {
         };
 
         try {
-            console.log(httpRequest);
             let props = await getSceneProps({
                 id: httpRequest.params.id
             });
