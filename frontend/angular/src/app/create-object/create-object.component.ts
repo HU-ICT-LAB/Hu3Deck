@@ -156,19 +156,19 @@ export class CreateObjectComponent implements OnInit {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       }
 
-      data.backgroundImage = this.backgroundImageFile;
-      data.audio = this.audioFile;
+      data.backgroundImageFile = this.backgroundImageFile;
+      data.audioFile = this.audioFile;
   
       const body = new FormData();
-      body.append('backgroundFile', data.backgroundImage);
-      body.append('audioFile', data.audio);
+      body.append('backgroundFile', this.backgroundImageFile);
+      body.append('audioFile', this.audioFile);
       body.append('propName', data.propName);
       body.append('propType', data.propType);
       body.append('backgroundImage', data.backgroundImage = this.backgroundImage);
       body.append('audio', data.audio = this.audio);
       body.append('volume', data.volume);   
 
-      this.http.post('http://localhost:3000/file', body).subscribe(dataa => {
+      this.http.post('http://localhost:3000/prop/createBackground', body).subscribe(dataa => {
         console.log(dataa);
       }, response => {
         console.log(response);

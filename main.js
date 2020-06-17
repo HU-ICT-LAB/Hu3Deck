@@ -59,7 +59,7 @@ app.get('/users', expressAdapter(listAllUsers));
 app.post('/users/create', expressAdapter(postUser));
 
 //prop
-app.post('/prop/createBackground', expressAdapter(postPropBackground))
+// app.post('/prop/createBackground', expressAdapter(postPropBackground))
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(__dirname + "/frontend/vr/index.html");
@@ -69,29 +69,13 @@ app.get('/*', (req, res) => {
   res.sendFile(process.cwd() + "/frontend/angular/dist/HU3Deck/index.html");
 });
 
-
 //multer
 const backgroundPropFileFields = upload.fields([
   { name: 'backgroundFile', maxCount: 1 },
   { name: 'audioFile', maxCount: 1 }
 ]);
 
-// expressAdapter(/**controller**/)
-
-app.post('/file', backgroundPropFileFields, (req, res) => {
-  res.header['Access-Control-Allow-Origin'] = 'http://localhost:4200';
-});
-
-// function(req, res, next) {
-//   const files = req.files;
-//   console.log(files);
-//   if(!files) {
-//     const error = new Error('No File')
-//     error.httpStatusCode = 400
-//     return next(error)
-//   }
-//   res.send(files);
-// }
+app.post('/prop/createBackground', backgroundPropFileFields, expressAdapter(postPropBackground));
 
 io.on('connection', (s) => {
   console.log('a user connected');
