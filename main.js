@@ -33,15 +33,23 @@ const upload = multer({ storage: storage(multer) });
 require('dotenv').config();
 
 
-import expressAdapter from './src/express-callback'; 
+import expressAdapter from './src/express-callback';
+import socketAdapter from './src/socket-callback';
+
+//socket controllers
+import { listPropById } from './src/socket-controllers/prop';
+
+//controllers
 import { listSceneProps, postPropBackground } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
 import { listHeartbeat, postHeartbeat } from './src/controllers/heartbeat';
 
-app.use(express.static(process.cwd() + "/frontend/angular/dist/HU3Deck"));
-app.use(express.static(process.cwd() + "/frontend/vr"));
+
+
+app.use(express.static(`${process.cwd()}/frontend/angular/dist/HU3Deck`));
+app.use(express.static(`${process.cwd()}/frontend/vr`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //session
@@ -72,25 +80,28 @@ const backgroundPropFileFields = upload.fields([
 app.post('/prop/createBackground', backgroundPropFileFields, expressAdapter(postPropBackground));
 
 app.get('/vr-environment', (req, res) => {
-  res.sendFile(__dirname + "/frontend/vr/index.html");
+  res.sendFile(`${__dirname}/frontend/vr/index.html`);
 });
 
 app.get('/*', (req, res) => {
-  res.sendFile(process.cwd() + "/frontend/angular/dist/HU3Deck/index.html");
+  res.sendFile(`${process.cwd()}/frontend/angular/dist/HU3Deck/index.html`);
 });
 
 
-
-io.on('connection', (s) => {
+io.on('connection', s => {
   console.log('a user connected');
-  
-  s.on("change scene", (data) => {
-    io.emit('change background', data); 
+
+  s.on("reload", data => {
+    io.emit("reload", data);
   });
+  
+  s.on("show prop", socketAdapter(io, "create prop", listPropById ));
+
+  s.on("hide prop", socketAdapter(io, "remove prop", async data => data ));
   
 });
 
 
 http.listen(3000, () => {
-  console.log('listening on *:3000');
+  console.log(`listening on *:${process.env.PORT}`);
 });

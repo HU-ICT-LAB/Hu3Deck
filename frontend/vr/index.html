@@ -8,7 +8,7 @@
       
             <!-- Assets -->
             <a-assets>
-                <a-asset-items id="bird" response-type="arraybuffer" src="/assets/scene.glb"></a-asset-items>
+                <!-- <a-asset-items id="bird" response-type="arraybuffer" src="/assets/scene.glb"></a-asset-items> -->
             </a-assets>
       
             <!-- Camera -->
@@ -16,8 +16,10 @@
               <a-camera></a-camera>
             </a-entity>
 
+            <!-- <a-entity propid="VbIRanohZ" gltf-model="/assets/scene.glb" scale=""></a-entity> -->
+
             <!-- Flying Bird -->
-            <a-entity gltf-model="#bird" scale="0.5 0.5 0.5" position="15 5 -50" animation-mixer="clip:Flying" rotation="0 -25 0" sound="src: url(/assets/vogel.mp3); autoplay: true; loop: true" loop=true animation="property: position; from: 15 5 -50; to: -5 3 10; dur: 4000; easing: linear; loop: true"></a-entity>
+            <!-- <a-entity gltf-model="#bird" scale="0.5 0.5 0.5" position="15 5 -50" animation-mixer="clip:Flying" rotation="0 -25 0" sound="src: url(/assets/vogel.mp3); autoplay: true; loop: true" loop=true animation="property: position; from: 15 5 -50; to: -5 3 10; dur: 4000; easing: linear; loop: true"></a-entity> -->
       
           </a-scene>
 
@@ -26,13 +28,25 @@
         
         <script src="/socket.io/socket.io.js"></script>
         
+        
+        <script src="/assets/web.js"></script>
         <script>
+            loadSessionEnvironment();
+
             var socket = io();
-            socket.on('change background', (data) => {
-                console.log(data);
-                document.querySelector("#background").setAttribute('src', "assets/" + data.background_image);
+            socket.on('remove prop', (data) => {
+                console.log('remove', data);
+                removeProp(data.id);
+            });
+
+            socket.on('create prop', (data) => {
+                console.log('create', data);
+                loadProp(data);
+            });
+
+            socket.on('reload', data => {
+                loadSessionEnvironment();
             });
         </script>
-        <script src="/assets/web.js"></script>
     </body>
 </html>
