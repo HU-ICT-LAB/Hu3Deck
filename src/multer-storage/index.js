@@ -8,6 +8,9 @@ module.exports = function diskStorage(multer) {
             else if(file.mimetype == 'audio/mpeg'){
                 callBack(null, process.env.AUDIO_STORAGE);
             }
+            else if(file.mimetype == 'model/gltf-binary'){
+                callBack(null, process.env.MODEL_STORAGE)
+            }
     
         },
         //filename on upload
