@@ -26,6 +26,7 @@ import { listSceneProps } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
+import { listHeartbeat, postHeartbeat } from './src/controllers/heartbeat';
 
 app.use(express.static(process.cwd() + "/frontend/angular/dist/HU3Deck"));
 app.use(express.static(process.cwd() + "/frontend/vr"));
@@ -44,6 +45,10 @@ app.get('/scene/:id/props', expressAdapter(listSceneProps));
 //user
 app.get('/users', expressAdapter(listAllUsers));
 app.post('/users/create', expressAdapter(postUser));
+
+//heartbeat
+app.get('/heartbeat/:id', expressAdapter(listHeartbeat));
+app.post('/heartbeat/create', expressAdapter(postHeartbeat));
 
 
 app.get('/vr-environment', (req, res) => {

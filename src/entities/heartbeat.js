@@ -13,8 +13,7 @@ export default function createMakeHeartbeat({uid}) {
 
         if(!sessionId) {
             throw new Error("Session needs to be set.");
-        }
-
+        }   
         
         return Object.freeze({
             getId: () => id,

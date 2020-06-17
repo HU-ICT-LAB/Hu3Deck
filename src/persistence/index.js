@@ -3,12 +3,13 @@ import makeSessionDb from './sessionDb';
 import makeUserDb from './userDb';
 import makeSceneDb from './sceneDb';
 import makePropDb from './propDb';
+import makeHeartbeatDb from './heartbeatDb';
 
 const sessionDb = makeSessionDb({ getDbInstance });
 const userDb = makeUserDb({ getDbInstance });
 const sceneDb = makeSceneDb({ getDbInstance });
 const propDb = makePropDb({ getDbInstance });
-
+const heartbeatDb = makeHeartbeatDb({ getDbInstance });
 
 async function getDbInstance() {
     let client = new Client({
@@ -25,6 +26,6 @@ async function getDbInstance() {
     return client;
 }
 
-export default { sessionDb, userDb, sceneDb, propDb };
+export default { sessionDb, userDb, sceneDb, propDb, heartbeatDb };
 
-export { sessionDb, userDb, sceneDb, propDb };
+export { sessionDb, userDb, sceneDb, propDb, heartbeatDb };

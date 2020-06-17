@@ -5,9 +5,9 @@ export default function createGetHeartbeat({heartbeatDb}) {
             throw new Error("Session id must be set when searching for heartbeat.");
         }
 
-        const heartbeats = heartbeatDb.findBySessionId({
-            sessionId
-        });
+        // const heartbeats = heartbeatDb.findBySessionId({
+        //     sessionId
+        // });
 
         return heartbeats;
     }
