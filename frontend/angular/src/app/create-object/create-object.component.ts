@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-create-object',
   templateUrl: './create-object.component.html',
@@ -14,13 +15,13 @@ export class CreateObjectComponent implements OnInit {
   propType;
   movement;
   volume = 50;
-  model;
-  audio;
   backgroundImage;
+  audio;
+  model;
   triggerSwitch = true;
-  audioFile;
-  modelFile;
   backgroundImageFile;
+  modelFile;
+  audioFile;
 
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
@@ -172,6 +173,19 @@ export class CreateObjectComponent implements OnInit {
     const token = this.createProp.get('token').value;
     const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
     this.webhookApi(apiLink);
+
+    data.backgroundImage = this.backgroundImageFile;
+    data.audio = this.audioFile;
+    console.log(data);
+    const formData = new FormData();
+    formData.append('file', data.backgroundImage);
+    formData.append('audio', data.audio);
+
+
+    this.http.post<any>('http://localhost:3000/file', formData).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 
   webhookApi(url: string) {
@@ -190,5 +204,10 @@ export class CreateObjectComponent implements OnInit {
         }
       });
   }
+
+
+
+
+
 }
 
