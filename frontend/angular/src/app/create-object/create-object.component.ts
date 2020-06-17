@@ -125,6 +125,50 @@ export class CreateObjectComponent implements OnInit {
       else if(this.movement == 'Rotation'){
         delete data.backgroundImage;
         console.log(data);
+
+        const options = {
+          headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+        }
+  
+        data.modelFile = this.modelFile;
+        data.audioFile = this.audioFile;
+    
+        const body = new FormData();
+        body.append('modelFile', this.modelFile);
+        body.append('audioFile', this.audioFile);
+        body.append('propName', data.propName);
+        body.append('propType', data.propType);
+        body.append('model', data.model = this.model);
+        body.append('audio', data.audio = this.audio);
+        body.append('volume', data.volume);
+        body.append('animationMixer', data.animationMixer);
+        body.append('xScale', data.xScale);
+        body.append('yScale', data.yScale);
+        body.append('zScale', data.zScale);
+        body.append('xRotation', data.xRotation);
+        body.append('yRotation', data.yRotation);
+        body.append('zRotation', data.zRotation);
+        body.append('movement', data.movement);
+        body.append('xPosition', data.xPosition);
+        body.append('yPosition', data.yPosition);
+        body.append('zPosition', data.zPosition);
+        body.append('xToPosition', data.xToPosition);
+        body.append('yToPosition', data.yToPosition);
+        body.append('zToPosition', data.zToPosition);
+        body.append('xOuterPosition', data.xOuterPosition);
+        body.append('yOuterPosition', data.yOuterPosition);
+        body.append('zOuterPosition', data.zOuterPosition);
+        body.append('duration', data.duration);
+        body.append('loop', data.loop);
+        body.append('easing', data.easing);
+        body.append('triggerName', data.triggerName);
+        body.append('token', data.token);
+
+        this.http.post('http://localhost:3000/prop/createModel', body).subscribe(dataa => {
+          console.log(dataa);
+        }, response => {
+          console.log(response);
+        });
       }
     }
     else if(this.propType == 'Background'){

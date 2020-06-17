@@ -40,7 +40,7 @@ import socketAdapter from './src/socket-callback';
 import { listPropById } from './src/socket-controllers/prop';
 
 //controllers
-import { listSceneProps, postPropBackground } from './src/controllers/prop';
+import { listSceneProps, postPropBackground, postPropModel } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
@@ -71,13 +71,19 @@ app.get('/heartbeat/:id', expressAdapter(listHeartbeat));
 app.post('/heartbeat/create', expressAdapter(postHeartbeat));
 
 //prop
-//multer
 const backgroundPropFileFields = upload.fields([
   { name: 'backgroundFile', maxCount: 1 },
   { name: 'audioFile', maxCount: 1 }
 ]);
 
 app.post('/prop/createBackground', backgroundPropFileFields, expressAdapter(postPropBackground));
+
+const modelPropFileFields = upload.fields([
+  { name: 'modelFile', maxCount: 1 },
+  { name: 'audioFile', maxCount: 1 }
+]);
+
+app.post('/prop/createProp', modelPropFileFields, expressAdapter(postPropModel));
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(`${__dirname}/frontend/vr/index.html`);

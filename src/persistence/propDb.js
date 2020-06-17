@@ -2,7 +2,8 @@ export default function makePropDb({ getDbInstance }) {
     return Object.freeze({
         findBySceneId,
         findById,
-        createPropOfTypeBackground
+        createPropOfTypeBackground,
+        createPropOfTypeModel
     });
     
     async function findBySceneId({id: _id}) {
@@ -123,6 +124,51 @@ export default function makePropDb({ getDbInstance }) {
         await conn.query(insertIntoPropQuery).then((res) => {
             response = res.rows;
         });
+
+        echo(__filename + thisLine(), response);
+
+        return {...data};
+    }
+
+    async function createPropOfTypeModel({...data}) {     
+        console.log(data); 
+        let conn = await getDbInstance();
+        const insertIntoPropQuery = {
+            name: 'insertProp',
+            text: `INSERT INTO prop(
+                id, movement_id, sound_id, api_id, model_id, background_id, name, prop_type, date_added, date_updated)
+                VALUES ($1, $2, $3, null, $4, null, $5, $6, $7, $8);`,
+            values: [data.propId, data.movementId, data.soundId, data.modelId, data.propName, data.propType, data.dateAdded, data.dateUpdated]
+        };
+
+
+        // const insertIntoSoundQuery = {
+        //     name: 'insertSound',
+        //     text: `INSERT INTO sound(id, audio_path, volume) VALUES ($1, $2, $3);`,
+        //     values: [data.soundId, data.audio, data.volume]
+        // };
+
+        // const insertIntoPropQuery = {
+        //     name: 'insertProp',
+        //     text: `INSERT INTO prop(
+        //         id, movement_id, sound_id, api_id, model_id, background_id, name, prop_type, date_added, date_updated)
+        //         VALUES ($1, null, $2, null, null, $3, $4, $5, $6, $7);`,
+        //     values: [data.propId, data.soundId, data.backgroundId, data.propName, data.propType, data.dateAdded, data.dateUpdated]
+        // };        
+
+        let response = [];
+
+        await conn.query(insertIntoPropQuery).then((res) => {
+            response = res.rows;
+        });
+
+        // await conn.query(insertIntoSoundQuery).then((res) => {
+        //     response = res.rows;
+        // });
+
+        // await conn.query(insertIntoPropQuery).then((res) => {
+        //     response = res.rows;
+        // });
 
         echo(__filename + thisLine(), response);
 
