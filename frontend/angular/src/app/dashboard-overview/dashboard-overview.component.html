@@ -70,7 +70,7 @@
                <div cdkDropList #hiddenList="cdkDropList" [cdkDropListData]="hidden"
                   [cdkDropListConnectedTo]="[shownList]" class="item-list" cdkDropListSortingDisabled
                   (cdkDropListDropped)="drop($event)">
-                  <div class="item-box" *ngFor="let item of hidden" cdkDrag>{{item}}</div>
+                  <div class="item-box" *ngFor="let item of hidden" [attr.propid]="item.id" cdkDrag>{{item.name}} [{{item.prop_type}}]</div>
                </div>
             </div>
          </div>
@@ -81,7 +81,7 @@
                <div cdkDropList #shownList="cdkDropList" [cdkDropListData]="shown"
                   [cdkDropListConnectedTo]="[hiddenList]" class="item-list" cdkDropListSortingDisabled
                   (cdkDropListDropped)="drop($event)">
-                  <div class="item-box" *ngFor="let item of shown" cdkDrag>{{item}}</div>
+                  <div class="item-box" *ngFor="let item of shown" [attr.propid]="item.id" cdkDrag>{{item.name}} [{{item.prop_type}}]</div>
                </div>
             </div>
          </div>

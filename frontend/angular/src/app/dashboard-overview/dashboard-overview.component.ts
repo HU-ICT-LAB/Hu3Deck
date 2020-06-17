@@ -14,10 +14,9 @@ import { ConstantsService } from '../constants.service';
   selector: 'app-dashboard-overview',
   templateUrl: './dashboard-overview.component.html',
   styleUrls: ['./dashboard-overview.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [WebSocketService]
 })
-
-
 
 export class DashboardOverviewComponent implements OnInit {
   scenes = [];
@@ -48,19 +47,9 @@ export class DashboardOverviewComponent implements OnInit {
   
   @ViewChild('sliders') sliders: ElementRef;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private _constant: ConstantsService) {
-    let sessionid = this.route.snapshot.paramMap.get('sessionid');
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private _constant: ConstantsService, private socket: WebSocketService) {
+    this.socket.emit("reload", {});
     this.sessionData = {name: '', id:'', scene_id: ''};
-    
-    // this.http.get(`${_constant.apiLocation}/sessions/${sessionid}`).subscribe(data => {
-    //     if(Object.keys(data).length < 1) {
-    //       location.href = '/';
-    //       return;
-    //     }
-
-        
-    //     this.sessionData = data;
-    //   });
 
     this.http.get(`${_constant.apiLocation}/scenes`).subscribe(data => {
         this.scenes = Object.values(data);
@@ -70,9 +59,6 @@ export class DashboardOverviewComponent implements OnInit {
     this.session_form = this.formBuilder.group({
       scene: ''
     });
-
-
-
 
   }
 
@@ -94,11 +80,8 @@ export class DashboardOverviewComponent implements OnInit {
     this.defaultSelected = this.sessionData['scene_id'];
 
     const propsData = await this.http.get(`http://localhost:3000/scene/${this.sessionData.scene_id}/props`).toPromise();
-
-    console.log(propsData);
-
-    this.shown = Object.values(propsData).map(data => `${data.name} [${data.prop_type}]`);
-
+    this.shown = Object.values(propsData).map(data => data);
+    // `${data.name} [${data.prop_type}] / ${data.id}`
     this.shown.forEach(obj => {
         this.propSlider(obj);
     });
@@ -112,9 +95,6 @@ export class DashboardOverviewComponent implements OnInit {
       63,
       65,
     ];
-
-
-
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
 
@@ -148,7 +128,7 @@ export class DashboardOverviewComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<string[]>) {
-    // console.log(event.item.element.nativeElement.innerHTML)
+    // console.log(event.item.element.nativeElement)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -157,10 +137,19 @@ export class DashboardOverviewComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+
+    let id = event.item.element.nativeElement.getAttribute('propid');
+
     if (event.container.id == 'cdk-drop-list-1' && event.previousContainer.id == 'cdk-drop-list-0') {
-      this.propSlider(event.item.element.nativeElement.innerHTML);
+      this.shown.forEach(obj => {
+        if(obj.id == id) {
+          this.propSlider(obj);
+        }
+      });
+      this.socket.emit('show prop', { id });
     } else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
-      (<HTMLInputElement>document.getElementById(event.item.element.nativeElement.innerHTML)).remove();
+      (<HTMLInputElement>document.querySelector(`[sliderpropid='${id}']`)).remove();
+      this.socket.emit('hide prop', { id });
     }
 
   }
@@ -174,17 +163,21 @@ export class DashboardOverviewComponent implements OnInit {
       var input = document.createElement("input");
       var title = document.createElement("p");
     
-      div.setAttribute('id', prop)
-      input.setAttribute('name', prop)
-      title.innerHTML = prop;
-      div.setAttribute('class', 'volume-prop')
-      input.setAttribute('type', 'range')
 
+      div.setAttribute('sliderpropid', prop.id);
+      input.setAttribute('name', prop.name);
+      title.innerHTML = prop.name;
+      div.setAttribute('class', 'volume-prop');
+      input.setAttribute('type', 'range');
+      input.setAttribute('propId', prop.id);
+
+      input.addEventListener('change', e => {
+        console.log(input.value, input.getAttribute('propId'));
+      });
 
       div.appendChild(title);
       div.appendChild(input);
       this.sliders.nativeElement.appendChild(div);
-
   }
 
 

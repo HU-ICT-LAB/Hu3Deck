@@ -14,17 +14,15 @@ module.exports = function makeExpressCallback (controller) {
         }
       };
 
-      echo(__filename, controller);
-
       controller(httpRequest)
         .then(httpResponse => {
           if (httpResponse.headers) {
             //remove when not in development
             httpResponse.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200';
-            res.set(httpResponse.headers)
+            res.set(httpResponse.headers);
           }
-          res.type('json')
-          res.status(httpResponse.statusCode).send(httpResponse.body)
+          res.type('json');
+          res.status(httpResponse.statusCode).send(httpResponse.body);
         })
         .catch(e => res.status(500).send({ error: 'An unkown error occurred.' }));
     }

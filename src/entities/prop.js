@@ -2,7 +2,6 @@ export default function buildMakeProp({uid, sanitize}) {
     return function makeProp({
         id = uid(),
         name
-
     } = {}) {
         
 

@@ -7,7 +7,6 @@ export default function buildMakeSession({uid, sanitize}) {
         date_updated,
         user_id,
         scene_id
-
     } = {}) {
         
         if(!user_id || user_id.length < 1) {
