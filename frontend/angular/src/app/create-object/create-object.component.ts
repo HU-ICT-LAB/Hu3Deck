@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-object',
@@ -14,12 +15,15 @@ export class CreateObjectComponent implements OnInit {
   movement;
   volume = 50;
   model: File = null;
-  audio: File = null;
-  backgroundImage: File = null;
+  audio;
+  audioFile;
+  backgroundImage;
+  backgroundImageFile;
   triggerSwitch = true;
+  
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -68,9 +72,10 @@ export class CreateObjectComponent implements OnInit {
     this.movement = movementType;
   }
 
-  onChangeAudio(fileValue) {
-    if(fileValue != undefined){
-      this.audio = fileValue;
+  onChangeAudio(event) {
+    if(event.target.files.length > 0){
+      this.audio = event.target.files[0].name;
+      this.audioFile = event.target.files[0];
     }
   }
 
@@ -80,9 +85,11 @@ export class CreateObjectComponent implements OnInit {
     }
   }
 
-  onChangeBG(fileValue) {
-    if(fileValue != undefined) {
-      this.backgroundImage = fileValue;
+  onChangeBG(event) {
+    if(event.target.files.length > 0) {
+      this.backgroundImage = event.target.files[0].name;
+      this.backgroundImageFile = event.target.files[0];
+      console.log(event.target.files[0].name);
     }
   }
 
@@ -145,6 +152,19 @@ export class CreateObjectComponent implements OnInit {
     const token = this.createProp.get('token').value;
     const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
     this.webhookApi(apiLink);
+
+    data.backgroundImage = this.backgroundImageFile;
+    data.audio = this.audioFile;
+    console.log(data);
+    const formData = new FormData();
+    formData.append('file', data.backgroundImage);
+    formData.append('audio', data.audio);
+
+
+    this.http.post<any>('http://localhost:3000/file', formData).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 
   webhookApi(url: string) {
@@ -163,5 +183,10 @@ export class CreateObjectComponent implements OnInit {
         }
       });
   }
+
+
+
+
+
 }
 

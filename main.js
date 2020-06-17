@@ -1,5 +1,9 @@
 //development functions:
 //for fun
+
+
+
+
 global.thisLine = () => {
   const e = new Error();
   const regex = /\((.*):(\d+):(\d+)\)$/
@@ -18,6 +22,30 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
+
+
+//multer 
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: (req, file, callBack) => {
+    //file upload destination
+    if(file.mimetype == 'image/jpeg'){
+    callBack(null, 'upload/backgrounds')
+    }
+    else if(file.mimetype == 'audio/mpeg'){
+      callBack(null, 'upload/audio')
+    }
+
+  },
+  //filename on upload
+  filename: function(req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+var upload = multer({ storage: storage })
+
+
 require('dotenv').config();
 
 
@@ -26,6 +54,7 @@ import { listSceneProps } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
+import { pathToFileURL } from 'url';
 
 app.use(express.static(process.cwd() + "/frontend/angular/dist/HU3Deck"));
 app.use(express.static(process.cwd() + "/frontend/vr"));
@@ -52,6 +81,23 @@ app.get('/vr-environment', (req, res) => {
 
 app.get('/*', (req, res) => {
   res.sendFile(process.cwd() + "/frontend/angular/dist/HU3Deck/index.html");
+});
+
+
+//multer
+app.post('/file', upload.fields([{
+    name: 'file', maxCount: 1
+},{
+    name: 'audio', maxCount: 1
+}]), function(req, res, next) {
+  const files = req.files;
+  console.log(files);
+  if(!files) {
+    const error = new Error('No File')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+  res.send(files);
 });
 
 
