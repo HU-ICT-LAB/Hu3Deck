@@ -56,8 +56,8 @@ function makeModel(modelObject) {
 
     if(modelObject.audio_path != null && modelObject.volume != null) {
         aEntity.setAttribute('sound', `src: url(${modelObject.audio_path}); autoplay: true; loop: true; volume: ${modelObject.volume};`);
-        aEntity.setAttribute('volume', `${modelObject.volume}`);
-        console.log(aEntity.getAttribute('sound'));
+        // aEntity.setAttribute('volume', `${modelObject.volume}`);
+        // console.log(aEntity.getAttribute('sound'));
     }
 
     if(modelObject.loop != null) {

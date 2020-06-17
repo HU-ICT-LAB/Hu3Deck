@@ -18,6 +18,19 @@ export default function createGetPropById({ propDb }) {
             return {};
         } 
 
+        if(propObject.background_image_path && propObject.background_image_path !== null) {
+            propObject.background_image_path = `/assets/background-images/${propObject.background_image_path}`;
+        }
+
+        if(propObject.model_path && propObject.model_path !== null) {
+            propObject.model_path = `/assets/model/${propObject.model_path}`;
+        }
+
+        if(propObject.audio_path && propObject.audio_path !== null) {
+            propObject.audio_path = `/assets/audio/${propObject.audio_path}`;
+        }
+
+
         // propObject = makeProp(propObject);
 
         return propObject;
