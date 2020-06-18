@@ -11,7 +11,7 @@ export default function makePropDb({ getDbInstance }) {
         const query = {
             name: 'findPropsById',
             text: 
-                `select sp.default_shown, p.id, p.name, p.prop_type, p.date_added, p.date_updated , b.background_image_path, s.audio_path, s.volume, m.easing, m.loop, m.duration, model.model_path, model.animation_mixer,
+                `select sp.default_shown, p.id, p.name, p.prop_type, p.date_added, p.date_updated , b.background_image_path, s.audio_path, s.volume, m.easing, m.loop, m.duration, m.movement_type, model.model_path, model.animation_mixer,
                 po.x_pos as x_pos_from, po.y_pos as y_pos_from, po.z_pos as z_pos_from,
                 po2.x_pos as x_pos_to, po2.y_pos as y_pos_to, po2.z_pos as z_pos_to,
                 po3.x_pos as x_pos_outer, po3.y_pos as y_pos_outer, po3.z_pos as z_pos_outer,
@@ -51,7 +51,7 @@ export default function makePropDb({ getDbInstance }) {
         const query = {
             name: 'findPropsById',
             text: 
-                `select p.id, p.name, p.prop_type, p.date_added, p.date_updated , b.background_image_path, s.audio_path, s.volume, m.easing, m.loop, m.duration, model.model_path, model.animation_mixer,
+                `select p.id, p.name, p.prop_type, p.date_added, p.date_updated , b.background_image_path, s.audio_path, s.volume, m.easing, m.loop, m.duration, m.movement_type, model.model_path, model.animation_mixer,
                 po.x_pos as x_pos_from, po.y_pos as y_pos_from, po.z_pos as z_pos_from,
                 po2.x_pos as x_pos_to, po2.y_pos as y_pos_to, po2.z_pos as z_pos_to,
                 po3.x_pos as x_pos_outer, po3.y_pos as y_pos_outer, po3.z_pos as z_pos_outer,

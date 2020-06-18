@@ -41,20 +41,19 @@ function makeModel(modelObject) {
     aEntity.setAttribute('gltf-model', modelObject.model_path);
 
     if(modelObject.x_pos_scale != null && modelObject.y_pos_scale != null && modelObject.z_pos_scale) {
-        // `${modelObject.x_pos_scale} ${modelObject.y_pos_scale} ${modelObject.z_pos_scale}`
         aEntity.setAttribute('scale', {x: modelObject.x_pos_scale, y: modelObject.y_pos_scale, z: modelObject.z_pos_scale });
     }
 
     if(modelObject.x_pos_from != null && modelObject.y_pos_from != null && modelObject.z_pos_from) {
+        console.log({x: modelObject.x_pos_from, y: modelObject.y_pos_from, z: modelObject.z_pos_from });
         aEntity.setAttribute('position', {x: modelObject.x_pos_from, y: modelObject.y_pos_from, z: modelObject.z_pos_from });
     }
     
-    if(modelObject.animation_mixer != null)  {
+    if(modelObject.movement_type !== 'Stationary')  {
         aEntity.setAttribute('animation', `property: position; from: ${modelObject.x_pos_from} ${modelObject.y_pos_from} ${modelObject.z_pos_from} ; to: ${modelObject.x_pos_to} ${modelObject.y_pos_to} ${modelObject.z_pos_to} ; dur: ${modelObject.duration}; easing: ${modelObject.easing};  loop: true`);
     }
     
     if(modelObject.x_pos_rot != null && modelObject.y_pos_rot != null && modelObject.z_pos_rot) {
-        
         aEntity.setAttribute('rotation', {x: modelObject.x_pos_rot, y: modelObject.y_pos_rot, z: modelObject.z_pos_rot });
     }
 
