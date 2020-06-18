@@ -61,7 +61,7 @@ app.post('/sessions/create', expressAdapter(postSession));
 app.get('/scenes', expressAdapter(listAllScenes));
 app.post('/scenes/create', expressAdapter(postScene));
 app.get('/scene/:id/props', expressAdapter(listSceneProps));
-//app.post('/scene/:id/assignprops', expressAdapter(postSceneProps));
+app.post('/scene/:id/assignprops', expressAdapter(postSceneProps));
 
 //user
 app.get('/users', expressAdapter(listAllUsers));

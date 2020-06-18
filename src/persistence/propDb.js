@@ -111,6 +111,40 @@ export default function makePropDb({ getDbInstance }) {
         return {};
     }
 
+    async function deletePropsBySceneId({ id: _id }){
+        let conn = await getDbInstance();
+        const query = {
+            name: 'deletePropsBySceneId',
+            text: 'DELETE FROM scene_props where scene_id = $1',
+            values: [_id]
+        };
+
+        let response = [];
+
+        await conn.query(query).then((res) => {
+            response = res.rows;
+        });
+
+        echo(__filename + thisLine(), response);
+    }
+
+    async function createPropBySceneId({ sid: _sid, pid: _pid, shown: _shown }){
+        let conn = await getDbInstance();
+        const query = {
+            name: 'insertPropBySceneId',
+            text: 'INSERT INTO scene_props (scene_id, prop_id, default_shown) VALUES ($1, $2, $3)',
+            values: [_sid, _pid, _shown ]
+        };
+
+        let response = [];
+        await conn.query(query).then((res) => {
+            response = res.rows;
+        });
+         echo(__filename + thisLine(), response);
+    }
+
+    
+
     async function createPropOfTypeBackground({...data}) {     
         console.log(data); 
         let conn = await getDbInstance();
