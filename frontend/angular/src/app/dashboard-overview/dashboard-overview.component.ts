@@ -86,7 +86,9 @@ export class DashboardOverviewComponent implements OnInit {
         this.propSlider(obj);
     });
 
-    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', {}).toPromise();
+    let form = new FormData();
+
+    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', form).toPromise();
     let jsonObjects = Object.values(jsonData);
     let data;
     let labels;
