@@ -15,7 +15,20 @@ export default function createCreateHeartbeat({heartbeatDb, httpRequest}) {
 
         let jsonData;
 
-        await httpRequest("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec.json", { method: 'GET', headers: headers })
+        var currentDate = new Date();
+        var oldDate = new Date(new Date() - 900000);
+
+        var datetimeUntil = (`0${currentDate.getHours().toString()}`).slice(-2) + ":" +
+            	        (`0${currentDate.getMinutes().toString()}`).slice(-2)
+        var datetimeFrom = (`0${oldDate.getHours().toString()}`).slice(-2) + ":" +
+                        (`0${oldDate.getMinutes().toString()}`).slice(-2);
+        
+        let period = datetimeFrom + "/" + datetimeUntil;
+
+        var url = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/" + period + ".json";
+        console.log(url);
+
+        await httpRequest(url, { method: 'GET', headers: headers })
             .then(res => res.json())
             .then(json => jsonData = json['activities-heart-intraday']['dataset']);
 

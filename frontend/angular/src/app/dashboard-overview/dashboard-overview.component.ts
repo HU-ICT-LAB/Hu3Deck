@@ -94,21 +94,16 @@ export class DashboardOverviewComponent implements OnInit {
 
     // setInterval( () => this.showHeartbeat, 5000);
 
-    this.subscription = timer(0, 60000).pipe(
-      switchMap(() => this.showHeartbeat())
-    ).subscribe(result => console.log("yeet"));
-
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
 
       data: {
-
-        labels: this.labels,
+        labels: [],
         datasets: [{
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
           label: "Heart rate",
-          data: this.data,
+          data: [],
           fill: false
         }]
       },
@@ -119,27 +114,36 @@ export class DashboardOverviewComponent implements OnInit {
             ticks: {
               stepSize: 5,
               beginAtZero: false,
-              max: Math.max(...this.data) + (25 - (Math.max(...this.data) % 25))
+              // max: Math.max(...this.data) + (25 - (Math.max(...this.data) % 25))
             }
           }]
         }
       }
     });
+
+    this.subscription = timer(0, 30000).pipe(
+      switchMap(() => this.showHeartbeat())
+    ).subscribe(result => false);
+
+    this.heartRateChart.update();
+
   }
 
   async showHeartbeat() {
     let form = new FormData();
     let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', form).toPromise();
-    let jsonObjects = Object.values(jsonData).slice(-60);
-    this.data = jsonObjects.map( (value) => {
+    let jsonObjects = Object.values(jsonData).slice(-60); 
+
+    this.heartRateChart.data.datasets[0].data = jsonObjects.map( (value) => {
       return value.value;
     });
-    this.labels = jsonObjects.map( (value) => {
+
+    this.heartRateChart.data.labels = jsonObjects.map( (value) => {
       return value.time;
     });
-    this.heartRateChart.data.datasets[0].data = this.data;
-    this.heartRateChart.data.label = this.labels;
+
     this.heartRateChart.update();
+    return this.heartRateChart;
   }
 
 
