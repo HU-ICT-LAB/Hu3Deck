@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
+import { ConstantsService } from '../constants.service';
 
 @Component({
   selector: 'app-assign-object',
@@ -8,7 +10,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./assign-object.component.css']
 })
 export class AssignObjectComponent implements OnInit {
-    scenes = [];
+    scenes: Object;
     form1;
     selectScene: string = '';
     selectedValue: string = '';
@@ -19,21 +21,21 @@ export class AssignObjectComponent implements OnInit {
     ];
 
     allowed= [
-        'Fortnite',
-        '90s',
-        'Bouwen',
-        'Noskin',
-        'Slurp juice',
-        'Boom bow',
-        'Quadruple ramp'
+        //'Fortnite',
+        //'90s',
+        //'Bouwen',
+        //'Noskin',
+        //'Slurp juice',
+        //'Boom bow',
+        //'Quadruple ramp'
     ];
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder, private http: HttpClient, private _constant: ConstantsService) {
 
-    this.scenes = [
-        "test",
-        "test2",
-    ]
+    
+    this.http.get(this._constant.apiLocation + "/scenes").subscribe(data => {
+      this.scenes = data;
+    }); 
 
     this.form1 = this.formBuilder.group({
       selectScene: '',
@@ -53,9 +55,16 @@ export class AssignObjectComponent implements OnInit {
     console.log(formData1);
   }
 
-  onChangeScene(sceneValue) {
+  async onChangeScene(sceneValue) {
       this.selectScene = sceneValue;
       console.log(sceneValue);
+      
+
+    const propsData = await this.http.get(this._constant.apiLocation + "/scene/"+this.selectScene+"/props").toPromise();
+
+    console.log(propsData);
+    this.allowed = Object.values(propsData).map(data => `${data.name} [${data.prop_type}]`);
+      
   }
 
 
