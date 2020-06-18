@@ -95,6 +95,8 @@ io.on('connection', s => {
     io.emit("reload", data);
   });
   
+  s.on("set volume", socketAdapter(io, "change volume", async data => data))
+
   s.on("show prop", socketAdapter(io, "create prop", listPropById ));
 
   s.on("hide prop", socketAdapter(io, "remove prop", async data => data ));

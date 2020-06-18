@@ -26,24 +26,9 @@ export class DashboardOverviewComponent implements OnInit {
 
   defaultSelected;
 
-  hidden = [
-    // 'Hond',
-    // 'Vogel',
-    // 'Zwarte bloem',
-    // 'Boom',
-    // 'Groene boom',
-    // 'Plant',
-    // 'Schaap'
-  ];
+  hidden = [];
 
-  shown = [
-    // 'Fortnite',
-    // 'Apple',
-    // 'koe',
-    // 'nog iets',
-    // 'android',
-    // 'laptop'
-  ];
+  shown = [];
   
   @ViewChild('sliders') sliders: ElementRef;
 
@@ -80,7 +65,8 @@ export class DashboardOverviewComponent implements OnInit {
     this.defaultSelected = this.sessionData['scene_id'];
 
     const propsData = await this.http.get(`http://localhost:3000/scene/${this.sessionData.scene_id}/props`).toPromise();
-    this.shown = Object.values(propsData).map(data => data);
+    this.shown = Object.values(propsData).filter(data => data.default_shown === true);
+    this.hidden = Object.values(propsData).filter(data => data.default_shown === false);
     // `${data.name} [${data.prop_type}] / ${data.id}`
     this.shown.forEach(obj => {
         this.propSlider(obj);
@@ -148,7 +134,15 @@ export class DashboardOverviewComponent implements OnInit {
       });
       this.socket.emit('show prop', { id });
     } else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
-      (<HTMLInputElement>document.querySelector(`[sliderpropid='${id}']`)).remove();
+      let element = (<HTMLInputElement>document.querySelector(`[sliderpropid='${id}']`));
+      
+      if(element !== null) {
+        element.remove();
+      }
+      
+      
+
+
       this.socket.emit('hide prop', { id });
     }
 
@@ -158,21 +152,27 @@ export class DashboardOverviewComponent implements OnInit {
 
 
   propSlider(prop){
+
+    if(prop.audio_path === null) {
+      return false;
+    }
     
       var div = document.createElement("div");
       var input = document.createElement("input");
       var title = document.createElement("p");
     
+      title.innerHTML = prop.name;
 
       div.setAttribute('sliderpropid', prop.id);
-      input.setAttribute('name', prop.name);
-      title.innerHTML = prop.name;
       div.setAttribute('class', 'volume-prop');
+
+      input.setAttribute('name', prop.name);
       input.setAttribute('type', 'range');
       input.setAttribute('propId', prop.id);
+      input.setAttribute('value', prop.volume);
 
       input.addEventListener('change', e => {
-        console.log(input.value, input.getAttribute('propId'));
+        this.socket.emit('set volume', {id: prop.id, volume: input.value} );
       });
 
       div.appendChild(title);

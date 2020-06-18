@@ -8,7 +8,7 @@ function loadSessionEnvironment() {
 
 function loadProps(data) {
     data.scene.props.forEach(val => {
-        let exists = document.querySelector(`[propId=${val.id}], [id=${val.id}]`);
+        let exists = document.querySelector(`[propId='${val.id}']`);
 
         if(exists != null) {
             return;
@@ -19,6 +19,13 @@ function loadProps(data) {
 }
 
 function loadProp(val) {
+    console.log(val);
+    if(val.default_shown !== undefined && val.default_shown === false) {
+        return false;
+    }
+
+    
+
     if(val.background_image_path != null) {
         return makeBackground(val);
     }
@@ -34,12 +41,12 @@ function makeModel(modelObject) {
     aEntity.setAttribute('gltf-model', modelObject.model_path);
 
     if(modelObject.x_pos_scale != null && modelObject.y_pos_scale != null && modelObject.z_pos_scale) {
-        aEntity.setAttribute('scale', `${modelObject.x_pos_scale} ${modelObject.y_pos_scale} ${modelObject.z_pos_scale}`);
+        // `${modelObject.x_pos_scale} ${modelObject.y_pos_scale} ${modelObject.z_pos_scale}`
+        aEntity.setAttribute('scale', {x: modelObject.x_pos_scale, y: modelObject.y_pos_scale, z: modelObject.z_pos_scale });
     }
 
     if(modelObject.x_pos_from != null && modelObject.y_pos_from != null && modelObject.z_pos_from) {
-        aEntity.setAttribute('position', `${modelObject.x_pos_from} ${modelObject.y_pos_from} ${modelObject.z_pos_from}`);
-
+        aEntity.setAttribute('position', {x: modelObject.x_pos_from, y: modelObject.y_pos_from, z: modelObject.z_pos_from });
     }
     
     if(modelObject.animation_mixer != null)  {
@@ -47,7 +54,8 @@ function makeModel(modelObject) {
     }
     
     if(modelObject.x_pos_rot != null && modelObject.y_pos_rot != null && modelObject.z_pos_rot) {
-        aEntity.setAttribute('rotation', `${modelObject.x_pos_rot} ${modelObject.y_pos_rot} ${modelObject.z_pos_rot}`);
+        
+        aEntity.setAttribute('rotation', {x: modelObject.x_pos_rot, y: modelObject.y_pos_rot, z: modelObject.z_pos_rot });
     }
 
     if(modelObject.animation_mixer != null) {
@@ -81,10 +89,20 @@ function makeBackground(backgroundObject) {
 }
 
 function removeProp(id) {
-    let element = document.querySelectorAll(`[propId=${id}]`);
+    let element = document.querySelectorAll(`[propId='${id}']`);
     if(element.length !== 0) {
         element.forEach(e => {
             e.remove();
         });
     }
+}
+
+function changeVolume(data) {
+    let element = document.querySelector(`[propId='${data.id}']`);
+    
+    if(element === null) {
+        return false;
+    }
+
+    element.setAttribute('sound', { volume: data.volume });
 }

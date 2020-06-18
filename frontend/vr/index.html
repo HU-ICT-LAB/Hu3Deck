@@ -47,6 +47,10 @@
             socket.on('reload', data => {
                 loadSessionEnvironment();
             });
+
+            socket.on('change volume', data => {
+                changeVolume(data);
+            });
         </script>
     </body>
 </html>
