@@ -1,4 +1,4 @@
-import { makePropModel, makePropSound, makeProp, makePropMovement, makePropPoint } from '../../entities';
+import { makePropModel, makePropSound, makeProp, makePropMovement, makePropPoint, makePropApi } from '../../entities';
 
 export default function makeCreateOfTypePropModel({ propDb }) {
     return function(propInfo) {         
@@ -7,9 +7,11 @@ export default function makeCreateOfTypePropModel({ propDb }) {
         const propSoundInstance = makePropSound(propInfo);
         const propMovementInstance = makePropMovement(propInfo);
         const propPointInstance = makePropPoint(propInfo);
+        const propApiInstance = makePropApi(propInfo);
 
         const propModel = propDb.createPropOfTypeModel({
             propId: propInstance.getPropId(),
+            apiId: propApiInstance.getId(),
             movementId: propMovementInstance.getMovementId(),
             modelId: propModelInstance.getModelId(),
             soundId: propSoundInstance.getId(),
@@ -40,7 +42,7 @@ export default function makeCreateOfTypePropModel({ propDb }) {
             yRotation: propPointInstance.getYRotation(),
             zRotation: propPointInstance.getZRotation(),
 
-            movementType: propMovementInstance.getMovementType(),
+            movement: propMovementInstance.getMovement(),
             xPosition: propPointInstance.getXpos(),
             yPosition: propPointInstance.getYpos(),
             zPosition: propPointInstance.getZpos(),
@@ -53,7 +55,9 @@ export default function makeCreateOfTypePropModel({ propDb }) {
 
             duration: propMovementInstance.getDuration(),
             loop: propMovementInstance.getLoop(),
-            easing: propMovementInstance.getEasing()
+            easing: propMovementInstance.getEasing(),
+
+            url: propApiInstance.getUrl()
         });
         return propModel;
     }

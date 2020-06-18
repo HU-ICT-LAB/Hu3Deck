@@ -1,9 +1,7 @@
 export default function buildMakePropApi({uid, sanitize}) {
     return function makePropApi({
         id = uid(),
-        //webhook gegevens uit de form sluiten niet aan aan de database gegevens
-        //moet nog met arjan bespreken hoe dat zit dus voor nu insert zonder
-        //webhook.
+        url
 
     } = {}) {
         
@@ -14,7 +12,8 @@ export default function buildMakePropApi({uid, sanitize}) {
         }
 
         return Object.freeze({
-
+            getId: () => id,
+            getUrl:() => url
         });
     }
 }

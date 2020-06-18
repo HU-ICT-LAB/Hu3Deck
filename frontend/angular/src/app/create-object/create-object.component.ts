@@ -98,7 +98,12 @@ export class CreateObjectComponent implements OnInit {
     this.volume = volumeValue;
   }
 
-  onSubmit(data){
+  onSubmit(data){   
+    const name = this.createProp.get('triggerName').value;
+    const token = this.createProp.get('token').value;
+    const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
+    // this.webhookApi(apiLink);
+
     console.log("hallo dit is etestestest", data);
     if(this.propType == 'Model'){
       if(this.movement == 'Stationary'){
@@ -114,6 +119,36 @@ export class CreateObjectComponent implements OnInit {
         delete data.easing;
 
         console.log(data);
+
+        data.modelFile = this.modelFile;
+        data.audioFile = this.audioFile;
+    
+        const body = new FormData();
+        body.append('modelFile', this.modelFile);
+        body.append('audioFile', this.audioFile);
+        body.append('propName', data.propName);
+        body.append('propType', data.propType);
+        body.append('model', data.model = this.model);
+        body.append('audio', data.audio = this.audio);
+        body.append('volume', data.volume);
+        body.append('animationMixer', data.animationMixer);
+        body.append('xScale', data.xScale);
+        body.append('yScale', data.yScale);
+        body.append('zScale', data.zScale);
+        body.append('xRotation', data.xRotation);
+        body.append('yRotation', data.yRotation);
+        body.append('zRotation', data.zRotation);
+        body.append('movement', data.movement);
+        body.append('xPosition', data.xPosition);
+        body.append('yPosition', data.yPosition);
+        body.append('zPosition', data.zPosition);
+        body.append('url', apiLink);
+
+        this.http.post('http://localhost:3000/prop/createModel', body).subscribe(dataa => {
+          console.log(dataa);
+        }, response => {
+          console.log(response);
+        });
       }
       else if(this.movement == 'Linear'){
         delete data.backgroundImage;
@@ -121,6 +156,42 @@ export class CreateObjectComponent implements OnInit {
         delete data.yOuterPosition;
         delete data.zOuterPosition;
         console.log(data);
+
+        data.modelFile = this.modelFile;
+        data.audioFile = this.audioFile;
+    
+        const body = new FormData();
+        body.append('modelFile', this.modelFile);
+        body.append('audioFile', this.audioFile);
+        body.append('propName', data.propName);
+        body.append('propType', data.propType);
+        body.append('model', data.model = this.model);
+        body.append('audio', data.audio = this.audio);
+        body.append('volume', data.volume);
+        body.append('animationMixer', data.animationMixer);
+        body.append('xScale', data.xScale);
+        body.append('yScale', data.yScale);
+        body.append('zScale', data.zScale);
+        body.append('xRotation', data.xRotation);
+        body.append('yRotation', data.yRotation);
+        body.append('zRotation', data.zRotation);
+        body.append('movement', data.movement);
+        body.append('xPosition', data.xPosition);
+        body.append('yPosition', data.yPosition);
+        body.append('zPosition', data.zPosition);
+        body.append('xToPosition', data.xToPosition);
+        body.append('yToPosition', data.yToPosition);
+        body.append('zToPosition', data.zToPosition);
+        body.append('duration', data.duration);
+        body.append('loop', data.loop);
+        body.append('easing', data.easing);
+        body.append('url', apiLink);
+
+        this.http.post('http://localhost:3000/prop/createModel', body).subscribe(dataa => {
+          console.log(dataa);
+        }, response => {
+          console.log(response);
+        });
       }
       else if(this.movement == 'Rotation'){
         delete data.backgroundImage;
@@ -161,8 +232,7 @@ export class CreateObjectComponent implements OnInit {
         body.append('duration', data.duration);
         body.append('loop', data.loop);
         body.append('easing', data.easing);
-        body.append('triggerName', data.triggerName);
-        body.append('token', data.token);
+        body.append('url', apiLink);
 
         this.http.post('http://localhost:3000/prop/createModel', body).subscribe(dataa => {
           console.log(dataa);
@@ -218,11 +288,6 @@ export class CreateObjectComponent implements OnInit {
         console.log(response);
       });
     }
-
-    const name = this.createProp.get('triggerName').value;
-    const token = this.createProp.get('token').value;
-    const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
-    this.webhookApi(apiLink);
   }
 
   webhookApi(url: string) {

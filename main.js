@@ -83,7 +83,7 @@ const modelPropFileFields = upload.fields([
   { name: 'audioFile', maxCount: 1 }
 ]);
 
-app.post('/prop/createProp', modelPropFileFields, expressAdapter(postPropModel));
+app.post('/prop/createModel', modelPropFileFields, expressAdapter(postPropModel));
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(`${__dirname}/frontend/vr/index.html`);
