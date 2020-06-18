@@ -7,14 +7,14 @@ export default function makePostHeartbeat({ createHeartbeat }) {
         try {
             const {...data } = httpRequest.body
 
-            const createdHeartbeat = await createHeartbeat({
-                ...data
-            });
+            // const createdHeartbeat = await createHeartbeat({
+            //     ...data
+            // });
 
             return {
                 headers,
                 statusCode: 200,
-                body: createdHeartbeat
+                body: {}
             }
 
 

@@ -86,21 +86,26 @@ export class DashboardOverviewComponent implements OnInit {
         this.propSlider(obj);
     });
 
+    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', {}).toPromise();
+    let jsonObjects = Object.values(jsonData);
+    let data;
+    let labels;
 
-    let data = [
-      68,
-      70,
-      91,
-      70,
-      63,
-      65,
-    ];
+    jsonObjects.forEach(element => {
+      data += element['value']
+      labels += element['time']
+    });
+
+    console.log(data);
+    console.log(labels);
+
+
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
 
       data: {
 
-        labels: ['10:52:05', '10:52:10', '10:52:15', '10:52:20', '10:52:25', '10:52:30'],
+        labels: labels.slice(Math.max(labels.length - 5, 1)),
         datasets: [{
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
