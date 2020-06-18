@@ -16,8 +16,8 @@ export class AssignObjectComponent implements OnInit {
     selectedValue: string = '';
 
     prohibited = [
-        'Apex',
-        'Android'
+       // 'Apex',
+        //'Android'
     ];
 
     allowed= [
@@ -60,11 +60,14 @@ export class AssignObjectComponent implements OnInit {
       console.log(sceneValue);
       
 
-    const propsData = await this.http.get(this._constant.apiLocation + "/scene/"+this.selectScene+"/props").toPromise();
+      const propsData = await this.http.get(this._constant.apiLocation + "/scene/"+this.selectScene+"/props").toPromise();
+      this.allowed = Object.values(propsData).map(data => data);
 
-    console.log(propsData);
-    this.allowed = Object.values(propsData).map(data => `${data.name} [${data.prop_type}]`);
-      
+
+      const propsDataNotActive = await this.http.get(this._constant.apiLocation + "/props/notactive").toPromise();
+      console.log(propsDataNotActive);
+      this.prohibited = Object.values(propsDataNotActive).map(data => data);
+    
   }
 
 
@@ -79,6 +82,10 @@ export class AssignObjectComponent implements OnInit {
                 event.previousIndex,
                 event.currentIndex);
         }
+    }
+
+    cancel(){
+      window.location.href = "/";
     }
 
 }

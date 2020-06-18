@@ -38,7 +38,7 @@
                     <div cdkDropList #ProhibitedList="cdkDropList" [cdkDropListData]="prohibited"
                         [cdkDropListConnectedTo]="[AllowedList]" class="item-list"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="item-box" *ngFor="let item of prohibited" cdkDrag>{{item}}</div>
+                        <div class="item-box" *ngFor="let item of prohibited" cdkDrag>{{item.name}} [{{item.prop_type}}]</div>
                     </div>
                 </div>
             </div>
@@ -48,12 +48,12 @@
 
                     <div cdkDropList #AllowedList="cdkDropList" [cdkDropListData]="allowed"
                         [cdkDropListConnectedTo]="[ProhibitedList]" class="item-list" (cdkDropListDropped)="drop($event)">
-                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item}}<input type="checkbox" [name]="item" value="default"></div>
+                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item.name}} [{{item.prop_type}}]<label for="checkbox" style="position: absolute; right: 57px;">Default shown</label><input type="checkbox" id="checkbox" [name]="item" [checked]="item.default_shown"></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-9 col-sm-9">
-                <button class="btn btn-primary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="button" (click)="cancel()">Cancel</button>
                 <button class="btn btn-success" type="submit">Save</button>
             </div>
         </div>

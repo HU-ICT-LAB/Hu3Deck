@@ -2,7 +2,8 @@ export default function makePropDb({ getDbInstance }) {
     return Object.freeze({
         findBySceneId,
         findById,
-        createPropOfTypeBackground
+        createPropOfTypeBackground,
+        findNotActive
     });
     
     async function findBySceneId({id: _id}) {
@@ -16,7 +17,7 @@ export default function makePropDb({ getDbInstance }) {
                 po2.x_pos as x_pos_to, po2.y_pos as y_pos_to, po2.z_pos as z_pos_to,
                 po3.x_pos as x_pos_outer, po3.y_pos as y_pos_outer, po3.z_pos as z_pos_outer,
                 scalepoint.x_pos as x_pos_scale, scalepoint.y_pos as y_pos_scale, scalepoint.z_pos as z_pos_scale,
-                rotpoint.x_pos as x_pos_rot, rotpoint.y_pos as y_pos_rot, rotpoint.z_pos as z_pos_rot
+                rotpoint.x_pos as x_pos_rot, rotpoint.y_pos as y_pos_rot, rotpoint.z_pos as z_pos_rot, sp.default_shown as default_shown
                  from prop p
                  inner join scene_props sp on p.id = sp.prop_id
                  left join background b on b.id = p.background_id
@@ -81,6 +82,30 @@ export default function makePropDb({ getDbInstance }) {
 
         if(response.length > 0) {
             return response[0];
+        }
+
+        return {};
+    }
+
+    async function findNotActive(){
+        let conn = await getDbInstance();
+        const query = {
+            name: 'findPropsNotActive',
+            text: 
+                `select * from prop p
+                left outer join scene_props sp on p.id = sp.prop_id
+                where scene_id is null and p.name != ''`,
+        };
+
+        let response = [];
+        
+        await conn.query(query).then((res) => {
+            response = res.rows;
+            conn.end();
+        });
+
+        if(response.length > 0) {
+            return response;
         }
 
         return {};
