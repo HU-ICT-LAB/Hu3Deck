@@ -6,7 +6,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ConstantsService } from '../constants.service';
-
+import { Subscription, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 
 
@@ -68,6 +69,11 @@ export class DashboardOverviewComponent implements OnInit {
 
       // this.webSocketService.emit('change scene', data);
 
+  subscription: Subscription;
+  statusText: string;
+
+  data = [];
+  labels = [];
 
   async ngOnInit() {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
@@ -86,33 +92,23 @@ export class DashboardOverviewComponent implements OnInit {
         this.propSlider(obj);
     });
 
-    let form = new FormData();
+    // setInterval( () => this.showHeartbeat, 5000);
 
-    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', form).toPromise();
-    let jsonObjects = Object.values(jsonData);
-    let data;
-    let labels;
-
-    jsonObjects.forEach(element => {
-      data += element['value']
-      labels += element['time']
-    });
-
-    console.log(data);
-    console.log(labels);
-
+    this.subscription = timer(0, 60000).pipe(
+      switchMap(() => this.showHeartbeat())
+    ).subscribe(result => console.log("yeet"));
 
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
 
       data: {
 
-        labels: labels.slice(Math.max(labels.length - 5, 1)),
+        labels: this.labels,
         datasets: [{
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
           label: "Heart rate",
-          data: data,
+          data: this.data,
           fill: false
         }]
       },
@@ -121,9 +117,9 @@ export class DashboardOverviewComponent implements OnInit {
         scales: {
           yAxes: [{
             ticks: {
-              stepSize: 15,
-              beginAtZero: true,
-              max: Math.max(...data) + (15 - (Math.max(...data) % 15))
+              stepSize: 5,
+              beginAtZero: false,
+              max: Math.max(...this.data) + (25 - (Math.max(...this.data) % 25))
             }
           }]
         }
@@ -131,6 +127,20 @@ export class DashboardOverviewComponent implements OnInit {
     });
   }
 
+  async showHeartbeat() {
+    let form = new FormData();
+    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', form).toPromise();
+    let jsonObjects = Object.values(jsonData).slice(-60);
+    this.data = jsonObjects.map( (value) => {
+      return value.value;
+    });
+    this.labels = jsonObjects.map( (value) => {
+      return value.time;
+    });
+    this.heartRateChart.data.datasets[0].data = this.data;
+    this.heartRateChart.data.label = this.labels;
+    this.heartRateChart.update();
+  }
 
 
 
