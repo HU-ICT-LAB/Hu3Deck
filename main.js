@@ -80,7 +80,7 @@ const backgroundPropFileFields = upload.fields([
 
 app.post('/prop/createBackground', backgroundPropFileFields, expressAdapter(postPropBackground));
 
-app.get('/props/notactive', expressAdapter(listNotActiveProps));
+app.get('/scene/:id/props/notactive', expressAdapter(listNotActiveProps));
 
 
 

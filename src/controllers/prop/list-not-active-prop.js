@@ -6,7 +6,9 @@ export default function makeListNotActiveProps({ getNotActiveProps }) {
         };
 
         try {
-            let props = await getNotActiveProps();
+            const id = httpRequest.params.id;
+
+            let props = await getNotActiveProps(id);
 
             return {
                 headers,

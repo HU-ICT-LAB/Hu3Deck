@@ -1,19 +1,21 @@
-export default function makePostSceneProps({ postSceneProps }) {
+export default function makePostSceneProps({ createSceneProps }) {
     return async function postSceneProps(httpRequest) {
         const headers = {
             'Content-Type': 'application/json',
-            
         };
 
+        let id = httpRequest.params.id;
+
         try {
-            let props = await postSceneProps({
-                id: httpRequest.params.id
+            let props = await createSceneProps({
+                id,
+                ...httpRequest.body
             });
 
             return {
                 headers,
                 statusCode: 200,
-                body: props
+                body: {rowCount: props}
             }
 
 

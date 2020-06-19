@@ -3,7 +3,9 @@ export default function makePropDb({ getDbInstance }) {
         findBySceneId,
         findById,
         createPropOfTypeBackground,
-        findNotActive
+        findNotActive,
+        deletePropsBySceneId,
+        createPropBySceneId
     });
     
     async function findBySceneId({id: _id}) {
@@ -87,14 +89,16 @@ export default function makePropDb({ getDbInstance }) {
         return {};
     }
 
-    async function findNotActive(){
+    async function findNotActive(id){
         let conn = await getDbInstance();
         const query = {
             name: 'findPropsNotActive',
             text: 
-                `select * from prop p
-                left outer join scene_props sp on p.id = sp.prop_id
-                where scene_id is null and p.name != ''`,
+                `select * from prop where name != '' and id not in (
+                    select sp.prop_id from scene_props sp 
+                    where scene_id = $1
+                )`,
+            values: [id]
         };
 
         let response = [];
@@ -119,28 +123,42 @@ export default function makePropDb({ getDbInstance }) {
             values: [_id]
         };
 
-        let response = [];
+        let response = 0;
 
         await conn.query(query).then((res) => {
-            response = res.rows;
+            response = res.rowCount;
+            conn.end();
         });
 
-        echo(__filename + thisLine(), response);
+        return response;
     }
 
-    async function createPropBySceneId({ sid: _sid, pid: _pid, shown: _shown }){
+    async function createPropBySceneId({ sid: _sid, json: _json }){
+        let index = 1;
+        let bindParams = Array(_json.length).fill(0).map(v => `(${Array(3).fill(0).map(val => `$${index++}`).join(',')})`).join(',');
+        
+        let values = _json.map(v => {
+            let array = Object.values(v);
+            array.unshift(_sid);
+            return array;
+        });
+
+        values = values.reduce((acc, v) => acc.concat(...v)); 
+
         let conn = await getDbInstance();
         const query = {
             name: 'insertPropBySceneId',
-            text: 'INSERT INTO scene_props (scene_id, prop_id, default_shown) VALUES ($1, $2, $3)',
-            values: [_sid, _pid, _shown ]
+            text: `INSERT INTO scene_props (scene_id, prop_id, default_shown) VALUES ${bindParams}`,
+            values
         };
 
-        let response = [];
+        let response;
         await conn.query(query).then((res) => {
-            response = res.rows;
+            response = res.rowCount;
+            conn.end();
         });
-         echo(__filename + thisLine(), response);
+
+        return response;
     }
 
     
@@ -181,6 +199,7 @@ export default function makePropDb({ getDbInstance }) {
 
         await conn.query(insertIntoPropQuery).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
         echo(__filename + thisLine(), response);

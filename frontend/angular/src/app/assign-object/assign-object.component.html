@@ -32,9 +32,12 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content" style="display: block;">
+            <div style="display:none" class="alert alert-success alert-dismissible " role="alert">
+                Your changes have been saved.
+            </div>
             <div class="col-md-6">
                 <div class="drag-container">
-                    <div class="section-heading">Prohibited Props</div>
+                    <div class="section-heading">Non-assigned Props</div>
                     <div cdkDropList #ProhibitedList="cdkDropList" [cdkDropListData]="prohibited"
                         [cdkDropListConnectedTo]="[AllowedList]" class="item-list"
                         (cdkDropListDropped)="drop($event)">
@@ -44,11 +47,11 @@
             </div>
             <div class="col-md-6">
                 <div class="drag-container">
-                    <div class="section-heading">Allowed Props</div>
+                    <div class="section-heading">Assigned Props</div>
 
                     <div cdkDropList #AllowedList="cdkDropList" [cdkDropListData]="allowed"
                         [cdkDropListConnectedTo]="[ProhibitedList]" class="item-list" (cdkDropListDropped)="drop($event)">
-                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item.name}} [{{item.prop_type}}]<label for="checkbox" style="position: absolute; right: 57px;">Default shown</label><input type="checkbox" id="checkbox" [name]="item" [checked]="item.default_shown"></div>
+                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item.name}} [{{item.prop_type}}]<label for="checkbox" style="position: absolute; right: 57px;">Default shown</label><input type="checkbox" id="checkbox" (change)="changeStatus(item)" [name]="item.id" [checked]="item.default_shown"></div>
                     </div>
                 </div>
             </div>
