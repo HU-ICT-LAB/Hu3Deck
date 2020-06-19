@@ -8,6 +8,7 @@ import buildMakeUser from './user';
 import buildMakePropBackground from './propBackground';
 import buildMakePropSound from './propSound';
 import buildMakeProp from './prop';
+import buildMakeFitbit from './fitbit';
 
 
 const makeUser = buildMakeUser({ uid, sanitize });
@@ -16,7 +17,8 @@ const makeHeartbeat = buildMakeHeartbeat({uid});
 const makeScene = buildMakeScene({uid});
 const makePropBackground = buildMakePropBackground({uid});
 const makePropSound = buildMakePropSound({uid});
-const makeProp = buildMakeProp({uid, sanitize})
+const makeProp = buildMakeProp({uid, sanitize});
+const makeFitbit = buildMakeFitbit({uid});
 
 function sanitize(text) {
     return sanitizeHtml(text, {
@@ -28,5 +30,5 @@ function uid() {
     return shortid.generate();
 }
 
-export default { makeSession, makeHeartbeat, makeScene, makeUser, makePropBackground, makePropSound, makeProp }
-export { makeSession, makeHeartbeat, makeScene, makeUser, makePropBackground, makePropSound, makeProp }
+export default { makeSession, makeHeartbeat, makeScene, makeUser, makePropBackground, makePropSound, makeProp, makeFitbit }
+export { makeSession, makeHeartbeat, makeScene, makeUser, makePropBackground, makePropSound, makeProp, makeFitbit }
