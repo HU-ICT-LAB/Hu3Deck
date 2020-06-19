@@ -41,7 +41,7 @@ import { listPropById } from './src/socket-controllers/prop';
 
 //controllers
 import { listSceneProps, postPropBackground, listNotActiveProps, postSceneProps } from './src/controllers/prop';
-import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
+import { listSessions, postSession, listActiveSession, putSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
 import { listHeartbeat, postHeartbeat } from './src/controllers/heartbeat';
@@ -56,6 +56,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/sessions/:id', expressAdapter(listSessions));
 app.get('/session/active', expressAdapter(listActiveSession));
 app.post('/sessions/create', expressAdapter(postSession));
+app.post('/session/update', expressAdapter(putSession));
 
 //scene
 app.get('/scenes', expressAdapter(listAllScenes));
@@ -100,9 +101,13 @@ io.on('connection', s => {
     io.emit("reload", data);
   });
   
+  s.on("set volume", socketAdapter(io, "change volume", async data => data))
+
   s.on("show prop", socketAdapter(io, "create prop", listPropById ));
 
   s.on("hide prop", socketAdapter(io, "remove prop", async data => data ));
+
+  s.on("reset scene", socketAdapter(io, "remake scene", async data => data));
   
 });
 

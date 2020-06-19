@@ -13,11 +13,16 @@ export default function createUpdateSession({sessionDb}) {
         }
 
 
-        const session = makeSession({...existingSession, ...changes});
+
+
+        // const session = makeSession({...existingSession, ...changes});
 
 
         const updatedSession = sessionDb.update({
-            sceneId: session.getSceneId()
+            scene_id: changes.scene_id,
+            id
         });
+
+        return updatedSession;
     }
 }

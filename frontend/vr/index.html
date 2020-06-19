@@ -35,16 +35,16 @@
 
             var socket = io();
             socket.on('remove prop', (data) => {
-                console.log('remove', data);
                 removeProp(data.id);
             });
 
-            socket.on('create prop', (data) => {
-                console.log('create', data);
-                loadProp(data);
-            });
+            socket.on('create prop', loadProp);
 
-            socket.on('reload', data => {
+            socket.on('reload', loadSessionEnvironment);
+
+            socket.on('change volume', changeVolume);
+
+            socket.on("remake scene", data => {
                 loadSessionEnvironment();
             });
         </script>

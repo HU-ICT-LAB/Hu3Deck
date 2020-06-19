@@ -15,6 +15,7 @@ module.exports = function makeExpressCallback (controller) {
         }
       };
 
+
       controller(httpRequest)
         .then(httpResponse => {
           if (httpResponse.headers) {
@@ -25,6 +26,6 @@ module.exports = function makeExpressCallback (controller) {
           res.type('json');
           res.status(httpResponse.statusCode).send(httpResponse.body);
         })
-        .catch(e => {console.log(e); return res.status(500).send({ error: 'An unkown error occurred.' })});
+        .catch(e => { console.log(e); return res.status(500).send({ error: 'An unkown error occurred.' })});
     }
   }
