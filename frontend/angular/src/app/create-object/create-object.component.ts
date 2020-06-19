@@ -64,10 +64,15 @@ export class CreateObjectComponent implements OnInit {
   }
 
   onChangePropType(propTypeValue) {
+    this.createProp.reset();
+    this.ngOnInit();
+    this.movement = null;
+    this.propType = propTypeValue;
     this.audio = undefined;
     this.model = undefined;
     this.backgroundImage = undefined;
-    this.propType = propTypeValue;
+    this.modelFile = undefined;
+    this.backgroundImageFile = undefined;
   }
 
   onChangeMovement(movementType){

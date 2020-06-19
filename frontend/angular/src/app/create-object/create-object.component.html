@@ -10,7 +10,7 @@
                 <div class="item form-group">
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Prop Type <span class="required">*</span></label>
                     <div class="col-md-9">
-                        <select (change)="onChangePropType($event.target.value)" class="form-control" formControlName="propType" name="propType" id="">
+                        <select (change)="onChangePropType($event.target.value)" class="form-control" formControlName="propType" name="propType" id="propTypeId">
                             <option value="" disabled selected>Select prop type</option>
                             <option *ngFor="let propType of propTypes" [value]="propType">{{ propType }}</option>
                          </select>
