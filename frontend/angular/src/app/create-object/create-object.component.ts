@@ -23,7 +23,6 @@ export class CreateObjectComponent implements OnInit {
   modelFile;
   audioFile;
   valid = false;
-  amountInvalid = 0;
 
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
@@ -100,7 +99,28 @@ export class CreateObjectComponent implements OnInit {
     this.volume = volumeValue;
   }
 
-  onSubmit(data){   
+  onSubmit(data){
+    var propNameValidate = document.getElementById("propNameValidate");
+    var backgroundValidate = document.getElementById("backgroundValidate");
+    var modelValidate = document.getElementById("modelValidate");
+    var xScaleValidate = document.getElementById("xScaleValidate");
+    var yScaleValidate = document.getElementById("yScaleValidate");
+    var zScaleValidate = document.getElementById("zScaleValidate");
+    var xRotationValidate = document.getElementById("xRotationValidate");
+    var yRotationValidate = document.getElementById("yRotationValidate");
+    var zRotationValidate = document.getElementById("zRotationValidate");
+    var xPositionValidate = document.getElementById("xPositionValidate");
+    var yPositionValidate = document.getElementById("yPositionValidate");
+    var zPositionValidate = document.getElementById("zPositionValidate");
+    var xToPositionValidate = document.getElementById("xToPositionValidate");
+    var yToPositionValidate = document.getElementById("yToPositionValidate");
+    var zToPositionValidate = document.getElementById("zToPositionValidate");
+    var xOuterPositionValidate = document.getElementById("xOuterPositionValidate");
+    var yOuterPositionValidate = document.getElementById("yOuterPositionValidate");
+    var zOuterPositionValidate = document.getElementById("zOuterPositionValidate");
+    var durationValidate = document.getElementById("durationValidate");
+    var loopValidate = document.getElementById("loopValidate");
+    
     const name = this.createProp.get('triggerName').value;
     const token = this.createProp.get('token').value;
     const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
@@ -119,7 +139,119 @@ export class CreateObjectComponent implements OnInit {
         delete data.loop;
         delete data.easing;
 
-        console.log(data);
+        if(data.propName == ''){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          propNameValidate.innerHTML = "";
+        }
+
+        if(this.modelFile == undefined || data.model == undefined){
+          modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          modelValidate.innerHTML = "";
+        }
+
+        if(data.xScale == null){
+          xScaleValidate.innerHTML = "<label style='color:red;'>X scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xScaleValidate.innerHTML = "";
+        }
+
+        if(data.yScale == null){
+          yScaleValidate.innerHTML = "<label style='color:red;'>Y scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yScaleValidate.innerHTML = "";
+        }
+
+        if(data.zScale == null){
+          zScaleValidate.innerHTML = "<label style='color:red;'>Z scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zScaleValidate.innerHTML = "";
+        }
+
+        
+        if(data.xRotation == null){
+          xRotationValidate.innerHTML = "<label style='color:red;'>X rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xRotationValidate.innerHTML = "";
+        }
+
+        if(data.yRotation == null){
+          yRotationValidate.innerHTML = "<label style='color:red;'>Y rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yRotationValidate.innerHTML = "";
+        }
+
+        if(data.zRotation == null){
+          zRotationValidate.innerHTML = "<label style='color:red;'>Z rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zRotationValidate.innerHTML = "";
+        }
+
+        if(data.xPosition == null){
+          xPositionValidate.innerHTML = "<label style='color:red;'>X Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xPositionValidate.innerHTML = "";
+        }
+
+        if(data.yPosition == null){
+          yPositionValidate.innerHTML = "<label style='color:red;'>Y Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yPositionValidate.innerHTML = "";
+        }
+
+        if(data.zPosition == null){
+          zPositionValidate.innerHTML = "<label style='color:red;'>Z Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zPositionValidate.innerHTML = "";
+        }
+
+        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" && 
+        xScaleValidate.innerHTML == "" && yScaleValidate.innerHTML == "" &&
+        zScaleValidate.innerHTML == "" && xRotationValidate.innerHTML == "" &&
+        yRotationValidate.innerHTML == "" && zRotationValidate.innerHTML == "" &&
+        xPositionValidate.innerHTML == "" &&  yPositionValidate.innerHTML == "" &&
+        zPositionValidate.innerHTML == "")
+        {
+          this.valid = true;
+        }
+
+        if(!this.valid){   
+          return;
+        }
 
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
@@ -156,7 +288,168 @@ export class CreateObjectComponent implements OnInit {
         delete data.xOuterPosition;
         delete data.yOuterPosition;
         delete data.zOuterPosition;
-        console.log(data);
+        
+        if(data.propName == ''){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          propNameValidate.innerHTML = "";
+        }
+
+        if(this.modelFile == undefined || data.model == undefined){
+          modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          modelValidate.innerHTML = "";
+        }
+
+        if(data.xScale == null){
+          xScaleValidate.innerHTML = "<label style='color:red;'>X scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xScaleValidate.innerHTML = "";
+        }
+
+        if(data.yScale == null){
+          yScaleValidate.innerHTML = "<label style='color:red;'>Y scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yScaleValidate.innerHTML = "";
+        }
+
+        if(data.zScale == null){
+          zScaleValidate.innerHTML = "<label style='color:red;'>Z scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zScaleValidate.innerHTML = "";
+        }
+
+        
+        if(data.xRotation == null){
+          xRotationValidate.innerHTML = "<label style='color:red;'>X rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xRotationValidate.innerHTML = "";
+        }
+
+        if(data.yRotation == null){
+          yRotationValidate.innerHTML = "<label style='color:red;'>Y rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yRotationValidate.innerHTML = "";
+        }
+
+        if(data.zRotation == null){
+          zRotationValidate.innerHTML = "<label style='color:red;'>Z rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zRotationValidate.innerHTML = "";
+        }
+
+        if(data.xPosition == null){
+          xPositionValidate.innerHTML = "<label style='color:red;'>X Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xPositionValidate.innerHTML = "";
+        }
+
+        if(data.yPosition == null){
+          yPositionValidate.innerHTML = "<label style='color:red;'>Y Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yPositionValidate.innerHTML = "";
+        }
+
+        if(data.zPosition == null){
+          zPositionValidate.innerHTML = "<label style='color:red;'>Z Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zPositionValidate.innerHTML = "";
+        }
+
+        if(data.xToPosition == null){
+          xToPositionValidate.innerHTML = "<label style='color:red;'>X To Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xToPositionValidate.innerHTML = "";
+        }
+
+        if(data.yToPosition == null){
+          yToPositionValidate.innerHTML = "<label style='color:red;'>Y To Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yToPositionValidate.innerHTML = "";
+        }
+
+        if(data.zToPosition == null){
+          zToPositionValidate.innerHTML = "<label style='color:red;'>Z To Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zToPositionValidate.innerHTML = "";
+        }
+
+        if(data.duration == null){
+          durationValidate.innerHTML = "<label style='color:red;'>Duration is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          durationValidate.innerHTML = "";
+        }
+
+        if(data.loop == ""){
+          loopValidate.innerHTML = "<label style='color:red;'>Loop is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          loopValidate.innerHTML = "";
+        }
+
+
+        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" && 
+        xScaleValidate.innerHTML == "" && yScaleValidate.innerHTML == "" &&
+        zScaleValidate.innerHTML == "" && xRotationValidate.innerHTML == "" &&
+        yRotationValidate.innerHTML == "" && zRotationValidate.innerHTML == "" &&
+        xPositionValidate.innerHTML == "" &&  yPositionValidate.innerHTML == "" &&
+        zPositionValidate.innerHTML == "" && xToPositionValidate.innerHTML == "" &&
+        yToPositionValidate.innerHTML == "" && zToPositionValidate.innerHTML == "" &&
+        durationValidate.innerHTML == "" && loopValidate.innerHTML == "")
+        {
+          this.valid = true;
+        }
+
+        if(!this.valid){   
+          return;
+        }
 
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
@@ -200,6 +493,197 @@ export class CreateObjectComponent implements OnInit {
 
         const options = {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+        }
+
+        if(data.propName == ''){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          propNameValidate.innerHTML = "";
+        }
+
+        if(this.modelFile == undefined || data.model == undefined){
+          modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          modelValidate.innerHTML = "";
+        }
+
+        if(data.xScale == null){
+          xScaleValidate.innerHTML = "<label style='color:red;'>X scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xScaleValidate.innerHTML = "";
+        }
+
+        if(data.yScale == null){
+          yScaleValidate.innerHTML = "<label style='color:red;'>Y scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yScaleValidate.innerHTML = "";
+        }
+
+        if(data.zScale == null){
+          zScaleValidate.innerHTML = "<label style='color:red;'>Z scale is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zScaleValidate.innerHTML = "";
+        }
+
+        
+        if(data.xRotation == null){
+          xRotationValidate.innerHTML = "<label style='color:red;'>X rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xRotationValidate.innerHTML = "";
+        }
+
+        if(data.yRotation == null){
+          yRotationValidate.innerHTML = "<label style='color:red;'>Y rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yRotationValidate.innerHTML = "";
+        }
+
+        if(data.zRotation == null){
+          zRotationValidate.innerHTML = "<label style='color:red;'>Z rotation is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zRotationValidate.innerHTML = "";
+        }
+
+        if(data.xPosition == null){
+          xPositionValidate.innerHTML = "<label style='color:red;'>X Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xPositionValidate.innerHTML = "";
+        }
+
+        if(data.yPosition == null){
+          yPositionValidate.innerHTML = "<label style='color:red;'>Y Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yPositionValidate.innerHTML = "";
+        }
+
+        if(data.zPosition == null){
+          zPositionValidate.innerHTML = "<label style='color:red;'>Z Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zPositionValidate.innerHTML = "";
+        }
+
+        if(data.xToPosition == null){
+          xToPositionValidate.innerHTML = "<label style='color:red;'>X To Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xToPositionValidate.innerHTML = "";
+        }
+
+        if(data.yToPosition == null){
+          yToPositionValidate.innerHTML = "<label style='color:red;'>Y To Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yToPositionValidate.innerHTML = "";
+        }
+
+        if(data.zToPosition == null){
+          zToPositionValidate.innerHTML = "<label style='color:red;'>Z To Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zToPositionValidate.innerHTML = "";
+        }
+
+        if(data.xOuterPosition == null){
+          xOuterPositionValidate.innerHTML = "<label style='color:red;'>X Outer Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          xOuterPositionValidate.innerHTML = "";
+        }
+
+        if(data.yOuterPosition == null){
+          yOuterPositionValidate.innerHTML = "<label style='color:red;'>Y Outer Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          yOuterPositionValidate.innerHTML = "";
+        }
+
+        if(data.zOuterPosition == null){
+          zOuterPositionValidate.innerHTML = "<label style='color:red;'>Z Outer Position is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          zOuterPositionValidate.innerHTML = "";
+        }
+
+        if(data.duration == null){
+          durationValidate.innerHTML = "<label style='color:red;'>Duration is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          durationValidate.innerHTML = "";
+        }
+
+        if(data.loop == ""){
+          loopValidate.innerHTML = "<label style='color:red;'>Loop is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          loopValidate.innerHTML = "";
+        }
+
+
+        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" && 
+        xScaleValidate.innerHTML == "" && yScaleValidate.innerHTML == "" &&
+        zScaleValidate.innerHTML == "" && xRotationValidate.innerHTML == "" &&
+        yRotationValidate.innerHTML == "" && zRotationValidate.innerHTML == "" &&
+        xPositionValidate.innerHTML == "" &&  yPositionValidate.innerHTML == "" &&
+        zPositionValidate.innerHTML == "" && xToPositionValidate.innerHTML == "" &&
+        yToPositionValidate.innerHTML == "" && zToPositionValidate.innerHTML == "" &&
+        durationValidate.innerHTML == "" && loopValidate.innerHTML == "" &&
+        xOuterPositionValidate.innerHTML == "" && yOuterPositionValidate.innerHTML == "" &&
+        zOuterPositionValidate.innerHTML == "")
+        {
+          this.valid = true;
+        }
+
+        if(!this.valid){   
+          return;
         }
   
         data.modelFile = this.modelFile;
@@ -267,35 +751,29 @@ export class CreateObjectComponent implements OnInit {
       delete data.token;
       delete data.triggerName;
 
-      if(data.propName == ""){
-        document.getElementById("propNameValidate").innerHTML =  
-              "<label style='color:red;'>Prop Name is required.</label>";
-        this.amountInvalid+1;
+      if(this.backgroundImageFile == undefined || this.backgroundImage == undefined){
+        backgroundValidate.innerHTML = "<label style='color:red;'>Background image is required.</label>";
+        this.valid = false;
       }
-      else{
-        document.getElementById("propNameValidate").innerHTML =  
-              "";
-        this.amountInvalid-1;
+      else
+      {
+        backgroundValidate.innerHTML =  "";
       }
-
-      console.log("data.background: " + data.background);
-      console.log("data.backgroundFile: " + data.backgroundFile);
-
-      if(this.backgroundImageFile == undefined){
-        document.getElementById("backgroundValidate").innerHTML =  
-              "<label style='color:red;'>Background image is required.</label>";
-        this.amountInvalid+1;
+      
+      if(data.propName == ''){
+        propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+        this.valid = false;
       }
-      else{
-        document.getElementById("backgroundValidate").innerHTML =  
-              "";
-        this.amountInvalid-1;
+      else
+      {
+        propNameValidate.innerHTML = "";
       }
 
-      console.log(this.amountInvalid);
-
-      if(this.amountInvalid != 0){
+      if(propNameValidate.innerHTML == "" && backgroundValidate.innerHTML == ""){
         this.valid = true;
+      }
+
+      if(!this.valid){   
         return;
       }
 
@@ -319,9 +797,9 @@ export class CreateObjectComponent implements OnInit {
         console.log(dataa);
       }, response => {
         console.log(response);
-      });
+      }); 
+      }
     }
-  }
 
   webhookApi(url: string) {
     const addTriggerValue = url + this.triggerSwitch;
