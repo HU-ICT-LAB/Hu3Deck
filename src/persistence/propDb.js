@@ -2,7 +2,10 @@ export default function makePropDb({ getDbInstance }) {
     return Object.freeze({
         findBySceneId,
         findById,
-        createPropOfTypeBackground
+        createPropOfTypeBackground,
+        findNotActive,
+        deletePropsBySceneId,
+        createPropBySceneId
     });
     
     async function findBySceneId({id: _id}) {
@@ -16,7 +19,7 @@ export default function makePropDb({ getDbInstance }) {
                 po2.x_pos as x_pos_to, po2.y_pos as y_pos_to, po2.z_pos as z_pos_to,
                 po3.x_pos as x_pos_outer, po3.y_pos as y_pos_outer, po3.z_pos as z_pos_outer,
                 scalepoint.x_pos as x_pos_scale, scalepoint.y_pos as y_pos_scale, scalepoint.z_pos as z_pos_scale,
-                rotpoint.x_pos as x_pos_rot, rotpoint.y_pos as y_pos_rot, rotpoint.z_pos as z_pos_rot
+                rotpoint.x_pos as x_pos_rot, rotpoint.y_pos as y_pos_rot, rotpoint.z_pos as z_pos_rot, sp.default_shown as default_shown
                  from prop p
                  inner join scene_props sp on p.id = sp.prop_id
                  left join background b on b.id = p.background_id
@@ -86,6 +89,80 @@ export default function makePropDb({ getDbInstance }) {
         return {};
     }
 
+    async function findNotActive(id){
+        let conn = await getDbInstance();
+        const query = {
+            name: 'findPropsNotActive',
+            text: 
+                `select * from prop where name != '' and id not in (
+                    select sp.prop_id from scene_props sp 
+                    where scene_id = $1
+                )`,
+            values: [id]
+        };
+
+        let response = [];
+        
+        await conn.query(query).then((res) => {
+            response = res.rows;
+            conn.end();
+        });
+
+        if(response.length > 0) {
+            return response;
+        }
+
+        return {};
+    }
+
+    async function deletePropsBySceneId({ id: _id }){
+        let conn = await getDbInstance();
+        const query = {
+            name: 'deletePropsBySceneId',
+            text: 'DELETE FROM scene_props where scene_id = $1',
+            values: [_id]
+        };
+
+        let response = 0;
+
+        await conn.query(query).then((res) => {
+            response = res.rowCount;
+            conn.end();
+        });
+
+        return response;
+    }
+
+    async function createPropBySceneId({ sid: _sid, json: _json }){
+        let index = 1;
+        let bindParams = Array(_json.length).fill(0).map(v => `(${Array(3).fill(0).map(val => `$${index++}`).join(',')})`).join(',');
+        
+        let values = _json.map(v => {
+            let array = Object.values(v);
+            array.unshift(_sid);
+            return array;
+        });
+
+        values = values.reduce((acc, v) => acc.concat(...v)); 
+
+        let conn = await getDbInstance();
+        const query = {
+            name: 'insertPropBySceneId',
+            text: `INSERT INTO scene_props (scene_id, prop_id, default_shown) VALUES ${bindParams}`,
+            values
+        };
+
+        let response;
+        await conn.query(query).then((res) => {
+            response = res.rowCount;
+            conn.end();
+        });
+
+        return response;
+    }
+
+    
+
     async function createPropOfTypeBackground({...data}) {     
         console.log(data); 
         let conn = await getDbInstance();
@@ -122,6 +199,7 @@ export default function makePropDb({ getDbInstance }) {
 
         await conn.query(insertIntoPropQuery).then((res) => {
             response = res.rows;
+            conn.end();
         });
 
         echo(__filename + thisLine(), response);

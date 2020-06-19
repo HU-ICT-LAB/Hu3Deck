@@ -40,7 +40,7 @@ import socketAdapter from './src/socket-callback';
 import { listPropById } from './src/socket-controllers/prop';
 
 //controllers
-import { listSceneProps, postPropBackground } from './src/controllers/prop';
+import { listSceneProps, postPropBackground, listNotActiveProps, postSceneProps } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
@@ -61,6 +61,7 @@ app.post('/sessions/create', expressAdapter(postSession));
 app.get('/scenes', expressAdapter(listAllScenes));
 app.post('/scenes/create', expressAdapter(postScene));
 app.get('/scene/:id/props', expressAdapter(listSceneProps));
+app.post('/scene/:id/assignprops', expressAdapter(postSceneProps));
 
 //user
 app.get('/users', expressAdapter(listAllUsers));
@@ -78,6 +79,10 @@ const backgroundPropFileFields = upload.fields([
 ]);
 
 app.post('/prop/createBackground', backgroundPropFileFields, expressAdapter(postPropBackground));
+
+app.get('/scene/:id/props/notactive', expressAdapter(listNotActiveProps));
+
+
 
 app.get('/vr-environment', (req, res) => {
   res.sendFile(`${__dirname}/frontend/vr/index.html`);

@@ -32,29 +32,32 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content" style="display: block;">
+            <div style="display:none" class="alert alert-success alert-dismissible " role="alert">
+                Your changes have been saved.
+            </div>
             <div class="col-md-6">
                 <div class="drag-container">
-                    <div class="section-heading">Prohibited Props</div>
+                    <div class="section-heading">Non-assigned Props</div>
                     <div cdkDropList #ProhibitedList="cdkDropList" [cdkDropListData]="prohibited"
                         [cdkDropListConnectedTo]="[AllowedList]" class="item-list"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="item-box" *ngFor="let item of prohibited" cdkDrag>{{item}}</div>
+                        <div class="item-box" *ngFor="let item of prohibited" cdkDrag>{{item.name}} [{{item.prop_type}}]</div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="drag-container">
-                    <div class="section-heading">Allowed Props</div>
+                    <div class="section-heading">Assigned Props</div>
 
                     <div cdkDropList #AllowedList="cdkDropList" [cdkDropListData]="allowed"
                         [cdkDropListConnectedTo]="[ProhibitedList]" class="item-list" (cdkDropListDropped)="drop($event)">
-                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item}}<input type="checkbox" [name]="item" value="default"></div>
+                        <div class="item-box" *ngFor="let item of allowed" cdkDrag>{{item.name}} [{{item.prop_type}}]<label for="checkbox" style="position: absolute; right: 57px;">Default shown</label><input type="checkbox" id="checkbox" (change)="changeStatus(item)" [name]="item.id" [checked]="item.default_shown"></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-9 col-sm-9">
-                <button class="btn btn-primary" type="button">Cancel</button>
-                <button class="btn btn-success" type="submit">Save</button>
+                <button class="btn btn-primary" type="button" (click)="cancel()">Cancel</button>
+                <button class="btn btn-success" type="button" (click)="save()">Save</button>
             </div>
         </div>
     </div>
