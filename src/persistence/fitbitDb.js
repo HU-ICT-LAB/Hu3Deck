@@ -31,10 +31,9 @@ export default function makeFitbitDb({ getDbInstance }) {
 
     async function update({...data}) {
         let conn = await getDbInstance();
-
         const query = {
             name: 'updateFitbit',
-            text: 'UPDATE fitbit SET access_token = $1, refresh_token = $2, date = $3) WHERE access_token = $4',
+            text: 'UPDATE fitbit SET access_token = $1, refresh_token = $2, date = $3 WHERE access_token = $4',
             values: [data.access_token, data.refresh_token, data.date, data.old_access_token],
         };
 
@@ -44,6 +43,7 @@ export default function makeFitbitDb({ getDbInstance }) {
             response = res.rows;
             conn.end();
         });
+        
 
         return {...data};
     }
