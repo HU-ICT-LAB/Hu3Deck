@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { WebSocketService } from '../web-socket.service';
 import { Chart } from 'chart.js';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ConstantsService } from '../constants.service';
 
@@ -47,8 +47,26 @@ export class DashboardOverviewComponent implements OnInit {
 
   }
 
-  onSubmit(data) {
-    console.log(data);
+  async onSubmit(data) {
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+    let requestBody = new HttpParams()
+    .set('id', this.route.snapshot.paramMap.get('sessionid'))
+    .set('scene_id', data.scene);
+
+    const result = await this.http.post(`${this._constant.apiLocation}/session/update`, requestBody.toString(), options).toPromise();
+
+    if(result['rowCount'] !== undefined && result['rowCount'] > 0) {
+      document.querySelectorAll(`[sliderpropid]`).forEach(v => {
+        v.remove();
+      });
+      this.ngOnInit();
+      this.socket.emit('reset scene', {});
+    }
+
+    // console.log(body.toString());
   }
 
       // this.webSocketService.emit('change scene', data);
@@ -56,7 +74,7 @@ export class DashboardOverviewComponent implements OnInit {
 
   async ngOnInit() {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
-    this.sessionData = await this.http.get(`http://localhost:3000/sessions/${sessionid}`).toPromise();
+    this.sessionData = await this.http.get(`${this._constant.apiLocation}/sessions/${sessionid}`).toPromise();
     
     if(Object.keys(this.sessionData).length < 1) {
       location.href = '/';
@@ -64,7 +82,7 @@ export class DashboardOverviewComponent implements OnInit {
 
     this.defaultSelected = this.sessionData['scene_id'];
 
-    const propsData = await this.http.get(`http://localhost:3000/scene/${this.sessionData.scene_id}/props`).toPromise();
+    const propsData = await this.http.get(`${this._constant.apiLocation}/scene/${this.sessionData.scene_id}/props`).toPromise();
     this.shown = Object.values(propsData).filter(data => data.default_shown === true);
     this.hidden = Object.values(propsData).filter(data => data.default_shown === false);
     // `${data.name} [${data.prop_type}] / ${data.id}`
@@ -157,27 +175,27 @@ export class DashboardOverviewComponent implements OnInit {
       return false;
     }
     
-      var div = document.createElement("div");
-      var input = document.createElement("input");
-      var title = document.createElement("p");
-    
-      title.innerHTML = prop.name;
+    var div = document.createElement("div");
+    var input = document.createElement("input");
+    var title = document.createElement("p");
+  
+    title.innerHTML = prop.name;
 
-      div.setAttribute('sliderpropid', prop.id);
-      div.setAttribute('class', 'volume-prop');
+    div.setAttribute('sliderpropid', prop.id);
+    div.setAttribute('class', 'volume-prop');
 
-      input.setAttribute('name', prop.name);
-      input.setAttribute('type', 'range');
-      input.setAttribute('propId', prop.id);
-      input.setAttribute('value', prop.volume);
+    input.setAttribute('name', prop.name);
+    input.setAttribute('type', 'range');
+    input.setAttribute('propId', prop.id);
+    input.setAttribute('value', prop.volume);
 
-      input.addEventListener('change', e => {
-        this.socket.emit('set volume', {id: prop.id, volume: input.value} );
-      });
+    input.addEventListener('change', e => {
+      this.socket.emit('set volume', {id: prop.id, volume: input.value} );
+    });
 
-      div.appendChild(title);
-      div.appendChild(input);
-      this.sliders.nativeElement.appendChild(div);
+    div.appendChild(title);
+    div.appendChild(input);
+    this.sliders.nativeElement.appendChild(div);
   }
 
 

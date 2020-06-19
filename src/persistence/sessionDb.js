@@ -100,9 +100,23 @@ export default function makeSessionDb({ getDbInstance }) {
     }
 
     async function update({id: _id, ...data}) {
-        //implement updating session.
+        console.log(_id, data);
+        let conn = await getDbInstance();
 
-        return {};
+        const query = {
+            name: 'updateSession',
+            text: 'UPDATE session SET scene_id = $1 WHERE id = $2',
+            values: [data.scene_id, _id],
+        };
+
+        let response = [];
+
+        await conn.query(query).then((res) => {
+            response = {rowCount: res.rowCount};
+            conn.end();
+        });
+
+        return response;
     }
     
 

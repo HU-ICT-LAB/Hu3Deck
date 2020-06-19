@@ -43,7 +43,7 @@ export default function makePropDb({ getDbInstance }) {
             return response;
         }
 
-        return {};
+        return [];
     }
 
     async function findById({ id: _id }) {
@@ -83,7 +83,7 @@ export default function makePropDb({ getDbInstance }) {
             return response[0];
         }
 
-        return {};
+        return [];
     }
 
     async function createPropOfTypeBackground({...data}) {     

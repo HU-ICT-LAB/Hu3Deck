@@ -19,7 +19,6 @@ function loadProps(data) {
 }
 
 function loadProp(val) {
-    console.log(val);
     if(val.default_shown !== undefined && val.default_shown === false) {
         return false;
     }
@@ -45,7 +44,6 @@ function makeModel(modelObject) {
     }
 
     if(modelObject.x_pos_from != null && modelObject.y_pos_from != null && modelObject.z_pos_from) {
-        console.log({x: modelObject.x_pos_from, y: modelObject.y_pos_from, z: modelObject.z_pos_from });
         aEntity.setAttribute('position', {x: modelObject.x_pos_from, y: modelObject.y_pos_from, z: modelObject.z_pos_from });
     }
     
@@ -63,8 +61,6 @@ function makeModel(modelObject) {
 
     if(modelObject.audio_path != null && modelObject.volume != null) {
         aEntity.setAttribute('sound', `src: url(${modelObject.audio_path}); autoplay: true; loop: true; volume: ${modelObject.volume};`);
-        // aEntity.setAttribute('volume', `${modelObject.volume}`);
-        // console.log(aEntity.getAttribute('sound'));
     }
 
     if(modelObject.loop != null) {
@@ -82,8 +78,6 @@ function makeBackground(backgroundObject) {
     element.setAttribute('propId', backgroundObject.id);
     element.setAttribute('src', backgroundObject.background_image_path);
     scene.appendChild(element);
-
-    console.log(element.getAttribute('sound'));
     return true;
 }
 
