@@ -4,7 +4,7 @@ import makeGetSceneProps from './getSceneProps';
 import makeGetPropById from './getPropById';
 import makeCreateOfTypePropBackground from './createPropOfTypeBackground';
 import makeGetNotActiveProps from './getNotActiveProps';
-import makeCreateSceneProps from '.createSceneProps';
+import makeCreateSceneProps from './createSceneProps';
 
 
 const getSceneProps = makeGetSceneProps({ propDb });

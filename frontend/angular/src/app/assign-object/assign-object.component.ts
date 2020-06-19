@@ -48,16 +48,16 @@ export class AssignObjectComponent implements OnInit {
   }
 
   save() {
-    console.log(this.form1.value);
-  }
+    console.log(this.allowed[0]['name']);
+    var name = Object.values(this.allowed).map(data => data.id + data.show_default);
+    console.log(name);
+    }
 
-  onSubmit(formData1){
-    console.log(formData1);
-  }
+
 
   async onChangeScene(sceneValue) {
       this.selectScene = sceneValue;
-      console.log(sceneValue);
+      // console.log(sceneValue);
       
 
       const propsData = await this.http.get(this._constant.apiLocation + "/scene/"+this.selectScene+"/props").toPromise();
@@ -65,7 +65,7 @@ export class AssignObjectComponent implements OnInit {
 
 
       const propsDataNotActive = await this.http.get(this._constant.apiLocation + "/props/notactive").toPromise();
-      console.log(propsDataNotActive);
+      console.log(propsData);
       this.prohibited = Object.values(propsDataNotActive).map(data => data);
     
   }
@@ -73,7 +73,7 @@ export class AssignObjectComponent implements OnInit {
 
 
     drop(event: CdkDragDrop<string[]>) {
-        console.log(event.container['data'])
+        // console.log(event.container['data'])
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {

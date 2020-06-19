@@ -40,7 +40,7 @@ import socketAdapter from './src/socket-callback';
 import { listPropById } from './src/socket-controllers/prop';
 
 //controllers
-import { listSceneProps, postPropBackground, listNotActiveProps } from './src/controllers/prop';
+import { listSceneProps, postPropBackground, listNotActiveProps, postSceneProps } from './src/controllers/prop';
 import { listSessions, postSession, listActiveSession }  from './src/controllers/session';
 import { postScene, listAllScenes } from './src/controllers/scene';
 import { listAllUsers, postUser } from './src/controllers/user';
