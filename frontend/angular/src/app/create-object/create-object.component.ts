@@ -22,6 +22,8 @@ export class CreateObjectComponent implements OnInit {
   backgroundImageFile;
   modelFile;
   audioFile;
+  valid = false;
+  amountInvalid = 0;
 
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
@@ -104,7 +106,6 @@ export class CreateObjectComponent implements OnInit {
     const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
     // this.webhookApi(apiLink);
 
-    console.log("hallo dit is etestestest", data);
     if(this.propType == 'Model'){
       if(this.movement == 'Stationary'){
         delete data.backgroundImage;
@@ -265,7 +266,39 @@ export class CreateObjectComponent implements OnInit {
       delete data.easing;
       delete data.token;
       delete data.triggerName;
-      console.log(data);
+
+      if(data.propName == ""){
+        document.getElementById("propNameValidate").innerHTML =  
+              "<label style='color:red;'>Prop Name is required.</label>";
+        this.amountInvalid+1;
+      }
+      else{
+        document.getElementById("propNameValidate").innerHTML =  
+              "";
+        this.amountInvalid-1;
+      }
+
+      console.log("data.background: " + data.background);
+      console.log("data.backgroundFile: " + data.backgroundFile);
+
+      if(this.backgroundImageFile == undefined){
+        document.getElementById("backgroundValidate").innerHTML =  
+              "<label style='color:red;'>Background image is required.</label>";
+        this.amountInvalid+1;
+      }
+      else{
+        document.getElementById("backgroundValidate").innerHTML =  
+              "";
+        this.amountInvalid-1;
+      }
+
+      console.log(this.amountInvalid);
+
+      if(this.amountInvalid != 0){
+        this.valid = true;
+        return;
+      }
+
       const options = {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       }

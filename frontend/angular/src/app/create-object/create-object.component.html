@@ -20,6 +20,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="prop-name">Prop Name <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="text" formControlName="propName" required="required" class="form-control ">
+                        <div id="propNameValidate"></div>
                     </div>
                 </div>
                 <div class="item form-group" *ngIf="propType == 'Background'">
@@ -28,6 +29,7 @@
                         <div class="custom-file">
                             <input type="file" accept="image/*" (change)="onChangeBG($event)" formControlName="backgroundImage" required="required" class="custom-file-input" id="customFileLang">
                             <label class="custom-file-label" for="customFileLang"> {{ backgroundImage }}</label>
+                            <div id="backgroundValidate"></div>
                           </div>
                     </div>
                 </div>
