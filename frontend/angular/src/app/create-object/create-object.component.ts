@@ -158,8 +158,12 @@ export class CreateObjectComponent implements OnInit {
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
 
-        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+        if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else if(!data.propName.match(/^[a-z0-9]+$/)){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
         else
@@ -315,8 +319,12 @@ export class CreateObjectComponent implements OnInit {
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
         
-        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+        if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else if(!data.propName.match(/^[a-z0-9]+$/)){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
         else
@@ -527,8 +535,12 @@ export class CreateObjectComponent implements OnInit {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         }
 
-        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+        if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else if(!data.propName.match(/^[a-z0-9]+$/)){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
         else
@@ -803,8 +815,12 @@ export class CreateObjectComponent implements OnInit {
         backgroundValidate.innerHTML =  "";
       }
       
-      if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+      if(data.propName == ''){
         propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+        this.valid = false;
+      }
+      else if(!data.propName.match(/^[a-z0-9]+$/)){
+        propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
         this.valid = false;
       }
       else

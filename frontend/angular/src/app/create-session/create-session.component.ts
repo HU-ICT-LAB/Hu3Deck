@@ -68,6 +68,7 @@ export class CreateSessionComponent {
     var sceneValidate = document.getElementById("sceneValidate");
     var userValidate = document.getElementById("userValidate");
     var firstNameValidate = document.getElementById("firstNameValidate");
+    var middleNameValidate = document.getElementById("middleNameValidate");
     var lastNameValidate = document.getElementById("lastNameValidate");
     var ageValidate = document.getElementById("ageValidate");
       
@@ -110,6 +111,10 @@ export class CreateSessionComponent {
           firstNameValidate.innerHTML = "<label style='color:red;'>First name is required.</label>";
           this.valid = false;
         }
+        else if(!data.first_name.match(/^[a-zA-Z ]+$/)){
+          firstNameValidate.innerHTML = "<label style='color:red;'>First name is invalid.</label>";
+          this.valid = false;
+        }
         else
         {
           firstNameValidate.innerHTML = "";
@@ -117,6 +122,10 @@ export class CreateSessionComponent {
 
         if(data.last_name == ''){
           lastNameValidate.innerHTML = "<label style='color:red;'>Last name is required.</label>";
+          this.valid = false;
+        }
+        else if(!data.last_name.match(/^[a-zA-Z ]+$/)){
+          lastNameValidate.innerHTML = "<label style='color:red;'>Last name is invalid.</label>";
           this.valid = false;
         }
         else
@@ -139,8 +148,12 @@ export class CreateSessionComponent {
         }
       }
 
-      if(data.session_name == '' || !data.session_name.replace(/\s/g, '').length){
+      if(data.session_name == ''){
         sessionNameValidate.innerHTML = "<label style='color:red;'>Session name is required.</label>";
+        this.valid = false;
+      }
+      else if(!data.session_name.match(/^[a-z0-9]+$/)){
+        sessionNameValidate.innerHTML = "<label style='color:red;'>Session name is invalid.</label>";
         this.valid = false;
       }
       else
