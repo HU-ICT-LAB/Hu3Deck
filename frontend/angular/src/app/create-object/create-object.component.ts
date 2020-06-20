@@ -158,7 +158,7 @@ export class CreateObjectComponent implements OnInit {
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
 
-        if(data.propName == ''){
+        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
         }
@@ -311,7 +311,7 @@ export class CreateObjectComponent implements OnInit {
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
         
-        if(data.propName == ''){
+        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
         }
@@ -447,7 +447,7 @@ export class CreateObjectComponent implements OnInit {
           durationValidate.innerHTML = "";
         }
 
-        if(data.loop == ""){
+        if(data.loop == "" || !data.loop.replace(/\s/g, '').length){
           loopValidate.innerHTML = "<label style='color:red;'>Loop is required.</label>";
           this.valid = false;
         }
@@ -519,7 +519,7 @@ export class CreateObjectComponent implements OnInit {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         }
 
-        if(data.propName == ''){
+        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
         }
@@ -682,7 +682,7 @@ export class CreateObjectComponent implements OnInit {
           durationValidate.innerHTML = "";
         }
 
-        if(data.loop == ""){
+        if(data.loop == "" || !data.loop.replace(/\s/g, '').length){
           loopValidate.innerHTML = "<label style='color:red;'>Loop is required.</label>";
           this.valid = false;
         }
@@ -787,7 +787,7 @@ export class CreateObjectComponent implements OnInit {
         backgroundValidate.innerHTML =  "";
       }
       
-      if(data.propName == ''){
+      if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
         propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
         this.valid = false;
       }
