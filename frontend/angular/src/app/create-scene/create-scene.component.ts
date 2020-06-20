@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 
@@ -11,20 +11,29 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class CreateSceneComponent implements OnInit {
   createScene;
   title:String;
+  submitted = false;
 
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { 
     this.createScene = this.formBuilder.group({
-      title: ''
+      title: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9]*$")]]
     });
 
   }
+
+  get s() { return this.createScene.controls; }
 
   ngOnInit(): void {
   }
 
 
   onSubmit(data) {
+    this.submitted = true;
+
+    if (this.createScene.invalid) {
+      return;
+  }
+
     if(data.title != ""){
         const options = {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')

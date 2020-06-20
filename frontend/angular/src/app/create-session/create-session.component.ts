@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ConstantsService } from '../constants.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
@@ -18,7 +18,8 @@ export class CreateSessionComponent {
     users: Object;
     updateSession;
     selectedLink: string="existingUser"; 
-    private _constant: ConstantsService;       
+    private _constant: ConstantsService;      
+    valid = false; 
   
 
   constructor(private formBuilder: FormBuilder, private constant: ConstantsService, private http: HttpClient) { 
@@ -34,7 +35,7 @@ export class CreateSessionComponent {
 
 
       this.updateSession = this.formBuilder.group({
-          session_name: '',
+          session_name: ['' , [Validators.required, Validators.pattern("^[a-zA-Z0-9]*$")]],
           scene: '',
           user: '',
           first_name: '',
@@ -44,7 +45,6 @@ export class CreateSessionComponent {
       });
 
   }
-
 
 
   setradio(e: string): void   {  
@@ -63,6 +63,13 @@ export class CreateSessionComponent {
     }  
 
   onSubmit(data) {
+
+    var sessionNameValidate = document.getElementById("sessionNameValidate");
+    var sceneValidate = document.getElementById("sceneValidate");
+    var userValidate = document.getElementById("userValidate");
+    var firstNameValidate = document.getElementById("firstNameValidate");
+    var lastNameValidate = document.getElementById("lastNameValidate");
+    var ageValidate = document.getElementById("ageValidate");
       
     let requestBody;
     
@@ -75,6 +82,21 @@ export class CreateSessionComponent {
         .set('name', data.session_name)
         .set('scene_id', data.scene)
         .set('user_id', data.user);
+
+        if(data.user == ''){
+          userValidate.innerHTML = "<label style='color:red;'>Select a user.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          userValidate.innerHTML = "";
+        }
+
+        if(userValidate.innerHTML == "" && sceneValidate.innerHTML == "" &&
+        sessionNameValidate.innerHTML == ""){
+          this.valid = true;
+        }
+
       } else{
         requestBody = new HttpParams()
         .set('name', data.session_name)
@@ -83,16 +105,68 @@ export class CreateSessionComponent {
         .set('middlename', data.middle_name)
         .set('lastname', data.last_name)
         .set('age', data.age);
+
+        if(data.first_name == ''){
+          firstNameValidate.innerHTML = "<label style='color:red;'>First name is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          firstNameValidate.innerHTML = "";
+        }
+
+        if(data.last_name == ''){
+          lastNameValidate.innerHTML = "<label style='color:red;'>Last name is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          lastNameValidate.innerHTML = "";
+        }
+
+        if(data.age == null){
+          ageValidate.innerHTML = "<label style='color:red;'>Age is required.</label>";
+          this.valid = false;
+        }
+        else
+        {
+          ageValidate.innerHTML = "";
+        }
+
+        if(sceneValidate.innerHTML == "" && ageValidate.innerHTML == "" &&
+        lastNameValidate.innerHTML == "" && firstNameValidate.innerHTML == ""){
+          this.valid = true;
+        }
       }
 
-      
-      
+      if(data.session_name == '' || !data.session_name.replace(/\s/g, '').length){
+        sessionNameValidate.innerHTML = "<label style='color:red;'>Session name is required.</label>";
+        this.valid = false;
+      }
+      else
+      {
+        sessionNameValidate.innerHTML = "";
+      }
+
+      if(data.scene == ''){
+        sceneValidate.innerHTML = "<label style='color:red;'>Select a scene.</label>";
+        this.valid = false;
+      }
+      else
+      {
+        sceneValidate.innerHTML = "";
+      }
+
+      if(!this.valid){
+        return;
+      }
 
       this.http.post(`${this._constant.apiLocation}/sessions/create`, requestBody.toString(), {
         headers: requestHeaders
       }).subscribe(data => {
 
         if("id" in data) {
+          alert('Session is succesfully created.');
           location.href = `/dashboard/${data['id']}`;
         }
       });

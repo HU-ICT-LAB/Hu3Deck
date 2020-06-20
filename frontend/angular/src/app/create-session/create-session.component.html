@@ -12,7 +12,8 @@
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Session name<span class="required"></span>
                 </label>
                 <div class="col-md-9 col-sm-9 ">
-                   <input type="text" id="session-name" name="session-name" class="form-control" formControlName="session_name">
+                   <input type="text" id="session-name" name="session-name" class="form-control" formControlName="session_name" >
+                   <div id="sessionNameValidate"></div>
                 </div>
              </div>
              <div class="session form-group">
@@ -21,6 +22,7 @@
                     <select class="form-control" formControlName="scene" name="" id="">
                         <option *ngFor="let scene of scenes" [value]="scene.id">{{ scene.title }}</option>
                     </select>
+                    <div id="sceneValidate"></div>
                 </div>
              </div>
 
@@ -45,6 +47,7 @@
                     <select class="form-control" formControlName="user" name="" id="">
                         <option *ngFor="let user of users" [value]="user.id">{{ user.name + " " }}{{ (user.middlename == null) ? "" : user.middlename + " " }} {{ user.lastname }}</option>
                     </select>
+                    <div id="userValidate"></div>
                 </div>
             </div>
             <div class="item form-group" *ngIf="isSelected('newUser')">
@@ -52,6 +55,7 @@
                     </label>
                     <div class="col-md-9 col-sm-9 ">
                         <input type="text" name="Name" class="form-control input-width" formControlName="first_name">
+                        <div id="firstNameValidate"></div>
                     </div>
                 </div>
                 <div class="item form-group" *ngIf="isSelected('newUser')">
@@ -59,6 +63,7 @@
                     </label>
                     <div class="col-md-9 col-sm-9 ">
                         <input type="text" name="Middlename" class="form-control input-width" formControlName="middle_name">
+                        <div id="middleNameValidate"></div>
                     </div>
                 </div>
                 <div class="item form-group" *ngIf="isSelected('newUser')">
@@ -66,6 +71,7 @@
                     </label>
                     <div class="col-md-9 col-sm-9 ">
                         <input type="text" name="Lastname" class="form-control input-width" formControlName="last_name">
+                        <div id="lastNameValidate"></div>
                     </div>
                 </div>
                 <div class="item form-group" *ngIf="isSelected('newUser')">
@@ -73,6 +79,7 @@
                     </label>
                     <div class="col-md-9 col-sm-9 ">
                         <input type="number" name="Age" class="form-control input-width" formControlName="age">
+                        <div id="ageValidate"></div>
                     </div>
                 </div>
                 
