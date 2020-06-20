@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 @Component({
@@ -64,15 +65,20 @@ export class CreateObjectComponent implements OnInit {
   }
 
   onChangePropType(propTypeValue) {
+    var propNameValidateOnChange = document.getElementById("propNameValidate")
     this.createProp.reset();
     this.propType = propTypeValue;
     this.ngOnInit();
+    if(typeof(propNameValidateOnChange) != 'undefined' && propNameValidateOnChange != null){
+      propNameValidateOnChange.innerHTML = "";
+    } 
     this.movement = null;
     this.audio = undefined;
     this.model = undefined;
     this.backgroundImage = undefined;
     this.modelFile = undefined;
     this.backgroundImageFile = undefined;
+    this.volume = 50;
   }
 
   onChangeMovement(movementType){
@@ -103,6 +109,11 @@ export class CreateObjectComponent implements OnInit {
   onInputVolume(volumeValue){
     this.volume = volumeValue;
   }
+
+  hasExtension(inputID, exts) {
+    inputID;
+    return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(inputID);
+}
 
   onSubmit(data){
     var propNameValidate = document.getElementById("propNameValidate");
@@ -144,6 +155,9 @@ export class CreateObjectComponent implements OnInit {
         delete data.loop;
         delete data.easing;
 
+        data.modelFile = this.modelFile;
+        data.audioFile = this.audioFile;
+
         if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
@@ -153,7 +167,7 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "";
         }
 
-        if(this.modelFile == undefined || data.model == undefined){
+        if(data.modelFile == undefined || data.model == undefined || !this.hasExtension(data.model, ['glb'])){
           modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
           this.valid = false;
         }
@@ -257,9 +271,6 @@ export class CreateObjectComponent implements OnInit {
         if(!this.valid){   
           return;
         }
-
-        data.modelFile = this.modelFile;
-        data.audioFile = this.audioFile;
     
         const body = new FormData();
         body.append('modelFile', this.modelFile);
@@ -283,7 +294,10 @@ export class CreateObjectComponent implements OnInit {
         body.append('url', apiLink);
 
         this.http.post('http://localhost:3000/prop/createModel', body).subscribe(dataa => {
-          console.log(dataa);
+          if(this.valid){
+            alert("Prop created.");
+            this.reset();
+          }
         }, response => {
           console.log(response);
         });
@@ -293,6 +307,9 @@ export class CreateObjectComponent implements OnInit {
         delete data.xOuterPosition;
         delete data.yOuterPosition;
         delete data.zOuterPosition;
+   
+        data.modelFile = this.modelFile;
+        data.audioFile = this.audioFile;
         
         if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
@@ -303,7 +320,7 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "";
         }
 
-        if(this.modelFile == undefined || data.model == undefined){
+        if(data.modelFile == undefined || data.model == undefined || !this.hasExtension(data.model, ['glb'])){
           modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
           this.valid = false;
         }
@@ -455,9 +472,6 @@ export class CreateObjectComponent implements OnInit {
         if(!this.valid){   
           return;
         }
-
-        data.modelFile = this.modelFile;
-        data.audioFile = this.audioFile;
     
         const body = new FormData();
         body.append('modelFile', this.modelFile);
@@ -487,14 +501,19 @@ export class CreateObjectComponent implements OnInit {
         body.append('url', apiLink);
 
         this.http.post('http://localhost:3000/prop/createModel', body).subscribe(dataa => {
-          console.log(dataa);
+          if(this.valid){
+            alert("Prop created.");
+            this.reset();
+          }
         }, response => {
           console.log(response);
         });
       }
       else if(this.movement == 'Rotation'){
         delete data.backgroundImage;
-        console.log(data);
+           
+        data.modelFile = this.modelFile;
+        data.audioFile = this.audioFile;
 
         const options = {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -509,7 +528,7 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "";
         }
 
-        if(this.modelFile == undefined || data.model == undefined){
+        if(data.modelFile == undefined || data.model == undefined || !this.hasExtension(data.model, ['glb'])){
           modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
           this.valid = false;
         }
@@ -690,9 +709,6 @@ export class CreateObjectComponent implements OnInit {
         if(!this.valid){   
           return;
         }
-  
-        data.modelFile = this.modelFile;
-        data.audioFile = this.audioFile;
     
         const body = new FormData();
         body.append('modelFile', this.modelFile);
@@ -725,7 +741,10 @@ export class CreateObjectComponent implements OnInit {
         body.append('url', apiLink);
 
         this.http.post('http://localhost:3000/prop/createModel', body).subscribe(dataa => {
-          console.log(dataa);
+          if(this.valid){
+            alert("Prop created.");
+            this.reset();
+          }
         }, response => {
           console.log(response);
         });
@@ -756,7 +775,10 @@ export class CreateObjectComponent implements OnInit {
       delete data.token;
       delete data.triggerName;
 
-      if(this.backgroundImageFile == undefined || this.backgroundImage == undefined){
+      data.backgroundImageFile = this.backgroundImageFile;
+      data.audioFile = this.audioFile;
+
+      if(this.backgroundImageFile == undefined || this.backgroundImage == undefined || !this.hasExtension(data.backgroundImage, ['jpg'])){
         backgroundValidate.innerHTML = "<label style='color:red;'>Background image is required.</label>";
         this.valid = false;
       }
@@ -785,9 +807,6 @@ export class CreateObjectComponent implements OnInit {
       const options = {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       }
-
-      data.backgroundImageFile = this.backgroundImageFile;
-      data.audioFile = this.audioFile;
   
       const body = new FormData();
       body.append('backgroundFile', this.backgroundImageFile);
@@ -799,7 +818,10 @@ export class CreateObjectComponent implements OnInit {
       body.append('volume', data.volume);   
 
       this.http.post('http://localhost:3000/prop/createBackground', body).subscribe(dataa => {
-        console.log(dataa);
+        if(this.valid){
+          alert("Prop created.");
+          this.reset();
+        }
       }, response => {
         console.log(response);
       }); 
@@ -823,9 +845,16 @@ export class CreateObjectComponent implements OnInit {
       });
   }
 
-
-
-
-
+  reset(){
+    this.propType = null;
+    this.createProp.reset();
+    this.movement = null;
+    this.audio = undefined;
+    this.model = undefined;
+    this.backgroundImage = undefined;
+    this.modelFile = undefined;
+    this.backgroundImageFile = undefined;
+    this.volume = 50;
+  }
 }
 
