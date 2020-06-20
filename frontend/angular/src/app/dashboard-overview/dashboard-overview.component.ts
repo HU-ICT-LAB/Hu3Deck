@@ -3,10 +3,10 @@ import { FormBuilder } from '@angular/forms';
 import { WebSocketService } from '../web-socket.service';
 import { Chart } from 'chart.js';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ConstantsService } from '../constants.service';
-import { Subscription, timer } from 'rxjs';
+import { Subscription, timer, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 
@@ -56,10 +56,10 @@ export class DashboardOverviewComponent implements OnInit {
         this.scenes = Object.values(data);
     });  
 
-
     this.session_form = this.formBuilder.group({
       scene: ''
     });
+    
 
   }
 
@@ -87,12 +87,9 @@ export class DashboardOverviewComponent implements OnInit {
 
     const propsData = await this.http.get(`http://localhost:3000/scene/${this.sessionData.scene_id}/props`).toPromise();
     this.shown = Object.values(propsData).map(data => data);
-    // `${data.name} [${data.prop_type}] / ${data.id}`
     this.shown.forEach(obj => {
         this.propSlider(obj);
     });
-
-    // setInterval( () => this.showHeartbeat, 5000);
 
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
@@ -130,8 +127,15 @@ export class DashboardOverviewComponent implements OnInit {
   }
 
   async showHeartbeat() {
-    let form = new FormData();
-    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', form).toPromise();
+    let minutes = (<HTMLInputElement>document.getElementById("minutes")).value;
+    
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+    const body = new HttpParams().set('minutes', minutes);
+    
+    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', body.toString(), options).toPromise();
     let jsonObjects = Object.values(jsonData).slice(-60); 
 
     this.heartRateChart.data.datasets[0].data = jsonObjects.map( (value) => {
@@ -200,8 +204,5 @@ export class DashboardOverviewComponent implements OnInit {
       div.appendChild(input);
       this.sliders.nativeElement.appendChild(div);
   }
-
-
-
 
 }
