@@ -113,8 +113,20 @@ export class DashboardOverviewComponent implements OnInit {
               beginAtZero: false,
               // max: Math.max(...this.data) + (25 - (Math.max(...this.data) % 25))
             }
-          }]
-        }
+          }],
+          // xAxes: [{
+          //     type: "linear",
+          //     display: true,
+          //     scaleLabel: {
+          //         display: true,
+          //         labelString: 'X-Axis'
+          //     },
+          //     ticks: {
+          //         min: -10,
+          //         suggestedMax: 150
+          //     }
+          // },]
+        },
       }
     });
 

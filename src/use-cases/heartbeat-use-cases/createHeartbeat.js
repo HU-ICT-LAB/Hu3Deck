@@ -6,21 +6,20 @@ export default function createCreateHeartbeat({heartbeatDb, fitbitDb, httpReques
         var ms;
 
         if (requestData['minutes'] == '') {
-            console.log("reeeee")
             ms = 900000;
         }
         else {
             minutes = parseInt(requestData['minutes']);
+
+            if (minutes < 1 || minutes > 60) {
+                ms = 900000;
+            }
+            else {
+                ms = minutes * 60000;
+            }
         }
         
-        if (minutes < 1 || minutes > 180) {
-            console.log("nee");
-            ms = 900000;
-        }
-        else {
-            ms = minutes * 60000;
-            console.log(ms);
-        }
+
 
         var currentDate = new Date();
         var oldDate = new Date(new Date() - ms);
@@ -68,7 +67,7 @@ export default function createCreateHeartbeat({heartbeatDb, fitbitDb, httpReques
         let period = `${datetimeFrom}/${datetimeUntil}`;
         console.log(period);
 
-        var url = `https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/${period}.json`;
+        var url = `https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min/time/${period}.json`;
 
         jsonData = await httpRequest(url, { method: 'GET', headers: headers2 })
             .then(res => res.json())
