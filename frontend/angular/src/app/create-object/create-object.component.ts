@@ -31,7 +31,7 @@ export class CreateObjectComponent implements OnInit {
   ngOnInit(): void {
     this.createProp = this.formBuilder.group(
       {
-        propType:'',
+        propType:this.propType,
         propName:'',
         model: '',
         audio: '',
@@ -65,9 +65,9 @@ export class CreateObjectComponent implements OnInit {
 
   onChangePropType(propTypeValue) {
     this.createProp.reset();
+    this.propType = propTypeValue;
     this.ngOnInit();
     this.movement = null;
-    this.propType = propTypeValue;
     this.audio = undefined;
     this.model = undefined;
     this.backgroundImage = undefined;
