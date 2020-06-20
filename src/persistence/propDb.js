@@ -5,7 +5,8 @@ export default function makePropDb({ getDbInstance }) {
         createPropOfTypeBackground,
         findNotActive,
         deletePropsBySceneId,
-        createPropBySceneId
+        createPropBySceneId,
+        createPropOfTypeModel
     });
     
     async function findBySceneId({id: _id}) {
@@ -207,15 +208,133 @@ export default function makePropDb({ getDbInstance }) {
         return {...data};
     }
 
-    async function remove({id: _id}) {
+    async function createPropOfTypeModel({...data}) {     
+        console.log(data); 
+        let conn = await getDbInstance();
+
+        const insertIntoApiQuery = {
+            name: 'insertApi',
+            text: `INSERT INTO api(
+                id, url)
+                VALUES ($1, $2);`,
+            values: [data.apiId, data.url]
+        };
+
+        const insertIntoModelQuery = {
+            name: 'insertModel',
+            text: `INSERT INTO model(
+                id, model_path, animation_mixer, point_scale_id, point_rotation_id)
+                VALUES ($1, $2, $3, $4, $5);`,
+            values: [data.modelId, data.model, data.animationMixer, data.pointScaleId, data.pointRotationId]
+        };
+
+        const insertIntoMovementQuery = {
+            name: 'insertMovement',
+            text: `INSERT INTO public.movement(
+                id, point_from_id, point_to_id, point_outer_id, name, movement_type, easing, loop, duration, date_added, date_updated)
+                VALUES ($1, $2, $3, $4, null, $5, $6, $7, $8, $9, $10);`,
+            values: [data.movementId, data.pointFromId, data.pointToId, data.pointOuterId, data.movement, data.easing, data.loop, data.duration, data.dateAdded, data.dateUpdated]
+        };
+
+        const insertIntoSoundQuery = {
+            name: 'insertSound',
+            text: `INSERT INTO sound(id, audio_path, volume) VALUES ($1, $2, $3);`,
+            values: [data.soundId, data.audio, data.volume]
+        };
         
+        const insertIntoPointOfTypeScaleQuery = {
+            name: 'insertPointScale',
+            text: `INSERT INTO point(
+                id, x_pos, y_pos, z_pos)
+                VALUES ($1, $2, $3, $4);`,
+            values: [data.pointScaleId, data.xScale, data.yScale, data.zScale]
+        };
 
-        return {};
-    }
+        const insertIntoPointOfTypeRotationQuery = {
+            name: 'insertPointRotation',
+            text: `INSERT INTO point(
+                id, x_pos, y_pos, z_pos)
+                VALUES ($1, $2, $3, $4);`,
+            values: [data.pointRotationId, data.xRotation, data.yRotation, data.zRotation]
+        };
 
-    async function update({id: _id, ...data}) {
-        
+        const insertIntoPointOfTypeFromQuery = {
+            name: 'insertPointFrom',
+            text: `INSERT INTO point(
+                id, x_pos, y_pos, z_pos)
+                VALUES ($1, $2, $3, $4);`,
+            values: [data.pointFromId, data.xPosition, data.yPosition, data.zPosition]
+        };
 
-        return {};
+        const insertIntoPointOfTypeToQuery = {
+            name: 'insertPointTo',
+            text: `INSERT INTO point(
+                id, x_pos, y_pos, z_pos)
+                VALUES ($1, $2, $3, $4);`,
+            values: [data.pointToId, data.xToPosition, data.yToPosition, data.zToPosition]
+        };
+
+        const insertIntoPointOfTypeOuterQuery = {
+            name: 'insertPointOuter',
+            text: `INSERT INTO point(
+                id, x_pos, y_pos, z_pos)
+                VALUES ($1, $2, $3, $4);`,
+            values: [data.pointOuterId, data.xOuterPosition, data.yOuterPosition, data.zOuterPosition]
+        };
+
+        const insertIntoPropQuery = {
+            name: 'insertProp',
+            text: `INSERT INTO prop(
+                id, movement_id, sound_id, api_id, model_id, background_id, name, prop_type, date_added, date_updated)
+                VALUES ($1, $2, $3, $4, $5, null, $6, $7, $8, $9);`,
+            values: [data.propId, data.movementId, data.soundId, data.apiId, data.modelId, data.propName, data.propType, data.dateAdded, data.dateUpdated]
+        };
+
+        let response = [];
+
+        await conn.query(insertIntoApiQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoPointOfTypeScaleQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoPointOfTypeRotationQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoPointOfTypeFromQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoPointOfTypeToQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoPointOfTypeOuterQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoSoundQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoModelQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoMovementQuery).then((res) => {
+            response = res.rows;
+        });
+
+        await conn.query(insertIntoPropQuery).then((res) => {
+            response = res.rows;
+        });
+
+
+        echo(__filename + thisLine(), response);
+
+        return {...data};
     }
 }

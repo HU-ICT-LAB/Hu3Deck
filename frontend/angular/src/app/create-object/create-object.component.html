@@ -10,9 +10,8 @@
                 <div class="item form-group">
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Prop Type <span class="required">*</span></label>
                     <div class="col-md-9">
-                        <select (change)="onChangePropType($event.target.value)" class="form-control" formControlName="propType" name="propType" id="">
-                            <option value="" disabled selected>Select prop type</option>
-                            <option *ngFor="let propType of propTypes" [value]="propType">{{ propType }}</option>
+                        <select (change)="onChangePropType($event.target.value)" class="form-control" formControlName="propType" name="propType" id="propTypeId">
+                            <option id="propTypeOption" *ngFor="let propType of propTypes" [value]="propType">{{ propType }}</option>
                          </select>
                     </div>
                 </div>
@@ -20,6 +19,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="prop-name">Prop Name <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="text" formControlName="propName" required="required" class="form-control ">
+                        <div id="propNameValidate"></div>
                     </div>
                 </div>
                 <div class="item form-group" *ngIf="propType == 'Background'">
@@ -28,6 +28,7 @@
                         <div class="custom-file">
                             <input type="file" accept="image/*" (change)="onChangeBG($event)" formControlName="backgroundImage" required="required" class="custom-file-input" id="customFileLang">
                             <label class="custom-file-label" for="customFileLang"> {{ backgroundImage }}</label>
+                            <div id="backgroundValidate"></div>
                           </div>
                     </div>
                 </div>
@@ -37,6 +38,7 @@
                         <div class="custom-file">
                             <input type="file" (change)="onChangeModel($event)" formControlName="model" required="required" class="custom-file-input" id="customFileLang">
                             <label class="custom-file-label" for="customFileLang">{{ model }}</label>
+                            <div id="modelValidate"></div>
                           </div>
                     </div>
                 </div>
@@ -68,6 +70,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align">X-scale <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="number" formControlName="xScale" id="xScale" class="form-control" >
+                        <div id="xScaleValidate"></div>
                     </div>
                 </div>
 
@@ -75,6 +78,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Y-scale <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="number" formControlName="yScale" id="yScale" class="form-control" >
+                        <div id="yScaleValidate"></div>
                     </div>
                 </div>
 
@@ -82,6 +86,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Z-scale <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="number" formControlName="zScale" id="zScale" class="form-control" >
+                        <div id="zScaleValidate"></div>
                     </div>
                 </div>
                 <br/>
@@ -90,6 +95,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align">X-rotation <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="number" formControlName="xRotation" id="xRotation" class="form-control" >
+                        <div id="xRotationValidate"></div>
                     </div>
                 </div>
 
@@ -97,6 +103,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Y-rotation <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="number" formControlName="yRotation" id="yRotation" class="form-control" >
+                        <div id="yRotationValidate"></div>
                     </div>
                 </div>
 
@@ -104,6 +111,7 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align">Z-rotation <span class="required">*</span></label>
                     <div class="col-md-9">
                         <input type="number" formControlName="zRotation" id="zRotation" class="form-control" >
+                        <div id="zRotationValidate"></div>
                     </div>
                 </div>
 
@@ -149,14 +157,17 @@
                           <div class="item form-group">
                             <label class="col-form-label label-align">X-position</label>
                             <input type="number" formControlName="xPosition" class="form-control" >
+                            <div id="xPositionValidate"></div>
                           </div>
                           <div class="item form-group">
                             <label class="col-form-label  label-align">Y-position</label>
                             <input type="number" formControlName="yPosition" class="form-control" >
+                            <div id="yPositionValidate"></div>
                           </div>
                           <div class="item form-group">
                             <label class="col-form-label  label-align">Z-position</label>
                             <input type="number" formControlName="zPosition" class="form-control" >
+                            <div id="zPositionValidate"></div>
                         </div>
                       </div>
                     </div>
@@ -171,14 +182,17 @@
                           <div class="item form-group">
                             <label class="col-form-label label-align">X-position</label>
                             <input type="number" formControlName="xToPosition" class="form-control" >
+                            <div id="xToPositionValidate"></div>
                           </div>
                           <div class="item form-group">
                             <label class="col-form-label label-align">Y-position</label>
                             <input type="number" formControlName="yToPosition" class="form-control" >
+                            <div id="yToPositionValidate"></div>
                           </div>
                           <div class="item form-group">
                             <label class="col-form-label label-align">Z-position</label>
                             <input type="number" formControlName="zToPosition" class="form-control" >
+                            <div id="zToPositionValidate"></div>
                           </div>
                           </div>
                       </div>
@@ -194,14 +208,17 @@
                           <div class="item form-group">
                             <label class="col-form-label label-align">X-position</label>
                             <input type="number" formControlName="xOuterPosition" class="form-control" >
+                            <div id="xOuterPositionValidate"></div>
                           </div>
                           <div class="item form-group">
                             <label class="col-form-label label-align">Y-position</label>
                             <input type="number" formControlName="yOuterPosition" class="form-control" >
+                            <div id="yOuterPositionValidate"></div>
                           </div>
                           <div class="item form-group">
                             <label class="col-form-label label-align">Z-position</label>
                             <input type="number" formControlName="zOuterPosition" class="form-control" >
+                            <div id="zOuterPositionValidate"></div>
                           </div>
                       </div>
                   </div>
@@ -213,6 +230,7 @@
                 <label class="col-form-label col-md-3 col-sm-3 label-align">Duration <span class="required">*</span></label>
                 <div class="col-md-9">
                     <input type="number" formControlName="duration" id="duration" class="form-control">
+                    <div id="durationValidate"></div>
                 </div>
             </div>
 
@@ -220,6 +238,7 @@
                 <label class="col-form-label col-md-3 col-sm-3 label-align">Loop <span class="required">*</span></label>
                 <div class="col-md-9">
                     <input type="text" formControlName="loop" required="required" class="form-control ">
+                    <div id="loopValidate"></div>
                 </div>
             </div>
 
