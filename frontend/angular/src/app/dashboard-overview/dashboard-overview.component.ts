@@ -6,7 +6,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ConstantsService } from '../constants.service';
-
+import { Subscription, timer, from } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 
 
@@ -40,10 +41,10 @@ export class DashboardOverviewComponent implements OnInit {
         this.scenes = Object.values(data);
     });  
 
-
     this.session_form = this.formBuilder.group({
       scene: ''
     });
+    
 
   }
 
@@ -71,6 +72,11 @@ export class DashboardOverviewComponent implements OnInit {
 
       // this.webSocketService.emit('change scene', data);
 
+  subscription: Subscription;
+  statusText: string;
+
+  data = [];
+  labels = [];
 
   async ngOnInit() {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
@@ -90,26 +96,16 @@ export class DashboardOverviewComponent implements OnInit {
         this.propSlider(obj);
     });
 
-
-    let data = [
-      68,
-      70,
-      91,
-      70,
-      63,
-      65,
-    ];
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
 
       data: {
-
-        labels: ['10:52:05', '10:52:10', '10:52:15', '10:52:20', '10:52:25', '10:52:30'],
+        labels: [],
         datasets: [{
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
           label: "Heart rate",
-          data: data,
+          data: [],
           fill: false
         }]
       },
@@ -118,16 +114,58 @@ export class DashboardOverviewComponent implements OnInit {
         scales: {
           yAxes: [{
             ticks: {
-              stepSize: 15,
-              beginAtZero: true,
-              max: Math.max(...data) + (15 - (Math.max(...data) % 15))
+              stepSize: 5,
+              beginAtZero: false,
+              // max: Math.max(...this.data) + (25 - (Math.max(...this.data) % 25))
             }
-          }]
-        }
+          }],
+          // xAxes: [{
+          //     type: "linear",
+          //     display: true,
+          //     scaleLabel: {
+          //         display: true,
+          //         labelString: 'X-Axis'
+          //     },
+          //     ticks: {
+          //         min: -10,
+          //         suggestedMax: 150
+          //     }
+          // },]
+        },
       }
     });
+
+    this.subscription = timer(0, 30000).pipe(
+      switchMap(() => this.showHeartbeat())
+    ).subscribe(result => false);
+
+    this.heartRateChart.update();
+
   }
 
+  async showHeartbeat() {
+    let minutes = (<HTMLInputElement>document.getElementById("minutes")).value;
+    
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+    const body = new HttpParams().set('minutes', minutes);
+    
+    let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', body.toString(), options).toPromise();
+    let jsonObjects = Object.values(jsonData).slice(-60); 
+
+    this.heartRateChart.data.datasets[0].data = jsonObjects.map( (value) => {
+      return value.value;
+    });
+
+    this.heartRateChart.data.labels = jsonObjects.map( (value) => {
+      return value.time;
+    });
+
+    this.heartRateChart.update();
+    return this.heartRateChart;
+  }
 
 
 
@@ -197,8 +235,5 @@ export class DashboardOverviewComponent implements OnInit {
     div.appendChild(input);
     this.sliders.nativeElement.appendChild(div);
   }
-
-
-
 
 }

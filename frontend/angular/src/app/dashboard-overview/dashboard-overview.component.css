@@ -76,3 +76,12 @@
   border-radius: 5px;
 }
 
+.minutes-update {
+  margin-left: 1%;
+}
+
+.minutes-input {
+  width: 30%;
+  float: left;
+}
+

@@ -40,11 +40,16 @@
    <div class="x_panel">
       <div class="x_title">
          <h2><i class="fa fa-heart"></i> Heart rate</h2>
-
          <div class="clearfix"></div>
       </div>
       <div class="x_content">
          <canvas id="heartRate"></canvas>
+         <div>
+            <div class="ln_solid"></div>
+            <h2>Select period in minutes (max 60)</h2>
+            <input type="number" id="minutes" class="minutes-input form-control" required>
+            <button type="button" class="minutes-update btn btn-success" (click)="showHeartbeat()">Update</button>
+         </div>
       </div>
    </div>
 </div>
