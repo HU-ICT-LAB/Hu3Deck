@@ -12,7 +12,11 @@
         <div class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align" for="scene-name">Scene Name <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 ">
-                <input type="text" formControlName="title" class="form-control" required>
+                <input type="text" formControlName="title" class="form-control" required  [ngClass]="{ 'is-invalid': submitted && s.title.errors }">
+                <div *ngIf="submitted && s.title.errors" class="invalid-feedback">
+                    <div *ngIf="s.title.errors.required">Scene name required.</div>
+                    <div *ngIf="s.title.errors.pattern">Scene name is invalid.</div>
+                </div>
             </div>
         </div>
   

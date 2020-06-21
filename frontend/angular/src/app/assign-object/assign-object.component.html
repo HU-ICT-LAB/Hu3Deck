@@ -11,9 +11,12 @@
           <div class="item form-group">
             <label class="col-form-label col-md-3 col-sm-3 label-align">Scene</label>
             <div class="col-md-9 col-sm-9 ">
-                <select (change)="onChangeScene($event.target.value)" class="form-control" formControlName="selectScene" name="" id="" [(ngModel)]="selectedValue">
+                <select (change)="onChangeScene($event.target.value)" class="form-control" formControlName="selectScene" name="" id="" [(ngModel)]="selectedValue" [ngClass]="{ 'is-invalid': submitted && f.selectScene.errors }">
                     <option *ngFor="let scene of scenes" [value]="scene.id">{{ scene.title }}</option>
                 </select>
+                <div *ngIf="submitted && f.selectScene.errors" class="invalid-feedback">
+                    <div *ngIf="f.selectScene.errors.required">Select a scene.</div>
+                </div>
             </div>
           </div>
         </form>

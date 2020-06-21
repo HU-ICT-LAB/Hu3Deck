@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ConstantsService } from '../constants.service';
@@ -14,6 +14,7 @@ export class AssignObjectComponent implements OnInit {
     form1;
     selectScene: string = '';
     selectedValue: string = '';
+    submitted = false;
 
     prohibited = [];
     allowed = [];
@@ -26,11 +27,13 @@ export class AssignObjectComponent implements OnInit {
     }); 
 
     this.form1 = this.formBuilder.group({
-      selectScene: '',
+      selectScene: ['', Validators.required],
       selectedValue: ''
     });
 
   }
+
+  get f() { return this.form1.controls; }
 
   ngOnInit(): void {
   }
@@ -45,6 +48,12 @@ export class AssignObjectComponent implements OnInit {
   }
 
   async save() {
+    this.submitted = true;
+
+    if (this.form1.invalid) {
+      return;
+  }
+
     const allowedProps = Object.values(this.allowed).map(data => {
       return {
         id: data.id,

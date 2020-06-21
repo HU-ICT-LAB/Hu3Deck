@@ -158,8 +158,12 @@ export class CreateObjectComponent implements OnInit {
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
 
-        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+        if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else if(!data.propName.match(/^[a-z0-9]+$/)){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
         else
@@ -167,8 +171,12 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "";
         }
 
-        if(data.modelFile == undefined || data.model == undefined || !this.hasExtension(data.model, ['glb'])){
+        if(data.modelFile == undefined || data.model == undefined){
           modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
+          this.valid = false;
+        }
+        else if(!this.hasExtension(data.model, ['glb'])){
+          modelValidate.innerHTML = "<label style='color:red;'>Incorrect file type.</label>";
           this.valid = false;
         }
         else
@@ -311,8 +319,12 @@ export class CreateObjectComponent implements OnInit {
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
         
-        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+        if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else if(!data.propName.match(/^[a-z0-9]+$/)){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
         else
@@ -320,8 +332,12 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "";
         }
 
-        if(data.modelFile == undefined || data.model == undefined || !this.hasExtension(data.model, ['glb'])){
+        if(data.modelFile == undefined || data.model == undefined){
           modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
+          this.valid = false;
+        }
+        else if(!this.hasExtension(data.model, ['glb'])){
+          modelValidate.innerHTML = "<label style='color:red;'>Incorrect file type.</label>";
           this.valid = false;
         }
         else
@@ -519,8 +535,12 @@ export class CreateObjectComponent implements OnInit {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         }
 
-        if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+        if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+          this.valid = false;
+        }
+        else if(!data.propName.match(/^[a-z0-9]+$/)){
+          propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
         else
@@ -528,8 +548,12 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "";
         }
 
-        if(data.modelFile == undefined || data.model == undefined || !this.hasExtension(data.model, ['glb'])){
+        if(data.modelFile == undefined || data.model == undefined){
           modelValidate.innerHTML = "<label style='color:red;'>Model is required.</label>";
+          this.valid = false;
+        }
+        else if(!this.hasExtension(data.model, ['glb'])){
+          modelValidate.innerHTML = "<label style='color:red;'>Incorrect file type.</label>";
           this.valid = false;
         }
         else
@@ -778,8 +802,12 @@ export class CreateObjectComponent implements OnInit {
       data.backgroundImageFile = this.backgroundImageFile;
       data.audioFile = this.audioFile;
 
-      if(this.backgroundImageFile == undefined || this.backgroundImage == undefined || !this.hasExtension(data.backgroundImage, ['jpg'])){
+      if(this.backgroundImageFile == undefined || this.backgroundImage == undefined){
         backgroundValidate.innerHTML = "<label style='color:red;'>Background image is required.</label>";
+        this.valid = false;
+      }
+      else if(!this.hasExtension(data.backgroundImage, ['jpg'])){
+        backgroundValidate.innerHTML = "<label style='color:red;'>Incorrect file type.</label>";
         this.valid = false;
       }
       else
@@ -787,8 +815,12 @@ export class CreateObjectComponent implements OnInit {
         backgroundValidate.innerHTML =  "";
       }
       
-      if(data.propName == '' || !data.propName.replace(/\s/g, '').length){
+      if(data.propName == ''){
         propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
+        this.valid = false;
+      }
+      else if(!data.propName.match(/^[a-z0-9]+$/)){
+        propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
         this.valid = false;
       }
       else
