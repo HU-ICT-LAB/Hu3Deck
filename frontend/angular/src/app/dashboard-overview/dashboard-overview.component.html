@@ -39,7 +39,7 @@
 <div class="col-md-6 ">
    <div class="x_panel">
       <div class="x_title">
-         <h2><i class="fa fa-heart"></i> Heart rate</h2>
+         <h2><i class="fa fa-area-chart"></i> Heart rate</h2>
          <div class="clearfix"></div>
       </div>
       <div class="x_content">
@@ -49,6 +49,7 @@
             <h2>Select period in minutes (max 60)</h2>
             <input type="number" id="minutes" class="minutes-input form-control" required>
             <button type="button" class="minutes-update btn btn-success" (click)="showHeartbeat()">Update</button>
+            <i class="bpm fa fa-heart"><label id="bpmLabel"></label></i>
          </div>
       </div>
    </div>

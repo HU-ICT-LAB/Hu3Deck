@@ -142,9 +142,12 @@ export class DashboardOverviewComponent implements OnInit {
     this.heartRateChart.update();
 
   }
+  
+
 
   async showHeartbeat() {
     let minutes = (<HTMLInputElement>document.getElementById("minutes")).value;
+    let bpm = (<HTMLInputElement>document.getElementById("bpmLabel"));
     
     const options = {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -154,6 +157,8 @@ export class DashboardOverviewComponent implements OnInit {
     
     let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', body.toString(), options).toPromise();
     let jsonObjects = Object.values(jsonData).slice(-60); 
+
+    bpm.textContent = Object.values(jsonData).slice(-1)[0].value;
 
     this.heartRateChart.data.datasets[0].data = jsonObjects.map( (value) => {
       return value.value;

@@ -85,3 +85,20 @@
   float: left;
 }
 
+#bpmLabel {
+  margin-left: 5px;
+  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+}
+
+.bpm {
+  animation: colorchg 3s infinite;
+  margin-left: 25%;
+  font-size: 20px;
+}
+
+@keyframes colorchg {
+  50% {
+    color: rgb(255, 99, 132);
+    font-size: 24px;
+  }
+}
