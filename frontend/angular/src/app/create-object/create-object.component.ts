@@ -162,7 +162,7 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
         }
-        else if(!data.propName.match(/^[a-z0-9]+$/)){
+        else if(!data.propName.match(/^[a-zA-Z0-9]+$/)){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
@@ -323,7 +323,7 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
         }
-        else if(!data.propName.match(/^[a-z0-9]+$/)){
+        else if(!data.propName.match(/^[a-zA-Z0-9]+$/)){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
@@ -539,7 +539,7 @@ export class CreateObjectComponent implements OnInit {
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
         }
-        else if(!data.propName.match(/^[a-z0-9]+$/)){
+        else if(!data.propName.match(/^[a-zA-Z0-9]+$/)){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
           this.valid = false;
         }
@@ -819,7 +819,7 @@ export class CreateObjectComponent implements OnInit {
         propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
         this.valid = false;
       }
-      else if(!data.propName.match(/^[a-z0-9]+$/)){
+      else if(!data.propName.match(/^[a-zA-Z0-9]+$/)){
         propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is invalid.</label>";
         this.valid = false;
       }
