@@ -152,7 +152,7 @@ export class CreateSessionComponent {
         sessionNameValidate.innerHTML = "<label style='color:red;'>Session name is required.</label>";
         this.valid = false;
       }
-      else if(!data.session_name.match(/^[a-z0-9]+$/)){
+      else if(!data.session_name.match(/^[a-zA-Z0-9]+$/)){
         sessionNameValidate.innerHTML = "<label style='color:red;'>Session name is invalid.</label>";
         this.valid = false;
       }
