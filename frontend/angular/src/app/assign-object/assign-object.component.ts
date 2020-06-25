@@ -21,10 +21,9 @@ export class AssignObjectComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder, private http: HttpClient, private _constant: ConstantsService) {
 
-    
     this.http.get(`${this._constant.apiLocation}/scenes`).subscribe(data => {
       this.scenes = data;
-    }); 
+    });
 
     this.form1 = this.formBuilder.group({
       selectScene: ['', Validators.required],
@@ -47,6 +46,7 @@ export class AssignObjectComponent implements OnInit {
     item.default_shown = true;
   }
 
+  // Assigns objects to a scene
   async save() {
     this.submitted = true;
 
@@ -81,9 +81,9 @@ export class AssignObjectComponent implements OnInit {
   }
 
 
-
+  // when the scene is changed, show which props are active/inactive of that scene
   async onChangeScene(sceneValue) {
-      this.selectScene = sceneValue;      
+      this.selectScene = sceneValue;
 
       const propsData = await this.http.get(`${this._constant.apiLocation}/scene/${this.selectScene}/props`).toPromise();
       this.allowed = Object.values(propsData).map(data => data);
@@ -98,9 +98,8 @@ export class AssignObjectComponent implements OnInit {
   }
 
 
-
+    // Allows you to drag and drop objects
     drop(event: CdkDragDrop<string[]>) {
-        // console.log(event.container['data'])
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {

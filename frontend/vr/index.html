@@ -5,30 +5,16 @@
     </head>
     <body>
         <a-scene>
-      
             <!-- Assets -->
             <a-assets>
-                <!-- <a-asset-items id="bird" response-type="arraybuffer" src="/assets/scene.glb"></a-asset-items> -->
             </a-assets>
-      
             <!-- Camera -->
             <a-entity position="0 0 0">
               <a-camera></a-camera>
             </a-entity>
-
-            <!-- <a-entity propid="VbIRanohZ" gltf-model="/assets/scene.glb" scale=""></a-entity> -->
-
-            <!-- Flying Bird -->
-            <!-- <a-entity gltf-model="#bird" scale="0.5 0.5 0.5" position="15 5 -50" animation-mixer="clip:Flying" rotation="0 -25 0" sound="src: url(/assets/vogel.mp3); autoplay: true; loop: true" loop=true animation="property: position; from: 15 5 -50; to: -5 3 10; dur: 4000; easing: linear; loop: true"></a-entity> -->
-      
           </a-scene>
 
-
-
-        
         <script src="/socket.io/socket.io.js"></script>
-        
-        
         <script src="/assets/web.js"></script>
         <script>
             loadSessionEnvironment();

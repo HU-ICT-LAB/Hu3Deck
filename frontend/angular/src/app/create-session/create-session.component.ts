@@ -17,12 +17,12 @@ export class CreateSessionComponent {
     scenes: Object;
     users: Object;
     updateSession;
-    selectedLink: string="existingUser"; 
-    private _constant: ConstantsService;      
-    valid = false; 
-  
+    selectedLink: string="existingUser";
+    private _constant: ConstantsService;
+    valid = false;
 
-  constructor(private formBuilder: FormBuilder, private constant: ConstantsService, private http: HttpClient) { 
+
+  constructor(private formBuilder: FormBuilder, private constant: ConstantsService, private http: HttpClient) {
     this._constant = constant;
     this.http.get(this._constant.apiLocation + "/scenes").subscribe(data => {
       this.scenes = data;
@@ -47,21 +47,22 @@ export class CreateSessionComponent {
   }
 
 
-  setradio(e: string): void   {  
-  
-    this.selectedLink = e;  
-          
-  }  
-  
-  isSelected(name: string): boolean {  
-  
-      if (!this.selectedLink) { // if no radio button is selected, always return false so every nothing is shown  
-          return false;  
-      }  
+  setradio(e: string): void   {
 
-      return (this.selectedLink === name); // if current radio button is selected, return true, else return false  
-    }  
+    this.selectedLink = e;
 
+  }
+
+  isSelected(name: string): boolean {
+
+      if (!this.selectedLink) { // if no radio button is selected, always return false so every nothing is shown
+          return false;
+      }
+
+      return (this.selectedLink === name); // if current radio button is selected, return true, else return false
+    }
+
+  // Submits the form data and validates this data
   onSubmit(data) {
 
     var sessionNameValidate = document.getElementById("sessionNameValidate");
@@ -71,12 +72,12 @@ export class CreateSessionComponent {
     var middleNameValidate = document.getElementById("middleNameValidate");
     var lastNameValidate = document.getElementById("lastNameValidate");
     var ageValidate = document.getElementById("ageValidate");
-      
+
     let requestBody;
-    
+
     const requestHeaders = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
-  
+
 
       if(this.selectedLink == "existingUser"){
         requestBody = new HttpParams()

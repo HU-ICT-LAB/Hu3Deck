@@ -7,7 +7,7 @@ import { StatisticsComponent }        from './statistics/statistics.component';
 import { CreateUserComponent }        from './create-user/create-user.component';
 import { AssignObjectComponent }      from './assign-object/assign-object.component';
 import { CreateSceneComponent }       from './create-scene/create-scene.component';
-import {WebhookComponent} from "./webhook/webhook.component";
+
 
 const routes: Routes = [
   {path: '', component: CreateSessionComponent},
@@ -16,7 +16,6 @@ const routes: Routes = [
   {path:'statistics',component:StatisticsComponent},
   {path: 'assign-object', component: AssignObjectComponent},
   {path: 'create-scene', component: CreateSceneComponent},
-  {path: 'webhook', component: WebhookComponent}
 ];
 
 @NgModule({
