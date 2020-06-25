@@ -2,6 +2,14 @@ import { makeSession } from './../../entities/';
 export default function makeCreateSession({ sessionDb, userDb, sceneDb }) {
     return async function(requestData) {        
         const session = makeSession({...requestData});
+
+        
+        //Check if there is already a session active or no.
+        const activeSession = await sessionDb.findActive();
+
+        if(Object.keys(activeSession).length > 0) {
+            throw new Error(`There is already 1 active session: /dashboard/${activeSession.id}`);
+        }
         
         //Check if the session already exists.
         const sessionExists = await sessionDb.findById({
