@@ -53,12 +53,8 @@ function makeModel(modelObject) {
         aEntity.setAttribute('position', {x: modelObject.x_pos_from, y: modelObject.y_pos_from, z: modelObject.z_pos_from });
     }
     
-    if(modelObject.movement_type !== 'Stationary')  {
+    if(modelObject.movement_type !== 'Stationary' && modelObject.movement_type !== 'Rotation')  {
         aEntity.setAttribute('animation', `property: position; from: ${modelObject.x_pos_from} ${modelObject.y_pos_from} ${modelObject.z_pos_from} ; to: ${modelObject.x_pos_to} ${modelObject.y_pos_to} ${modelObject.z_pos_to} ; dur: ${modelObject.duration}; easing: ${modelObject.easing};  loop: true`);
-    }
-    
-    if(modelObject.x_pos_rot != null && modelObject.y_pos_rot != null && modelObject.z_pos_rot) {
-        aEntity.setAttribute('rotation', {x: modelObject.x_pos_rot, y: modelObject.y_pos_rot, z: modelObject.z_pos_rot });
     }
 
     if(modelObject.animation_mixer != null) {
@@ -71,6 +67,18 @@ function makeModel(modelObject) {
 
     if(modelObject.loop != null) {
         aEntity.setAttribute('loop', `${modelObject.loop}`);
+    }
+    if(modelObject.movement_type == 'Rotation') {
+        let rOuter = document.createElement('a-entity');
+        
+        aEntity.setAttribute('position', {x: modelObject.x_pos_outer, y: modelObject.y_pos_outer, z: modelObject.z_pos_outer });
+        aEntity.setAttribute('rotation', {x: modelObject.x_pos_rot, y: modelObject.y_pos_rot, z: modelObject.z_pos_rot});
+        rOuter.setAttribute('position', {x: modelObject.x_pos_from, y: modelObject.y_pos_from, z: modelObject.z_pos_from});
+        rOuter.setAttribute('animation', `property: rotation; to: ${modelObject.x_pos_to} ${modelObject.y_pos_to} ${modelObject.z_pos_to} ; dur: ${modelObject.duration}; easing:${modelObject.easing}; loop:true;`);
+        
+        rOuter.appendChild(aEntity);
+        parent.appendChild(rOuter);
+        return true;
     }
 
 
