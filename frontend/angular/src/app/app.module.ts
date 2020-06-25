@@ -17,7 +17,6 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { AssignObjectComponent } from './assign-object/assign-object.component';
 import { CreateSceneComponent } from './create-scene/create-scene.component';
 import { ConstantsService } from './constants.service';
-import { WebhookComponent } from './webhook/webhook.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { WebhookComponent } from './webhook/webhook.component';
     CreateUserComponent,
     AssignObjectComponent,
     CreateSceneComponent,
-    WebhookComponent
   ],
   imports: [
     BrowserModule,

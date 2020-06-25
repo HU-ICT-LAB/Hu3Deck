@@ -30,7 +30,7 @@ export class DashboardOverviewComponent implements OnInit {
   hidden = [];
 
   shown = [];
-  
+
   @ViewChild('sliders') sliders: ElementRef;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private _constant: ConstantsService, private socket: WebSocketService) {
@@ -39,12 +39,12 @@ export class DashboardOverviewComponent implements OnInit {
 
     this.http.get(`${_constant.apiLocation}/scenes`).subscribe(data => {
         this.scenes = Object.values(data);
-    });  
+    });
 
     this.session_form = this.formBuilder.group({
       scene: ''
     });
-    
+
 
   }
 
@@ -66,11 +66,7 @@ export class DashboardOverviewComponent implements OnInit {
       this.ngOnInit();
       this.socket.emit('reload', {});
     }
-
-    // console.log(body.toString());
   }
-
-      // this.webSocketService.emit('change scene', data);
 
   subscription: Subscription;
   statusText: string;
@@ -81,7 +77,7 @@ export class DashboardOverviewComponent implements OnInit {
   async ngOnInit() {
     let sessionid = this.route.snapshot.paramMap.get('sessionid');
     this.sessionData = await this.http.get(`${this._constant.apiLocation}/sessions/${sessionid}`).toPromise();
-    
+
     if(Object.keys(this.sessionData).length < 1) {
       location.href = '/';
     }
@@ -91,11 +87,11 @@ export class DashboardOverviewComponent implements OnInit {
     const propsData = await this.http.get(`${this._constant.apiLocation}/scene/${this.sessionData.scene_id}/props`).toPromise();
     this.shown = Object.values(propsData).filter(data => data.default_shown === true);
     this.hidden = Object.values(propsData).filter(data => data.default_shown === false);
-    // `${data.name} [${data.prop_type}] / ${data.id}`
     this.shown.forEach(obj => {
         this.propSlider(obj);
     });
 
+    // Creates a chart in which a heartbeat is going to be shown
     this.heartRateChart = new Chart('heartRate', {
       type: 'line',
 
@@ -116,21 +112,8 @@ export class DashboardOverviewComponent implements OnInit {
             ticks: {
               stepSize: 5,
               beginAtZero: false,
-              // max: Math.max(...this.data) + (25 - (Math.max(...this.data) % 25))
             }
           }],
-          // xAxes: [{
-          //     type: "linear",
-          //     display: true,
-          //     scaleLabel: {
-          //         display: true,
-          //         labelString: 'X-Axis'
-          //     },
-          //     ticks: {
-          //         min: -10,
-          //         suggestedMax: 150
-          //     }
-          // },]
         },
       }
     });
@@ -142,21 +125,21 @@ export class DashboardOverviewComponent implements OnInit {
     this.heartRateChart.update();
 
   }
-  
 
 
+  // Shows the heartbeat in the created chart
   async showHeartbeat() {
     let minutes = (<HTMLInputElement>document.getElementById("minutes")).value;
     let bpm = (<HTMLInputElement>document.getElementById("bpmLabel"));
-    
+
     const options = {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };
 
     const body = new HttpParams().set('minutes', minutes);
-    
+
     let jsonData = await this.http.post('http://localhost:3000/heartbeat/create', body.toString(), options).toPromise();
-    let jsonObjects = Object.values(jsonData).slice(-60); 
+    let jsonObjects = Object.values(jsonData).slice(-60);
 
     bpm.textContent = Object.values(jsonData).slice(-1)[0].value;
 
@@ -173,9 +156,8 @@ export class DashboardOverviewComponent implements OnInit {
   }
 
 
-
+  // Allows for drag and drop functionality
   drop(event: CdkDragDrop<string[]>) {
-    // console.log(event.item.element.nativeElement)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -196,14 +178,10 @@ export class DashboardOverviewComponent implements OnInit {
       this.socket.emit('show prop', { id });
     } else if (event.container.id == 'cdk-drop-list-0' && event.previousContainer.id == 'cdk-drop-list-1') {
       let element = (<HTMLInputElement>document.querySelector(`[sliderpropid='${id}']`));
-      
+
       if(element !== null) {
         element.remove();
       }
-      
-      
-
-
       this.socket.emit('hide prop', { id });
     }
 
@@ -211,17 +189,17 @@ export class DashboardOverviewComponent implements OnInit {
 
 
 
-
+  // Adds a slider for the audio volume
   propSlider(prop){
 
     if(prop.audio_path === null) {
       return false;
     }
-    
+
     var div = document.createElement("div");
     var input = document.createElement("input");
     var title = document.createElement("p");
-  
+
     title.innerHTML = prop.name;
 
     div.setAttribute('sliderpropid', prop.id);

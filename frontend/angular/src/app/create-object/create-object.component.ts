@@ -71,7 +71,7 @@ export class CreateObjectComponent implements OnInit {
     this.ngOnInit();
     if(typeof(propNameValidateOnChange) != 'undefined' && propNameValidateOnChange != null){
       propNameValidateOnChange.innerHTML = "";
-    } 
+    }
     this.movement = null;
     this.audio = undefined;
     this.model = undefined;
@@ -115,6 +115,7 @@ export class CreateObjectComponent implements OnInit {
     return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(inputID);
 }
 
+  //Submits the form data and validates this data
   onSubmit(data){
     var propNameValidate = document.getElementById("propNameValidate");
     var backgroundValidate = document.getElementById("backgroundValidate");
@@ -136,11 +137,10 @@ export class CreateObjectComponent implements OnInit {
     var zOuterPositionValidate = document.getElementById("zOuterPositionValidate");
     var durationValidate = document.getElementById("durationValidate");
     var loopValidate = document.getElementById("loopValidate");
-    
+
     const name = this.createProp.get('triggerName').value;
     const token = this.createProp.get('token').value;
     const apiLink = 'https://maker.ifttt.com/trigger/' + name + '/with/key/' + token + '?value1=';
-    // this.webhookApi(apiLink);
 
     if(this.propType == 'Model'){
       if(this.movement == 'Stationary'){
@@ -211,7 +211,7 @@ export class CreateObjectComponent implements OnInit {
           zScaleValidate.innerHTML = "";
         }
 
-        
+
         if(data.xRotation == null){
           xRotationValidate.innerHTML = "<label style='color:red;'>X rotation is required.</label>";
           this.valid = false;
@@ -266,7 +266,7 @@ export class CreateObjectComponent implements OnInit {
           zPositionValidate.innerHTML = "";
         }
 
-        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" && 
+        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" &&
         xScaleValidate.innerHTML == "" && yScaleValidate.innerHTML == "" &&
         zScaleValidate.innerHTML == "" && xRotationValidate.innerHTML == "" &&
         yRotationValidate.innerHTML == "" && zRotationValidate.innerHTML == "" &&
@@ -276,10 +276,10 @@ export class CreateObjectComponent implements OnInit {
           this.valid = true;
         }
 
-        if(!this.valid){   
+        if(!this.valid){
           return;
         }
-    
+
         const body = new FormData();
         body.append('modelFile', this.modelFile);
         body.append('audioFile', this.audioFile);
@@ -315,10 +315,10 @@ export class CreateObjectComponent implements OnInit {
         delete data.xOuterPosition;
         delete data.yOuterPosition;
         delete data.zOuterPosition;
-   
+
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
-        
+
         if(data.propName == ''){
           propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
           this.valid = false;
@@ -372,7 +372,7 @@ export class CreateObjectComponent implements OnInit {
           zScaleValidate.innerHTML = "";
         }
 
-        
+
         if(data.xRotation == null){
           xRotationValidate.innerHTML = "<label style='color:red;'>X rotation is required.</label>";
           this.valid = false;
@@ -473,7 +473,7 @@ export class CreateObjectComponent implements OnInit {
         }
 
 
-        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" && 
+        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" &&
         xScaleValidate.innerHTML == "" && yScaleValidate.innerHTML == "" &&
         zScaleValidate.innerHTML == "" && xRotationValidate.innerHTML == "" &&
         yRotationValidate.innerHTML == "" && zRotationValidate.innerHTML == "" &&
@@ -485,10 +485,10 @@ export class CreateObjectComponent implements OnInit {
           this.valid = true;
         }
 
-        if(!this.valid){   
+        if(!this.valid){
           return;
         }
-    
+
         const body = new FormData();
         body.append('modelFile', this.modelFile);
         body.append('audioFile', this.audioFile);
@@ -527,7 +527,7 @@ export class CreateObjectComponent implements OnInit {
       }
       else if(this.movement == 'Rotation'){
         delete data.backgroundImage;
-           
+
         data.modelFile = this.modelFile;
         data.audioFile = this.audioFile;
 
@@ -588,7 +588,7 @@ export class CreateObjectComponent implements OnInit {
           zScaleValidate.innerHTML = "";
         }
 
-        
+
         if(data.xRotation == null){
           xRotationValidate.innerHTML = "<label style='color:red;'>X rotation is required.</label>";
           this.valid = false;
@@ -716,7 +716,7 @@ export class CreateObjectComponent implements OnInit {
         }
 
 
-        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" && 
+        if(propNameValidate.innerHTML == "" && modelValidate.innerHTML == "" &&
         xScaleValidate.innerHTML == "" && yScaleValidate.innerHTML == "" &&
         zScaleValidate.innerHTML == "" && xRotationValidate.innerHTML == "" &&
         yRotationValidate.innerHTML == "" && zRotationValidate.innerHTML == "" &&
@@ -730,10 +730,10 @@ export class CreateObjectComponent implements OnInit {
           this.valid = true;
         }
 
-        if(!this.valid){   
+        if(!this.valid){
           return;
         }
-    
+
         const body = new FormData();
         body.append('modelFile', this.modelFile);
         body.append('audioFile', this.audioFile);
@@ -814,7 +814,7 @@ export class CreateObjectComponent implements OnInit {
       {
         backgroundValidate.innerHTML =  "";
       }
-      
+
       if(data.propName == ''){
         propNameValidate.innerHTML = "<label style='color:red;'>Prop Name is required.</label>";
         this.valid = false;
@@ -832,14 +832,14 @@ export class CreateObjectComponent implements OnInit {
         this.valid = true;
       }
 
-      if(!this.valid){   
+      if(!this.valid){
         return;
       }
 
       const options = {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       }
-  
+
       const body = new FormData();
       body.append('backgroundFile', this.backgroundImageFile);
       body.append('audioFile', this.audioFile);
@@ -847,7 +847,7 @@ export class CreateObjectComponent implements OnInit {
       body.append('propType', data.propType);
       body.append('backgroundImage', data.backgroundImage = this.backgroundImage);
       body.append('audio', data.audio = this.audio);
-      body.append('volume', data.volume);   
+      body.append('volume', data.volume);
 
       this.http.post('http://localhost:3000/prop/createBackground', body).subscribe(dataa => {
         if(this.valid){
@@ -856,26 +856,9 @@ export class CreateObjectComponent implements OnInit {
         }
       }, response => {
         console.log(response);
-      }); 
+      });
       }
     }
-
-  webhookApi(url: string) {
-    const addTriggerValue = url + this.triggerSwitch;
-    url = addTriggerValue;
-
-    return fetch(url, {mode: 'no-cors'})
-      .then(response => {
-        if (this.triggerSwitch) {
-          this.triggerSwitch = false;
-          console.log(url);
-        }
-        else {
-          this.triggerSwitch = true;
-          console.log(url);
-        }
-      });
-  }
 
   reset(){
     this.propType = null;
