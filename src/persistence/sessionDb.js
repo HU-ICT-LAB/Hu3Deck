@@ -8,6 +8,7 @@ export default function makeSessionDb({ getDbInstance }) {
         findActive
     });
 
+    // selects the active session
     async function findActive() {
         let conn = await getDbInstance();
 
@@ -50,7 +51,7 @@ export default function makeSessionDb({ getDbInstance }) {
         ];
     }
 
-    
+    // selects session by the parameter id
     async function findById({id: _id}) {
         let conn = await getDbInstance();
 
@@ -74,6 +75,7 @@ export default function makeSessionDb({ getDbInstance }) {
         return {};
     }
 
+    // inserts a session
     async function create({...data}) {
         let conn = await getDbInstance();
 
@@ -99,6 +101,8 @@ export default function makeSessionDb({ getDbInstance }) {
         return {};
     }
 
+
+    // updates the scene of the session
     async function update({id: _id, ...data}) {
         console.log(_id, data);
         let conn = await getDbInstance();

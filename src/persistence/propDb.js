@@ -9,6 +9,7 @@ export default function makePropDb({ getDbInstance }) {
         createPropOfTypeModel
     });
     
+    // search all props based on scene id
     async function findBySceneId({id: _id}) {
         let conn = await getDbInstance();
 
@@ -50,6 +51,7 @@ export default function makePropDb({ getDbInstance }) {
         return [];
     }
 
+    // search all props based on prop id
     async function findById({ id: _id }) {
         let conn = await getDbInstance();
         const query = {
@@ -90,6 +92,7 @@ export default function makePropDb({ getDbInstance }) {
         return [];
     }
 
+    // gives all props not assigned in the given scene id
     async function findNotActive(id){
         let conn = await getDbInstance();
         const query = {
@@ -115,7 +118,7 @@ export default function makePropDb({ getDbInstance }) {
 
         return {};
     }
-
+    // deletes all props based on the scene id in the linking table
     async function deletePropsBySceneId({ id: _id }){
         let conn = await getDbInstance();
         const query = {
@@ -134,6 +137,7 @@ export default function makePropDb({ getDbInstance }) {
         return response;
     }
 
+    // creates all props based on scene id in the linking table
     async function createPropBySceneId({ sid: _sid, json: _json }){
         let index = 1;
         let bindParams = Array(_json.length).fill(0).map(v => `(${Array(3).fill(0).map(val => `$${index++}`).join(',')})`).join(',');
@@ -163,7 +167,7 @@ export default function makePropDb({ getDbInstance }) {
     }
 
     
-
+    // creates background prop
     async function createPropOfTypeBackground({...data}) {     
         console.log(data); 
         let conn = await getDbInstance();
@@ -208,6 +212,7 @@ export default function makePropDb({ getDbInstance }) {
         return {...data};
     }
 
+    // creates model prop
     async function createPropOfTypeModel({...data}) {     
         console.log(data); 
         let conn = await getDbInstance();

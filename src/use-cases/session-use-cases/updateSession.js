@@ -13,11 +13,6 @@ export default function createUpdateSession({sessionDb}) {
         }
 
 
-
-
-        // const session = makeSession({...existingSession, ...changes});
-
-
         const updatedSession = sessionDb.update({
             scene_id: changes.scene_id,
             id

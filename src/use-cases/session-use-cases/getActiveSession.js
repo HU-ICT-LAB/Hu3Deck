@@ -1,10 +1,10 @@
-// import { makeSession } from './../../entities/';
 export default function makeGetActiveSession({ sessionDb, sceneDb, propDb }) {
     return async function getActiveSession() {
         let sessionObject = await sessionDb.findActive();
         let scene = await sceneDb.findById({ id : sessionObject.scene_id });
         let props = await propDb.findBySceneId({ id: scene.id });
 
+        // check if the props backgroundimage/mode/audiopath !== null and assign a path to them
         props.forEach((val) => {
             if(val.background_image_path !== null) {
                 val.background_image_path = `/assets/background-images/${val.background_image_path}`;
@@ -30,7 +30,6 @@ export default function makeGetActiveSession({ sessionDb, sceneDb, propDb }) {
 
         return {
             ...sessionObject
-            // ...makeSession(sessionObject).toObject()
         };
     }
 }

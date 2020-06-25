@@ -5,9 +5,7 @@ export default function makePostPropModel({ createPropOfTypeModel }) {
         };
 
         try {
-            const {...data } = httpRequest.body
-
-            // echo(__filename + thisLine(), httpRequest);
+            const {...data } = httpRequest.body;
             
             const createdPropOfTypeModel = await createPropOfTypeModel({
                 ...data

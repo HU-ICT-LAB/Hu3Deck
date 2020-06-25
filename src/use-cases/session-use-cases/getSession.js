@@ -4,7 +4,7 @@ export default function createGetSession({ sessionDb }) {
         id
     }) {
 
-        //Could use more validation.
+        //Check if the sessionId exist.
         if(!id) {
             throw new Error("To get a session, you need a sessionId.");
         }

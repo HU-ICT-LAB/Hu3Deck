@@ -7,6 +7,7 @@ export default function makeSceneDb({ getDbInstance }) {
         findAll
     });
 
+    // returns all scenes that are found
     async function findAll() {
         let conn = await getDbInstance();
 
@@ -32,9 +33,9 @@ export default function makeSceneDb({ getDbInstance }) {
         return [];
     }
 
+    // this function returns the scene based on the parameter id
     async function findById({id: _id}) {
         let conn = await getDbInstance();
-        //echo(__filename + thisLine(), _id);
 
         const query = {
             name: 'findSceneById',
@@ -58,6 +59,7 @@ export default function makeSceneDb({ getDbInstance }) {
         return {};
     }
 
+    // this function create a new scene based on the parameter ...data
     async function create({...data}) {
         let conn = await getDbInstance();
         const query = {

@@ -42,7 +42,6 @@ export default function createCreateHeartbeat({heartbeatDb, fitbitDb, httpReques
                 })
                 .then(res => res.json())
                 .then(json => {
-                    echo(__filename, json);
 
                     fitbitDb.update({
                         access_token: json['access_token'],
