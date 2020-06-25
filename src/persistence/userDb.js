@@ -7,6 +7,8 @@ export default function makeUserDb({ getDbInstance }) {
         findAll
     });
 
+
+    // selects all users
     async function findAll() {
         let conn = await getDbInstance();
 
@@ -31,6 +33,7 @@ export default function makeUserDb({ getDbInstance }) {
         return {};
     }
 
+    // selects user by the parameter id
     async function findById({id: _id}) {
         let conn = await getDbInstance();
 
@@ -55,6 +58,7 @@ export default function makeUserDb({ getDbInstance }) {
         return {};
     }
 
+    // inserts user by the parameter data
     async function create({...data}) {
         let conn = await getDbInstance();
         

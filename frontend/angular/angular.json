@@ -127,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "HU3Deck"
+    }
+  },
+  "defaultProject": "HU3Deck",
+  "cli": {
+    "analytics": false
+  }
 }

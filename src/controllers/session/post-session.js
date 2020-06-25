@@ -5,7 +5,7 @@ export default function makePostSession({ createSession, createUser }) {
         };
 
         try {
-            const {...data } = httpRequest.body
+            const {...data } = httpRequest.body;
             
 
             if(!("user_id" in data)) {

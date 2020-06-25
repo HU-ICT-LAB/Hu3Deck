@@ -5,7 +5,7 @@ export default function makePostHeartbeat({ createHeartbeat }) {
         };
 
         try {
-            const {...data } = httpRequest.body
+            const {...data } = httpRequest.body;
 
             const createdHeartbeat = await createHeartbeat({
                 ...data

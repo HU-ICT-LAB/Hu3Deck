@@ -3,11 +3,12 @@ import { makePropBackground, makePropSound, makeProp } from '../../entities';
 export default function makeCreateOfTypePropBackground({ propDb }) {
     return function(propInfo) {   
         
-        
+        // makes prop background from entities
         const propBackgroundInstance = makePropBackground(propInfo);
         const propSoundInstance = makePropSound(propInfo);
         const propInstance = makeProp(propInfo);
 
+        // calls function createPropOfTypeBackground from propDb
         const propBackground = propDb.createPropOfTypeBackground({
             backgroundId: propBackgroundInstance.getId(),
             soundId: propSoundInstance.getId(),

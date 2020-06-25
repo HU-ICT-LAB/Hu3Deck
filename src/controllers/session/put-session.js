@@ -7,9 +7,7 @@ export default function makePutSession({ updateSession }) {
         };
 
         try {
-            console.log(httpRequest);
-
-            const {...data } = httpRequest.body
+            const {...data } = httpRequest.body;
             
 
             const createdSession = await updateSession({
