@@ -1,0 +1,9 @@
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DATABASE=
+PORT=
+BACKGROUND_STORAGE=frontend/vr/assets/background-images
+AUDIO_STORAGE=frontend/vr/assets/audio
+MODEL_STORAGE=frontend/vr/assets/model
+FITBIT_API_KEY=
