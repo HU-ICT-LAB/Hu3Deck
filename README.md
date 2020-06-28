@@ -3,7 +3,7 @@
 ## System requirements
   - Angular v9.1.6+
   - NodeJS v12.16.2+
-  - Database v somethingsomething[example]
+  - Database PostgreSQL
   
 ## Installation manual
   - Clone this repo on to your machine
