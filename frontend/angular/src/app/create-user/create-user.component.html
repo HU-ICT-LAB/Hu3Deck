@@ -1,0 +1,47 @@
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Create User</h2>
+        
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content" style="display: block;">
+            <br>
+            <form class="form-horizontal form-label-left" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Name:<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" name="Name" class="form-control input-width">
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Middle name:<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" name="Middlename" class="form-control input-width">
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Last name:<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" name="Lastname" class="form-control input-width">
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Age:<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" name="Age" class="form-control input-width">
+                    </div>
+                </div>
+            <div class="ln_solid"></div>
+            <div class="col-md-9 col-sm-9">
+                <button class="btn btn-primary" type="button">Cancel</button>
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

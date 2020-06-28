@@ -1,0 +1,100 @@
+<div class="col-md-6 ">
+   <div class="x_panel">
+      <div class="x_title">
+         <h2><i class="fa fa-wrench"></i> Session settings</h2>
+
+         <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+         <form class="form-horizontal form-label-left" [formGroup]="session_form"
+            (ngSubmit)="onSubmit(session_form.value)">
+            <div class="item form-group">
+               <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Name</label>
+               <div class="col-md-9 col-sm-9 ">
+                  <p>{{sessionData.name}}</p>
+               </div>
+            </div>
+            <div class="form-group row">
+
+                <label class="control-label col-md-3 col-sm-3 ">Scenes</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select class="form-control" formControlName="scene" [(ngModel)]="defaultSelected" name="scenes" id="">
+                        <option *ngFor="let scene of scenes" [selected]="" [ngValue]="scene.id">{{ scene.title }}</option>
+                     </select>
+                </div>
+            </div>
+
+            <div class="ln_solid"></div>
+            <div class="form-group">
+               <div class="col-md-12 col-sm12">
+                  <button type="button" class="btn btn-primary">Cancel</button>
+                  <button type="submit" class="btn btn-success">Submit</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+
+<div class="col-md-6 ">
+   <div class="x_panel">
+      <div class="x_title">
+         <h2><i class="fa fa-area-chart"></i> Heart rate</h2>
+         <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+         <canvas id="heartRate"></canvas>
+         <div>
+            <div class="ln_solid"></div>
+            <h2>Select period in minutes (max 60)</h2>
+            <input type="number" id="minutes" class="minutes-input form-control" required>
+            <button type="button" class="minutes-update btn btn-success" (click)="showHeartbeat()">Update</button>
+            <i class="bpm fa fa-heart"><label id="bpmLabel"></label></i>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<div class="col-md-12 col-sm-12 ">
+   <div class="x_panel">
+      <div class="x_title">
+         <h2><i class="fa fa-rocket"></i> Props</h2>
+
+         <div class="clearfix"></div>
+      </div>
+      <div class="x_content drag-prop" style="display: block;">
+         <div class="col-md-6">
+            <div class="drag-container">
+               <div class="section-heading">Hidden Props</div>
+               <div cdkDropList #hiddenList="cdkDropList" [cdkDropListData]="hidden"
+                  [cdkDropListConnectedTo]="[shownList]" class="item-list" cdkDropListSortingDisabled
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="item-box" *ngFor="let item of hidden" [attr.propid]="item.id" cdkDrag>{{item.name}} [{{item.prop_type}}]</div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-6">
+            <div class="drag-container">
+               <div class="section-heading">Shown Props</div>
+
+               <div cdkDropList #shownList="cdkDropList" [cdkDropListData]="shown"
+                  [cdkDropListConnectedTo]="[hiddenList]" class="item-list" cdkDropListSortingDisabled
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="item-box" *ngFor="let item of shown" [attr.propid]="item.id" cdkDrag>{{item.name}} [{{item.prop_type}}]</div>
+               </div>
+            </div>
+         </div>
+       
+      </div>
+      <div class="col-md-12">
+         <div class="x_title">
+            <h2><i class="fa fa-rocket"></i> Sliders</h2>
+   
+            <div class="clearfix"></div>
+         </div>
+         <div class="sliders" #sliders></div>
+      </div>
+   </div>
+</div>

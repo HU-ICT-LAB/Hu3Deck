@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    </head>
+    <body>
+        <a-scene>
+            <!-- Assets -->
+            <a-assets>
+            </a-assets>
+            <!-- Camera -->
+            <a-entity position="0 0 0">
+              <a-camera></a-camera>
+            </a-entity>
+          </a-scene>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/assets/web.js"></script>
+        <script>
+            loadSessionEnvironment();
+
+            var socket = io();
+            socket.on('remove prop', (data) => {
+                removeProp(data.id);
+            });
+
+            socket.on('create prop', loadProp);
+
+            socket.on('reload', loadSessionEnvironment);
+
+            socket.on('change volume', changeVolume);
+
+            socket.on("remake scene", data => {
+                loadSessionEnvironment();
+            });
+        </script>
+    </body>
+</html>

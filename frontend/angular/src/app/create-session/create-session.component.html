@@ -1,0 +1,97 @@
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+       <div class="x_title">
+          <h2>Create Session</h2>
+          
+          <div class="clearfix"></div>
+       </div>
+       <div class="x_content" style="display: block;">
+          <br>
+          <form id="create-session" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" [formGroup]="updateSession" (ngSubmit)="onSubmit(updateSession.value)">
+             <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Session name<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 ">
+                   <input type="text" id="session-name" name="session-name" class="form-control" formControlName="session_name" >
+                   <div id="sessionNameValidate"></div>
+                </div>
+             </div>
+             <div class="session form-group">
+                <label for="scene" class="col-form-label col-md-3 col-sm-3 label-align">Scene</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select class="form-control" formControlName="scene" name="" id="">
+                        <option *ngFor="let scene of scenes" [value]="scene.id">{{ scene.title }}</option>
+                    </select>
+                    <div id="sceneValidate"></div>
+                </div>
+             </div>
+
+            <div class="item form-group">
+                <div class="col-md-9 col-sm-9 ">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="existingUser" id="optionsRadios1" name="optionsRadios" (click)="setradio('existingUser')"  [checked]='true'> Existing user
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="newUser" id="optionsRadios2" name="optionsRadios" (click)="setradio('newUser')"> New user
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="session form-group" *ngIf="isSelected('existingUser')">
+                <label for="user" class="col-form-label col-md-3 col-sm-3 label-align">User</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select class="form-control" formControlName="user" name="" id="">
+                        <option *ngFor="let user of users" [value]="user.id">{{ user.name + " " }}{{ (user.middlename == null) ? "" : user.middlename + " " }} {{ user.lastname }}</option>
+                    </select>
+                    <div id="userValidate"></div>
+                </div>
+            </div>
+            <div class="item form-group" *ngIf="isSelected('newUser')">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Name<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" name="Name" class="form-control input-width" formControlName="first_name">
+                        <div id="firstNameValidate"></div>
+                    </div>
+                </div>
+                <div class="item form-group" *ngIf="isSelected('newUser')">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Middle name<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" name="Middlename" class="form-control input-width" formControlName="middle_name">
+                        <div id="middleNameValidate"></div>
+                    </div>
+                </div>
+                <div class="item form-group" *ngIf="isSelected('newUser')">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Last name<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" name="Lastname" class="form-control input-width" formControlName="last_name">
+                        <div id="lastNameValidate"></div>
+                    </div>
+                </div>
+                <div class="item form-group" *ngIf="isSelected('newUser')">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="session-name">Age<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="number" name="Age" class="form-control input-width" formControlName="age">
+                        <div id="ageValidate"></div>
+                    </div>
+                </div>
+                
+                
+
+            <div class="ln_solid"></div>
+            <div class="col-md-9 col-sm-9">
+                <button class="btn btn-primary" type="button">Cancel</button>
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+
+          </form>
+       </div>
+    </div>
+ </div>

@@ -1,0 +1,33 @@
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Statistics for `user`</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content" style="display: block;">
+            <br>
+            <form id="create_prop" [formGroup]="statisticsform" (ngSubmit)="onSubmit(statisticsform.value)"  data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">Session <span class="required">*</span></label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <select class="form-control" formControlName="session" name="scenes" id="">
+                            <option *ngFor="let session of sessions" [value]="session">{{ session }}</option>
+                         </select>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="col-md-9 col-sm-9">
+                    <button class="btn btn-primary" type="button">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+<br>
+            <div class="x_title">
+                <h2>Example</h2>
+                <div class="clearfix"></div>
+            </div>
+            <canvas id="sampleCanvas">{{chart}}</canvas>
+
+        </div>
+    </div>
+</div>
